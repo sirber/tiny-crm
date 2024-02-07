@@ -1,10 +1,10 @@
-FROM golang:1.21-alpine
+FROM golang:1
 
+COPY ./dist/tiny-crm /app/
+COPY ./dist/static/* /app/static/
+
+VOLUME /app/data/
 EXPOSE 3000
-WORKDIR /app
-VOLUME /app/data
 
-COPY ./dist/* ./
-RUN chmod +x ./tiny-crm
-
+WORKDIR /app/
 CMD ["./tiny-crm"]

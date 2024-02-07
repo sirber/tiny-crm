@@ -22,7 +22,8 @@ build: clean backend frontend
 	@echo "done!"
 
 docker: build
-	@docker build .
+	@docker build . -t tiny-crm
 
 clean:
+	@echo "Cleaning..."
 	@rm -fr ./dist
