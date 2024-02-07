@@ -16,7 +16,7 @@ frontend:
 	@echo "Building frontend..."
 	@cd $(FRONTEND) && npm run build
 	@cd $(FRONTEND) && cp -r ./dist/* ../dist/static/
-	@rm -fr ./frontend/dist
+	@rm -fr $(FRONTEND)/dist
 
 build: clean backend frontend 
 	@echo "done!"
