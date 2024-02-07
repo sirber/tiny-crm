@@ -1,12 +1,18 @@
-.PHONY: build build-frontend build-backend
+.PHONY: backend frontend buid
 
-build-backend:
+BACKEND := ./backend
+FRONTEND := ./frontend
+
+backend: $(BUILD_DIR)
+	@mkdir -p ./dist/data
 	@echo "Building backend..."
-	@cd ./backend && go build -o ./dist/backend .
+	@cd $(BACKEND) && go build -o ../dist/tinycrm .
 
-build-frontend:
+frontend: $(BUILD_DIR)
+	@mkdir -p ./dist/static
 	@echo "Building frontend..."
-	@cd ./frontend && npm run build
+	@cd $(FRONTEND) && npm run build
+	@cd $(FRONTEND) && cp -r ./dist/* ../dist/static/
 
-build: build-backend build-frontend
+build: backend frontend 
 	@echo "done!"
