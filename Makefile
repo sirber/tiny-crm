@@ -1,4 +1,4 @@
-.PHONY: backend frontend build clean
+.PHONY: backend frontend build clean docker
 
 BACKEND := ./backend
 FRONTEND := ./frontend
@@ -9,7 +9,7 @@ help:
 backend:
 	@mkdir -p ./dist/data
 	@echo "Building backend..."
-	@cd $(BACKEND) && go build -o ../dist/tinycrm .
+	@cd $(BACKEND) && GOOS=linux GOARCH=amd64 go build -o ../dist/tiny-crm .
 
 frontend:
 	@mkdir -p ./dist/static
@@ -18,8 +18,11 @@ frontend:
 	@cd $(FRONTEND) && cp -r ./dist/* ../dist/static/
 	@rm -fr ./frontend/dist
 
-build: backend frontend 
+build: clean backend frontend 
 	@echo "done!"
 
+docker: build
+	@docker build .
+
 clean:
-	rm -fr ./dist
+	@rm -fr ./dist
