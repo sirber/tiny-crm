@@ -7,6 +7,8 @@ import (
 	"gorm.io/gorm"
 )
 
+const dbName string = "data/tiny-crm.sqlite"
+
 var database *gorm.DB
 
 func init() {
@@ -16,10 +18,11 @@ func init() {
 
 func connectDb() {
 	var err error
-	database, err = gorm.Open(sqlite.Open("data/test.sqlite"), &gorm.Config{})
+	database, err = gorm.Open(sqlite.Open(dbName), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
+
 	fmt.Println("Database ready.")
 }
 
