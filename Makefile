@@ -9,7 +9,7 @@ help:
 backend:
 	@mkdir -p ./dist/data
 	@echo "Building backend..."
-	@cd $(BACKEND) && GOOS=linux GOARCH=amd64 go build -o ../dist/tiny-crm .
+	@cd $(BACKEND) && GOOS=linux GOARCH=amd64 go build -ldflags '-s -w' -o ../dist/tiny-crm .
 
 frontend:
 	@mkdir -p ./dist/static
