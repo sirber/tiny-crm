@@ -14,7 +14,7 @@ backend:
 frontend:
 	@mkdir -p ./dist/static
 	@echo "Building frontend..."
-	@cd $(FRONTEND) && npm run build
+	@cd $(FRONTEND) && npm i && npm run build
 	@cd $(FRONTEND) && cp -r ./dist/* ../dist/static/
 	@rm -fr $(FRONTEND)/dist
 
