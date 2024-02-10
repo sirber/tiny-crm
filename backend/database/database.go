@@ -1,4 +1,4 @@
-package main
+package database
 
 import (
 	"fmt"
@@ -11,12 +11,7 @@ const dbName string = "data/tiny-crm.sqlite"
 
 var database *gorm.DB
 
-func init() {
-	connectDb()
-	migrateDb()
-}
-
-func connectDb() {
+func ConnectDb() {
 	var err error
 	database, err = gorm.Open(sqlite.Open(dbName), &gorm.Config{})
 	if err != nil {
@@ -26,7 +21,7 @@ func connectDb() {
 	fmt.Println("Database ready.")
 }
 
-func migrateDb() {
+func MigrateDb() {
 	for _, model := range Models {
 		database.AutoMigrate(model)
 	}
