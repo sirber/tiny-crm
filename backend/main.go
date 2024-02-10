@@ -1,7 +1,8 @@
 package main
 
 import (
-	"backend/database"
+	"backend/packages/api"
+	"backend/packages/database"
 	"fmt"
 )
 
@@ -16,5 +17,5 @@ func init() {
 func main() {
 	fmt.Println("Backend v" + ver + " ready!")
 
-	LaunchAPI(port)
+	api.LaunchAPI(port)
 }
