@@ -9,7 +9,14 @@ import (
 
 func LaunchAPI(port string) {
 	r := chi.NewRouter()
+	r.Use(middleware.Recoverer)
 	r.Use(middleware.Logger)
+	r.Use(middleware.Compress(5, "text/html", "text/css", "application/json"))
+	r.Use(middleware.StripSlashes)
+	r.Use(middleware.CleanPath)
+
+	// API
+	r.Mount("/api/users", getUserRouter(r))
 
 	// Static Files
 	fs := http.FileServer(http.Dir("static"))
