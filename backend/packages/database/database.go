@@ -1,7 +1,7 @@
 package database
 
 import (
-	"fmt"
+	"log/slog"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -18,12 +18,13 @@ func ConnectDb() {
 		panic("failed to connect database")
 	}
 
-	fmt.Println("Database ready.")
+	slog.Info("Database ready.")
 }
 
 func MigrateDb() {
 	for _, model := range Models {
 		database.AutoMigrate(model)
 	}
-	fmt.Println("Schema migrated.")
+
+	slog.Info("Schema migrated.")
 }

@@ -3,19 +3,18 @@ package main
 import (
 	"backend/packages/api"
 	"backend/packages/database"
-	"fmt"
+	"log/slog"
 )
 
 const ver string = "1.0.0"
 const port string = "3000"
 
 func init() {
+	slog.Info("Backend v" + ver + " launching...")
 	database.ConnectDb()
 	database.MigrateDb()
 }
 
 func main() {
-	fmt.Println("Backend v" + ver + " ready!")
-
 	api.LaunchAPI(port)
 }

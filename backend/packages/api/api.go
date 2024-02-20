@@ -1,6 +1,7 @@
 package api
 
 import (
+	"log/slog"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -22,5 +23,6 @@ func LaunchAPI(port string) {
 	fs := http.FileServer(http.Dir("static"))
 	r.Handle("/*", http.StripPrefix("/", fs))
 
+	slog.Info("Listening on: http://localhost:" + port)
 	http.ListenAndServe(":"+port, r)
 }
