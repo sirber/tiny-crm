@@ -4,10 +4,11 @@ import (
 	"time"
 
 	uuid "github.com/satori/go.uuid"
+	"github.com/shopspring/decimal"
 	"gorm.io/gorm"
 )
 
-type Base struct {
+type PrimaryKey struct {
 	ID uuid.UUID `gorm:"type:uuid;primary_key;"`
 }
 
@@ -17,34 +18,24 @@ type Timestamps struct {
 	DeletedAt *time.Time `sql:"index"`
 }
 
-func (base *Base) BeforeCreate(tx *gorm.DB) error {
+func (base *PrimaryKey) BeforeCreate(tx *gorm.DB) (err error) {
 	base.ID = uuid.NewV4()
-	return nil
-}
-
-func (t *Timestamps) BeforeCreate(tx *gorm.DB) error {
-	t.CreatedAt = time.Now()
-	t.UpdatedAt = time.Now()
-	return nil
-}
-
-func (t *Timestamps) BeforeUpdate(tx *gorm.DB) error {
-	t.UpdatedAt = time.Now()
-	return nil
+	return
 }
 
 type User struct {
-	Base
+	PrimaryKey
 	FirstName string
 	LastName  string
 	Email     string
 	Password  string
 	Roles     string
+	TimeZone  string
 	Timestamps
 }
 
 type Customer struct {
-	Base
+	PrimaryKey
 	UserId    uuid.UUID
 	User      User
 	FirstName string
@@ -54,7 +45,7 @@ type Customer struct {
 }
 
 type Product struct {
-	Base
+	PrimaryKey
 	UserId      uuid.UUID
 	User        User
 	Name        string
@@ -65,21 +56,30 @@ type Product struct {
 }
 
 type Bill struct {
-	Base
+	PrimaryKey
 	UserId     uuid.UUID
 	User       User
 	CustomerId uuid.UUID
 	Customer   Customer
+	Payments   []Payment
 	Timestamps
 }
 
 type BillProduct struct {
-	Base
+	PrimaryKey
 	BillId    uuid.UUID
 	Bill      Bill
 	ProductId uuid.UUID
 	Product   Product
-	Price     float32
+	Price     decimal.Decimal `gorm:"type:decimal(10,2)"`
+	Timestamps
+}
+
+type Payment struct {
+	PrimaryKey
+	BillId uuid.UUID
+	Bill   Bill
+	Amount decimal.Decimal `gorm:"type:decimal(10,2)"`
 	Timestamps
 }
 
@@ -89,4 +89,5 @@ var Models = []interface{}{
 	&Customer{},
 	&Bill{},
 	&BillProduct{},
+	&Payment{},
 }
