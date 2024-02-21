@@ -12,12 +12,9 @@ var (
 	port int = 3000
 )
 
-func init() {
+func main() {
 	slog.Info("Backend v" + ver + " launching...")
 	database.ConnectDb()
 	database.MigrateDb()
-}
-
-func main() {
 	api.LaunchAPI(port)
 }
