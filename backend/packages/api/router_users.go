@@ -1,25 +1,20 @@
 package api
 
 import (
-	"net/http"
-
-	"github.com/go-chi/chi/v5"
+	"github.com/gin-gonic/gin"
 )
 
-func getUserRouter(r chi.Router) *chi.Mux {
-	apiRouter := chi.NewRouter()
-	apiRouter.Get("/", getUsersRoute)
-	apiRouter.Get("/{id}", getUserRoute)
-
-	return apiRouter
+func (r *GinRouter) getUserRouter(rg *gin.RouterGroup) {
+	rg.GET("/", getUsersRoute)
+	rg.GET("/:id", getUserRoute)
 }
 
-func getUsersRoute(w http.ResponseWriter, r *http.Request) {
+func getUsersRoute(c *gin.Context) {
 	// TODO
 
 }
 
-func getUserRoute(w http.ResponseWriter, r *http.Request) {
+func getUserRoute(c *gin.Context) {
 	// TODO
 
 }

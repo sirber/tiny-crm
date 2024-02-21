@@ -2,27 +2,40 @@ package api
 
 import (
 	"log/slog"
-	"net/http"
 
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
+	"github.com/gin-contrib/gzip"
+	"github.com/gin-contrib/static"
+	"github.com/gin-gonic/gin"
+	sloggin "github.com/samber/slog-gin"
 )
 
-func LaunchAPI(port string) {
-	r := chi.NewRouter()
-	r.Use(middleware.Recoverer)
-	r.Use(middleware.Logger)
-	r.Use(middleware.Compress(5, "text/html", "text/css", "application/json"))
-	r.Use(middleware.StripSlashes)
-	r.Use(middleware.CleanPath)
+type GinRouter struct {
+	router *gin.Engine
+}
 
-	// API
-	r.Mount("/api/users", getUserRouter(r))
+func init() {
+	gin.SetMode(gin.ReleaseMode)
+}
+
+func LaunchAPI(port string) {
+	r := GinRouter{
+		router: gin.New(),
+	}
+
+	// Middlewares
+	r.router.Use(sloggin.New(slog.Default()))
+	r.router.Use(gin.Recovery())
+	r.router.Use(gzip.Gzip(gzip.BestCompression))
 
 	// Static Files
-	fs := http.FileServer(http.Dir("static"))
-	r.Handle("/*", http.StripPrefix("/", fs))
+	r.router.Use(static.Serve("/", static.LocalFile("static", false)))
+
+	// API
+	api := r.router.Group("/api")
+
+	users := api.Group("/users")
+	r.getUserRouter(users)
 
 	slog.Info("Listening on: http://localhost:" + port)
-	http.ListenAndServe(":"+port, r)
+	r.router.Run(":" + port)
 }
