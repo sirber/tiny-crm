@@ -7,7 +7,10 @@ import (
 )
 
 const ver string = "1.0.0"
-const port string = "3000"
+
+var (
+	port int = 3000
+)
 
 func init() {
 	slog.Info("Backend v" + ver + " launching...")

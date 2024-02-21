@@ -2,6 +2,7 @@ package api
 
 import (
 	"log/slog"
+	"strconv"
 
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-contrib/static"
@@ -17,7 +18,7 @@ func init() {
 	gin.SetMode(gin.ReleaseMode)
 }
 
-func LaunchAPI(port string) {
+func LaunchAPI(port int) {
 	r := GinRouter{
 		router: gin.New(),
 	}
@@ -36,6 +37,6 @@ func LaunchAPI(port string) {
 	users := api.Group("/users")
 	r.getUserRouter(users)
 
-	slog.Info("Listening on: http://localhost:" + port)
-	r.router.Run(":" + port)
+	slog.Info("Listening on: http://localhost:" + strconv.Itoa(port))
+	r.router.Run(":" + strconv.Itoa(port))
 }
