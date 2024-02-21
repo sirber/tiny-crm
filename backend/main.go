@@ -1,9 +1,9 @@
 package main
 
 import (
-	"backend/packages/api"
-	"backend/packages/database"
 	"log/slog"
+	"main/api"
+	"main/database"
 )
 
 const ver string = "1.0.0"
