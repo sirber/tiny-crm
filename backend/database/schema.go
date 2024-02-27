@@ -27,7 +27,7 @@ type User struct {
 	PrimaryKey
 	FirstName string
 	LastName  string
-	Email     string
+	Email     string `sql:"index"`
 	Password  string
 	Roles     string
 	TimeZone  string
@@ -41,6 +41,8 @@ type Customer struct {
 	FirstName string
 	LastName  string
 	Email     string
+	PhoneHome string
+	PhoneCell string
 	Timestamps
 }
 
@@ -50,7 +52,7 @@ type Product struct {
 	User        User
 	Name        string
 	Description string
-	Code        string
+	Code        string `sql:"index"`
 	Price       float32
 	Timestamps
 }
