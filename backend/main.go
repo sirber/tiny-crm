@@ -2,8 +2,8 @@ package main
 
 import (
 	"log/slog"
-	"main/api"
-	"main/database"
+	"main/packages/database"
+	"main/packages/router"
 )
 
 const ver string = "1.0.0"
@@ -14,7 +14,9 @@ var (
 
 func main() {
 	slog.Info("Backend v" + ver + " launching...")
+
 	database.ConnectDb()
 	database.MigrateDb()
-	api.LaunchAPI(port)
+
+	router.LaunchAPI(port)
 }
