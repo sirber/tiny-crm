@@ -14,10 +14,6 @@ type GinRouter struct {
 	router *gin.Engine
 }
 
-func init() {
-	gin.SetMode(gin.ReleaseMode)
-}
-
 func LaunchAPI(port int) {
 	r := GinRouter{
 		router: gin.New(),
@@ -31,8 +27,12 @@ func LaunchAPI(port int) {
 	// Static Files
 	r.router.Use(static.Serve("/", static.LocalFile("static", false)))
 
+	// Auth
+	auth := r.router.Group("/api/auth")
+	r.getAuthRouter(auth)
+
 	// API
-	api := r.router.Group("/api")
+	api := r.router.Group("/api", authGuard())
 
 	users := api.Group("/users")
 	r.getUserRouter(users)

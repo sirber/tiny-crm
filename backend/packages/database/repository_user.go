@@ -33,6 +33,32 @@ func (r Repository) GetUser(id uuid.UUID) (user *User, err error) {
 	return user, err
 }
 
+func (r Repository) GetUserByEmail(email string) (user *User, err error) {
+	err = database.
+		Where("email = ?", email).
+		First(&user).
+		Error
+
+	if err == gorm.ErrRecordNotFound {
+		return nil, nil
+	}
+
+	return user, err
+}
+
+func (r Repository) GetUserByToken(token string) (user *User, err error) {
+	err = database.
+		Where("token = ?", token).
+		First(&user).
+		Error
+
+	if err == gorm.ErrRecordNotFound {
+		return nil, nil
+	}
+
+	return user, err
+}
+
 func (r Repository) CreateUser(user *User) (err error) {
 	return database.Create(user).Error
 }

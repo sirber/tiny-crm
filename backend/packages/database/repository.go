@@ -25,6 +25,8 @@ type RepositoryInterface interface {
 	DeleteProduct(id uuid.UUID) (err error)
 	GetUsers() (users []User, err error)
 	GetUser(id uuid.UUID) (user *User, err error)
+	GetUserByEmail(email string) (user *User, err error)
+	GetUserByToken(token string) (user *User, err error)
 	CreateUser(user *User) (err error)
 	UpdateUser(user *User) (err error)
 	DeleteUser(id uuid.UUID) (err error)
