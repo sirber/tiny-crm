@@ -2,6 +2,7 @@ package router
 
 import (
 	"log/slog"
+	"main/packages/security"
 	"strconv"
 
 	"github.com/gin-contrib/gzip"
@@ -32,7 +33,7 @@ func LaunchAPI(port int) {
 	r.getAuthRouter(auth)
 
 	// API
-	api := r.router.Group("/api", authGuard())
+	api := r.router.Group("/api", security.AuthGuard())
 
 	users := api.Group("/users")
 	r.getUserRouter(users)

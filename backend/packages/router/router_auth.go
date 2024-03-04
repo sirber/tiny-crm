@@ -2,6 +2,7 @@ package router
 
 import (
 	"errors"
+	"main/packages/security"
 	"main/packages/service"
 	"net/http"
 
@@ -31,13 +32,13 @@ func getLoginRoute(c *gin.Context) {
 		return
 	}
 
-	passwordCheck := checkPasswordHash(login.Password, user.Password)
+	passwordCheck := security.CheckPasswordHash(login.Password, user.Password)
 	if !passwordCheck {
 		c.Status(http.StatusUnauthorized)
 		return
 	}
 
-	token, _ := randomHex(40)
+	token, _ := security.RandomHex(32)
 	user.Token = &token
 
 	err = service.UpdateUser(user)

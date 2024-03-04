@@ -2,6 +2,7 @@ package service
 
 import (
 	"main/packages/database"
+	"main/packages/security"
 
 	uuid "github.com/satori/go.uuid"
 )
@@ -23,5 +24,14 @@ func GetUserByToken(token string) (*database.User, error) {
 }
 
 func UpdateUser(user *database.User) error {
+	if user.Password != "" { // FIXME: use a DTO, convert to User
+		hashedPassword, err := security.HashPassword(user.Password)
+		if err != nil {
+			return err
+		}
+
+		user.Password = hashedPassword
+	}
+
 	return repository.UpdateUser(user)
 }
