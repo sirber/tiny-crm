@@ -1,9 +1,9 @@
-import "bulma/css/bulma.css";
+import 'bulma/css/bulma.css'
 
-import { createApp } from "vue";
-import { createPinia } from "pinia";
-import App from "@/components/App.vue";
-import router from "@/router.js";
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import App from '@/components/App.vue'
+import router from '@/router.js'
 
 const app = createApp(App)
 

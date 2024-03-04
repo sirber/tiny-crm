@@ -1,6 +1,6 @@
 export const ActionButtons = {
-  Save: "Save",
-  Cancel: "Cancel",
-  Back: "Back",
-  Add: "Add",
-};
+  Save: 'Save',
+  Cancel: 'Cancel',
+  Back: 'Back',
+  Add: 'Add'
+}

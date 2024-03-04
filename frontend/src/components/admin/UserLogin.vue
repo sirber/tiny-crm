@@ -16,7 +16,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapActions } from 'pinia';
-import { useUserStore } from "@/stores/user"
+import { useUserStore } from "@/stores/user";
 import Card from "@/components/ui/Card.vue";
 import FormInput from "@/components/ui/form/FormInput.vue";
 import { useNotificationStore } from "@/stores/notification";

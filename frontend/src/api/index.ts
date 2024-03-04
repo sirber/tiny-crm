@@ -1,13 +1,13 @@
-import axios from "axios";
+import axios from 'axios'
 
 export default {
   configureApi(apiUrl: string) {
-    axios.defaults.withCredentials = true;
+    axios.defaults.withCredentials = true
 
     if (!apiUrl) {
-      return;
+      return
     }
 
-    axios.defaults.baseURL = apiUrl;
-  },
-};
+    axios.defaults.baseURL = apiUrl
+  }
+}

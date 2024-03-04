@@ -1,5 +1,5 @@
 export type Business = {
-  id: string,
-  name: string,
-  isDefault: boolean,
-};
+  id: string
+  name: string
+  isDefault: boolean
+}
