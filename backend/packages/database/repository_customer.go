@@ -34,11 +34,11 @@ func (r Repository) GetCustomer(id uuid.UUID) (customer *Customer, err error) {
 }
 
 func (r Repository) CreateCustomer(customer *Customer) (err error) {
-	return database.Create(customer).Error
+	return database.Create(&customer).Error
 }
 
 func (r Repository) UpdateCustomer(customer *Customer) (err error) {
-	return database.Save(customer).Error
+	return database.Updates(&customer).Error
 }
 
 func (r Repository) DeleteCustomer(id uuid.UUID) (err error) {

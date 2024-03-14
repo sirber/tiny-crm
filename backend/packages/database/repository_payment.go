@@ -35,11 +35,11 @@ func (r Repository) GetPayment(id uuid.UUID) (payment *Payment, err error) {
 }
 
 func (r Repository) CreatePayment(payment *Payment) (err error) {
-	return database.Create(payment).Error
+	return database.Create(&payment).Error
 }
 
 func (r Repository) UpdatePayment(payment *Payment) (err error) {
-	return database.Save(payment).Error
+	return database.Updates(&payment).Error
 }
 
 func (r Repository) DeletePayment(id uuid.UUID) (err error) {

@@ -35,11 +35,11 @@ func (r Repository) GetProduct(id uuid.UUID) (product *Product, err error) {
 }
 
 func (r Repository) CreateProduct(product *Customer) (err error) {
-	return database.Create(product).Error
+	return database.Create(&product).Error
 }
 
 func (r Repository) UpdateProduct(product *Product) (err error) {
-	return database.Save(product).Error
+	return database.Updates(&product).Error
 }
 
 func (r Repository) DeleteProduct(id uuid.UUID) (err error) {

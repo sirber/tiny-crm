@@ -10,7 +10,7 @@ import (
 )
 
 func (r *GinRouter) getUserRouter(rg *gin.RouterGroup) {
-	rg.GET("/", getUsersRoute)
+	rg.GET("", getUsersRoute)
 	rg.GET("/:id", getUserRoute)
 }
 

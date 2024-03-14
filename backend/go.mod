@@ -1,6 +1,6 @@
 module main
 
-go 1.21.5
+go 1.21
 
 require (
 	github.com/gin-contrib/gzip v0.0.6
@@ -9,6 +9,7 @@ require (
 	github.com/samber/slog-gin v1.10.2
 	github.com/satori/go.uuid v1.2.0
 	github.com/shopspring/decimal v1.3.1
+	golang.org/x/crypto v0.19.0
 	gorm.io/driver/sqlite v1.5.5
 	gorm.io/gorm v1.25.7
 )
@@ -39,7 +40,6 @@ require (
 	go.opentelemetry.io/otel v1.19.0 // indirect
 	go.opentelemetry.io/otel/trace v1.19.0 // indirect
 	golang.org/x/arch v0.7.0 // indirect
-	golang.org/x/crypto v0.19.0 // indirect
 	golang.org/x/net v0.21.0 // indirect
 	golang.org/x/sys v0.17.0 // indirect
 	golang.org/x/text v0.14.0 // indirect

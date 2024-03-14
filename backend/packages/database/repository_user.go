@@ -1,6 +1,7 @@
 package database
 
 import (
+	"main/packages/common"
 	"time"
 
 	uuid "github.com/satori/go.uuid"
@@ -14,7 +15,7 @@ func (r Repository) GetUsers() (users []User, err error) {
 		Error
 
 	if err == gorm.ErrRecordNotFound {
-		return nil, nil
+		return users, common.ErrRecordNotFound
 	}
 
 	return users, err
@@ -27,7 +28,7 @@ func (r Repository) GetUser(id uuid.UUID) (user *User, err error) {
 		Error
 
 	if err == gorm.ErrRecordNotFound {
-		return nil, nil
+		return user, common.ErrRecordNotFound
 	}
 
 	return user, err
@@ -35,12 +36,16 @@ func (r Repository) GetUser(id uuid.UUID) (user *User, err error) {
 
 func (r Repository) GetUserByEmail(email string) (user *User, err error) {
 	err = database.
-		Where("email = ?", email).
-		First(&user).
+		Where(&User{
+			Email: email,
+			Timestamps: Timestamps{
+				DeletedAt: nil,
+			},
+		}).First(&user).
 		Error
 
 	if err == gorm.ErrRecordNotFound {
-		return nil, nil
+		return user, common.ErrRecordNotFound
 	}
 
 	return user, err
@@ -48,23 +53,28 @@ func (r Repository) GetUserByEmail(email string) (user *User, err error) {
 
 func (r Repository) GetUserByToken(token string) (user *User, err error) {
 	err = database.
-		Where("token = ?", token).
+		Where(&User{
+			Token: &token,
+			Timestamps: Timestamps{
+				DeletedAt: nil,
+			},
+		}).
 		First(&user).
 		Error
 
 	if err == gorm.ErrRecordNotFound {
-		return nil, nil
+		return user, common.ErrRecordNotFound
 	}
 
 	return user, err
 }
 
 func (r Repository) CreateUser(user *User) (err error) {
-	return database.Create(user).Error
+	return database.Create(&user).Error
 }
 
 func (r Repository) UpdateUser(user *User) (err error) {
-	return database.Save(user).Error
+	return database.Updates(&user).Error
 }
 
 func (r Repository) DeleteUser(id uuid.UUID) (err error) {

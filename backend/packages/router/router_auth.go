@@ -2,6 +2,7 @@ package router
 
 import (
 	"errors"
+	"main/packages/common"
 	"main/packages/security"
 	"main/packages/service"
 	"net/http"
@@ -28,17 +29,17 @@ func getLoginRoute(c *gin.Context) {
 		return
 	}
 	if user == nil {
-		c.Status(http.StatusUnauthorized)
+		c.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
 
 	passwordCheck := security.CheckPasswordHash(login.Password, user.Password)
 	if !passwordCheck {
-		c.Status(http.StatusUnauthorized)
+		c.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
 
-	token, _ := security.RandomHex(32)
+	token, _ := security.RandomHex(common.TokenLength)
 	user.Token = &token
 
 	err = service.UpdateUser(user)
@@ -46,6 +47,9 @@ func getLoginRoute(c *gin.Context) {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
+
+	config := common.GetConfig()
+	c.SetCookie(common.TokenName, token, 0, "/", config.Domain, config.SecureCookie, true)
 
 	c.JSON(http.StatusOK, gin.H{
 		token: token,
@@ -75,6 +79,9 @@ func getLogoutRoute(c *gin.Context) {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
+
+	config := common.GetConfig()
+	c.SetCookie(common.TokenName, "", -1, "/", config.Domain, config.SecureCookie, true)
 
 	c.Status(http.StatusOK)
 }

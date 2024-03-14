@@ -1,6 +1,7 @@
 package database
 
 import (
+	"main/packages/common"
 	"time"
 
 	uuid "github.com/satori/go.uuid"
@@ -15,7 +16,7 @@ func (r Repository) GetBills(userId uuid.UUID) (bills []Bill, err error) {
 		Error
 
 	if err == gorm.ErrRecordNotFound {
-		return nil, nil
+		return bills, common.ErrRecordNotFound
 	}
 
 	return bills, err
@@ -29,18 +30,18 @@ func (r Repository) GetBill(id uuid.UUID) (bill *Bill, err error) {
 		Error
 
 	if err == gorm.ErrRecordNotFound {
-		return nil, nil
+		return bill, common.ErrRecordNotFound
 	}
 
 	return bill, err
 }
 
 func (r Repository) CreateBill(bill *Bill) (err error) {
-	return database.Create(bill).Error
+	return database.Create(&bill).Error
 }
 
 func (r Repository) UpdateBill(bill *Bill) (err error) {
-	return database.Save(bill).Error
+	return database.Updates(&bill).Error
 }
 
 func (r Repository) DeleteBill(id uuid.UUID) (err error) {
