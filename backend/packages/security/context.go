@@ -1,6 +1,7 @@
 package security
 
 import (
+	"main/packages/common"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -9,7 +10,7 @@ import (
 
 type SecurityContext struct {
 	UserId    uuid.UUID
-	UserRoles string
+	UserRoles []string
 }
 
 func GetSecurityContext(c *gin.Context) (securityContext *SecurityContext, err error) {
@@ -18,7 +19,7 @@ func GetSecurityContext(c *gin.Context) (securityContext *SecurityContext, err e
 		return securityContext, err
 	}
 
-	userRoles := c.GetString("userRoles")
+	userRoles := strings.Split(c.GetString("userRoles"), ",")
 
 	securityContext = &SecurityContext{
 		UserId:    userId,
@@ -28,16 +29,14 @@ func GetSecurityContext(c *gin.Context) (securityContext *SecurityContext, err e
 	return securityContext, nil
 }
 
-func (sc *SecurityContext) HasRole(roles []string) bool {
-	userRoles := strings.Split(sc.UserRoles, ",")
-
+func (sc *SecurityContext) HasRole(roles []string) error {
 	for _, role := range roles {
-		for _, userRole := range userRoles {
+		for _, userRole := range sc.UserRoles {
 			if strings.TrimSpace(userRole) == role {
-				return true
+				return nil
 			}
 		}
 	}
 
-	return false
+	return common.ErrUserRoleNotFound
 }
