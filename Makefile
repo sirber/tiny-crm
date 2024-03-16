@@ -15,7 +15,7 @@ frontend:
 build-backend:
 	@mkdir -p ./dist/data
 	@echo "Building backend..."
-	@cd $(BACKEND) && GOOS=linux GOARCH=amd64 go build -ldflags '-s -w' -o ../dist/tiny-crm .
+	@cd $(BACKEND) && make build
 
 build-frontend:
 	@mkdir -p ./dist/static

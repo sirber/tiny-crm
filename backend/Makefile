@@ -1,0 +1,7 @@
+.PHONY:test build
+
+test:
+	go test ./...
+
+build:
+	GOOS=linux GOARCH=amd64 go build -ldflags '-s -w' -o ../dist/tiny-crm .
