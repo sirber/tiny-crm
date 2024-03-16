@@ -3,6 +3,7 @@ package router
 import (
 	"errors"
 	"main/packages/common"
+	"main/packages/dto"
 	"main/packages/security"
 	"main/packages/service"
 	"net/http"
@@ -16,8 +17,17 @@ func (r *GinRouter) getAuthRouter(rg *gin.RouterGroup) {
 }
 
 func getLoginRoute(c *gin.Context) {
-	var login LoginDTO
-	err := c.BindJSON(&login)
+	var (
+		login dto.Login
+		err   error
+	)
+
+	err = c.BindJSON(&login)
+	if err != nil {
+		c.AbortWithError(http.StatusBadRequest, err)
+		return
+	}
+	err = common.GetValidator().Struct(&login)
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
