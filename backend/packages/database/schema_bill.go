@@ -7,11 +7,11 @@ import (
 
 type Bill struct {
 	PrimaryKey
-	UserId     uuid.UUID `json:"userId"`
-	User       User      `json:"user"`
-	CustomerId uuid.UUID `json:"customerId"`
-	Customer   Customer  `json:"customer"`
-	Payments   []Payment `json:"payments"`
+	UserId     uuid.UUID
+	User       User
+	CustomerId uuid.UUID
+	Customer   Customer
+	Payments   []Payment
 	Timestamps
 }
 

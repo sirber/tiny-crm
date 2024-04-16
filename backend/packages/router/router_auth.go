@@ -18,7 +18,7 @@ func (r *GinRouter) getAuthRouter(rg *gin.RouterGroup) {
 
 func getLoginRoute(c *gin.Context) {
 	var (
-		login dto.Login
+		login dto.LoginDTO
 		err   error
 	)
 
@@ -27,6 +27,7 @@ func getLoginRoute(c *gin.Context) {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
+
 	err = common.GetValidator().Struct(&login)
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)

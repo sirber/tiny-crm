@@ -6,7 +6,7 @@ import (
 	"main/packages/router"
 )
 
-const ver string = "1.0.0"
+const ver string = "*dev*"
 
 var (
 	port int = 3000

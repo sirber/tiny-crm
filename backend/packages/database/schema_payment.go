@@ -7,8 +7,8 @@ import (
 
 type Payment struct {
 	PrimaryKey
-	BillId uuid.UUID       `json:"billId"`
-	Bill   Bill            `json:"bill"`
-	Amount decimal.Decimal `json:"amount" gorm:"type:decimal(10,2)"`
+	BillId uuid.UUID
+	Bill   Bill
+	Amount decimal.Decimal `gorm:"type:decimal(10,2)"`
 	Timestamps
 }
