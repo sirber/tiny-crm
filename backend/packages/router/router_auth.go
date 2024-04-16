@@ -36,6 +36,11 @@ func getLoginRoute(c *gin.Context) {
 
 	user, err := service.GetUserByEmail(login.Email)
 	if err != nil {
+		if err == common.ErrRecordNotFound {
+			c.AbortWithStatus(http.StatusUnauthorized)
+			return
+		}
+
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}

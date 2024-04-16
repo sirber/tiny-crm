@@ -4,7 +4,7 @@
 </template>
 
 <script lang="ts">
-import { getPeople } from '@/api/people';
+import { getPeople } from '@/api/routes/people';
 import { defineComponent } from "vue";
 import CardList from "@/components/ui/CardList.vue";
 import { ActionButtons } from "@/constant";
@@ -80,3 +80,4 @@ export default defineComponent({
   }
 });
 </script>
+@/api/routes/people

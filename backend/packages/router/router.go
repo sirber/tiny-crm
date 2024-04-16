@@ -5,6 +5,7 @@ import (
 	"main/packages/security"
 	"strconv"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
@@ -24,6 +25,11 @@ func LaunchAPI(port int) {
 	r.router.Use(sloggin.New(slog.Default()))
 	r.router.Use(gin.Recovery())
 	r.router.Use(gzip.Gzip(gzip.BestCompression))
+
+	// CORS
+	config := cors.DefaultConfig()
+	config.AllowAllOrigins = true
+	r.router.Use(cors.New(config))
 
 	// Static Files
 	r.router.Use(static.Serve("/", static.LocalFile("static", false)))

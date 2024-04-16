@@ -33,7 +33,7 @@ import { v4 as uuidv4 } from "uuid";
 import { ActionButtons } from "@/constant";
 import CardEdit from "@/components/ui/CardEdit.vue";
 import FormInput from "@/components/ui/form/FormInput.vue";
-import { getPerson, addPerson, updatePerson } from "@/api/people";
+import { getPerson, addPerson, updatePerson } from "@/api/routes/people";
 import { useNotificationStore } from "@/stores/notification";
 import { mapActions, mapState } from "pinia";
 import { useExtraStore } from "@/stores/extra";
@@ -154,3 +154,4 @@ export default defineComponent({
   },
 });
 </script>
+@/api/routes/people

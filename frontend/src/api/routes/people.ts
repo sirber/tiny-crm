@@ -1,5 +1,5 @@
 import type { PersonDto } from '@/dtos/PersonDto'
-import Crud from './_crud'
+import Crud from '../crud'
 
 const basePath = '/people/'
 const crud = new Crud<PersonDto>(basePath)

@@ -7,10 +7,10 @@ help:
 	@echo "make [build, backend, frontend, clean]"
 
 backend:
-	@cd backend/ && go run .
+	@cd backend && go run .
 
 frontend:
-	@cd frontend && nom run dev
+	@cd frontend && npm run dev
 
 build-backend:
 	@mkdir -p ./dist/data

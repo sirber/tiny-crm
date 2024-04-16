@@ -32,7 +32,7 @@ import { ActionButtons } from "@/constant";
 import CardEdit from "@/components/ui/CardEdit.vue";
 import FormInput from "@/components/ui/form/FormInput.vue";
 import FormSelect from "@/components/ui/form/FormInputSelect.vue";
-import { getProfile } from "@/api/profile";
+import { getProfile } from "@/api/routes/profile";
 import type { SelectOption } from "@/types/SelectOption";
 import type { User } from "@/types/User";
 import UserProfileBusinessVue from "./UserProfileBusiness.vue";
@@ -133,4 +133,4 @@ export default defineComponent({
     this.loadProfile();
   },
 });
-</script>
+</script>@/api/routes/profile

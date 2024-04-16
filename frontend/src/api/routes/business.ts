@@ -1,5 +1,5 @@
 import type { Business } from '@/types/Business'
-import Crud from './_crud'
+import Crud from '../crud'
 
 const basePath = '/business/'
 const crud = new Crud<Business>(basePath)

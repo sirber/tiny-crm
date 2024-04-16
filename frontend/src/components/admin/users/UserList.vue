@@ -4,7 +4,7 @@
 </template>
 
 <script lang="ts">
-import { getUsers } from '@/api/user';
+import { getUsers } from '@/api/routes/user';
 import CardList from '@/components/ui/CardList.vue';
 import type { User } from '@/types/User';
 import { defineComponent } from 'vue';
@@ -55,3 +55,4 @@ export default defineComponent({
 });
 
 </script>
+@/api/routes/user

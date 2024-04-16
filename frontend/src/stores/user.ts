@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { login } from '../api/auth'
-import { getProfile } from '../api/profile'
+import { login } from '../api/routes/auth'
+import { getProfile } from '../api/routes/profile'
 import { jwtDecode } from 'jwt-decode'
 import axios from 'axios'
 import type { User } from '@/types/User'

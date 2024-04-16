@@ -1,4 +1,4 @@
-import Crud from './_crud'
+import Crud from '../crud'
 import type { UserDto } from '@/dtos/UserDto'
 
 const basePath = '/user/'
