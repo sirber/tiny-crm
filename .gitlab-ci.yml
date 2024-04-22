@@ -31,5 +31,5 @@ docker:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker docker build -t "tiny-crm:latest" ./dist
+    - docker docker build -t "$IMAGE_BACKEND" ./dist
     - docker push "$IMAGE_BACKEND"
