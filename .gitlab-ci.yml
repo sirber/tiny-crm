@@ -4,7 +4,7 @@ stages:
   - docker
 
 variables:
-  IMAGE_BACKEND: "registry.gitlab.com/sirber/tiny-crm/tiny-crm:latest"
+  DOCKER_TAG: "registry.gitlab.com/sirber/tiny-crm/tiny-crm:latest"
 
 test:
   image: node:20-alpine
@@ -12,7 +12,7 @@ test:
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
     - if: $CI_COMMIT_BRANCH == "develop"
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
   before_script:
     - apk add --no-cache make go
   script: 
@@ -45,5 +45,5 @@ docker:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker docker build -t "$IMAGE_BACKEND" ./dist
-    - docker push "$IMAGE_BACKEND"
+    - docker build -t "$DOCKER_TAG" ./dist
+    - docker push "$DOCKER_TAG"
