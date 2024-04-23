@@ -26,7 +26,6 @@ build-frontend:
 	@echo "Building frontend..."
 	@cd $(FRONTEND) && npm i && npm run build
 	@cd $(FRONTEND) && cp -r ./dist/* ../dist/static/
-	@rm -fr $(FRONTEND)/dist
 
 build: clean build-backend build-frontend 
 	@echo "done!"
@@ -37,3 +36,4 @@ docker: build
 clean:
 	@echo "Cleaning..."
 	@rm -fr ./dist
+	@rm -fr $(FRONTEND)/dist
