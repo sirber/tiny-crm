@@ -54,9 +54,8 @@ export default function Login() {
           >
             {({ errors, touched, isSubmitting }) => (
               <Form>
-                <Field
-                  name='email'
-                  render={({ field }) => (
+                <Field name='email'>
+                  {({ field }) => (
                     <TextField
                       {...field}
                       autoFocus={true}
@@ -66,14 +65,13 @@ export default function Login() {
                       margin='normal'
                     />
                   )}
-                />
+                </Field>
                 {errors.email && touched.email ? (
                   <FormikFieldError error={errors.email} />
                 ) : null}
 
-                <Field
-                  name='password'
-                  render={({ field }) => (
+                <Field name='password'>
+                  {({ field }) => (
                     <TextField
                       {...field}
                       type='password'
@@ -82,7 +80,7 @@ export default function Login() {
                       margin='normal'
                     />
                   )}
-                />
+                </Field>
                 {errors.password && touched.password ? (
                   <FormikFieldError error={errors.password} />
                 ) : null}
