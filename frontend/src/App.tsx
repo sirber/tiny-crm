@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 import { sessionCheck } from './features/auth'
 import Dashboard from './pages/Dashboard'
 import NavBar from './components/NavBar'
+import { Box } from '@mui/material'
 
 export default function App() {
   // Store
@@ -60,7 +61,13 @@ export default function App() {
     <>
       <BrowserRouter>
         <NavBar />
-        <Routes>{routes}</Routes>
+        <Box
+          sx={{
+            px: 2
+          }}
+        >
+          <Routes>{routes}</Routes>
+        </Box>
       </BrowserRouter>
     </>
   )
