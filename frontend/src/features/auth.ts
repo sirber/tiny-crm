@@ -1,10 +1,6 @@
-import { Dispatch, createSlice } from '@reduxjs/toolkit'
+import { Dispatch, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
-
-// Define the interface for the state
-interface AuthState {
-  isAuthenticated: boolean
-}
+import { AuthState, LoginValues } from '../types/auth'
 
 // Initial state
 const initialState: AuthState = {
@@ -36,21 +32,16 @@ export const selectIsAuthenticated = (state: RootState) =>
   state.auth.isAuthenticated
 
 // Thunks
-export const login =
-  (username: string, password: string) => async (dispatch: Dispatch) => {
-    try {
-      console.log(username, password)
+export const login = createAsyncThunk(
+  'auth/login',
+  async ({ email, password }: LoginValues) => {
+    console.log(email, password)
 
-      // TODO: API call
-      // const response = await api.login(username, password);
-      // const data = response.data;
+    // TODO: API call
 
-      dispatch(loginSuccess())
-    } catch (error) {
-      // TODO: handle error
-      console.error('Login failed:', error)
-    }
+    return loginSuccess()
   }
+)
 
 export const logout = () => async (dispatch: Dispatch) => {
   try {

@@ -4,11 +4,11 @@ import CardContent from '@mui/material/CardContent'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import FormikFieldError from '../../components/FormikFieldError'
-
-interface LoginValues {
-  email: string
-  password: string
-}
+import { useDispatch } from 'react-redux'
+import { login } from '../../features/auth'
+import { AppDispatch } from '../../store'
+import { LoginValues } from '../../types/auth'
+import { SubmitFunction } from '../../types/formix'
 
 const initialValues: LoginValues = {
   email: '',
@@ -21,8 +21,22 @@ const LoginSchema = Yup.object().shape({
 })
 
 export default function Login() {
-  const handleSubmit = (values: LoginValues) => {
-    console.log(values) // Do something with the form values, like submitting to a server
+  const dispatch = useDispatch<AppDispatch>()
+
+  const handleSubmit = async (
+    values: LoginValues,
+    { setSubmitting }: SubmitFunction
+  ) => {
+    const { email, password } = values
+
+    try {
+      await dispatch(login({ email, password }))
+    } catch (err) {
+      // TODO: show error banner (hook? store?)
+      console.error(err)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
