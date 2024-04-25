@@ -7,6 +7,8 @@ import NotFound from './pages/NotFound'
 import Loader from './components/Loader'
 import { useEffect } from 'react'
 import { sessionCheck } from './features/auth'
+import MainLayout from './components/layouts/MainLayout'
+import Dashboard from './pages/Dashboard'
 
 export default function App() {
   // Store
@@ -39,12 +41,22 @@ export default function App() {
       />
     )
   } else {
-    // TODO: authenticiated routes
     routes = (
-      <Route
-        path='*'
-        element={<NotFound />}
-      />
+      <>
+        <Route
+          path='/'
+          element={
+            <MainLayout>
+              <Dashboard />
+            </MainLayout>
+          }
+        />
+
+        <Route
+          path='*'
+          element={<NotFound />}
+        />
+      </>
     )
   }
 
