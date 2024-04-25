@@ -11,7 +11,8 @@ import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
-import AdbIcon from '@mui/icons-material/Adb'
+import Logo from '../assets/people.png'
+import { useMediaQuery, useTheme } from '@mui/material'
 
 const pages = ['Products', 'Pricing', 'Blog']
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
@@ -21,6 +22,9 @@ export default function NavBar() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   )
+
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget)
@@ -41,7 +45,19 @@ export default function NavBar() {
     <AppBar position='static'>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {!isMobile && (
+            <img
+              src={Logo}
+              alt='Logo'
+              style={{
+                height: '40px',
+                marginRight: '10px',
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            />
+          )}
+
           <Typography
             variant='h6'
             noWrap
@@ -99,7 +115,20 @@ export default function NavBar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+
+          {isMobile && (
+            <img
+              src={Logo}
+              alt='Logo'
+              style={{
+                height: '40px',
+                marginRight: '10px',
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            />
+          )}
+
           <Typography
             variant='h5'
             noWrap
