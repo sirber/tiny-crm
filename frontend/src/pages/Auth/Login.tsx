@@ -40,7 +40,7 @@ export default function Login() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh'
+        height: '60vh'
       }}
     >
       <Card
@@ -112,6 +112,9 @@ export default function Login() {
                   color='primary'
                   fullWidth
                   disabled={isSubmitting}
+                  sx={{
+                    mt: 2
+                  }}
                 >
                   Sign In
                 </Button>
