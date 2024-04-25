@@ -29,14 +29,8 @@ export default function Login() {
   ) => {
     const { email, password } = values
 
-    try {
-      await dispatch(login({ email, password }))
-    } catch (err) {
-      // TODO: show error banner (hook? store?)
-      console.error(err)
-    } finally {
-      setSubmitting(false)
-    }
+    await dispatch(login({ email, password }))
+    setSubmitting(false)
   }
 
   return (

@@ -1,6 +1,7 @@
-import { Dispatch, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 import { AuthState, LoginValues } from '../types/auth'
+import * as api from '../api/auth'
 
 // Initial state
 const initialState: AuthState = {
@@ -18,6 +19,12 @@ const authSlice = createSlice({
     logoutSuccess(state) {
       state.isAuthenticated = false
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(login.rejected, (state, action) => {
+      console.error('Login failed:', action.payload) // action.payload contains the error message
+      // TODO: update "error state"
+    })
   }
 })
 
@@ -34,34 +41,24 @@ export const selectIsAuthenticated = (state: RootState) =>
 // Thunks
 export const login = createAsyncThunk(
   'auth/login',
-  async ({ email, password }: LoginValues) => {
-    console.log(email, password)
+  async (credentials: LoginValues, { rejectWithValue }) => {
+    try {
+      await api.login(credentials)
+      return loginSuccess()
+    } catch (error) {
+      let errorMessage = 'unknown error'
+      if (typeof error === 'string') {
+        errorMessage = error
+      } else if (error instanceof Error) {
+        errorMessage = error.message
+      }
 
-    // TODO: API call
-
-    return loginSuccess()
+      return rejectWithValue(errorMessage)
+    }
   }
 )
 
-export const logout = () => async (dispatch: Dispatch) => {
-  try {
-    // TODO: API call
-    // const response = await api.logout();
-
-    dispatch(logoutSuccess())
-  } catch (error) {
-    // TODO: handle error
-    console.error('Logout failed:', error)
-  }
-}
-
-export const session = () => async (dispatch: Dispatch) => {
-  try {
-    // TODO: API call
-
-    dispatch(loginSuccess())
-  } catch (error) {
-    // TODO: handle error
-    console.error('Session check failed:', error)
-  }
-}
+export const logout = createAsyncThunk('auth/logout', async () => {
+  // TODO: call api
+  return logoutSuccess()
+})
