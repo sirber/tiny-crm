@@ -13,8 +13,14 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import Logo from '../assets/people.png'
 import { useMediaQuery, useTheme } from '@mui/material'
+import { NavLink } from 'react-router-dom'
 
-const pages = ['Products', 'Pricing', 'Blog']
+const pages = [
+  { name: 'Products', url: '/products' },
+  { name: 'Pricing', url: '/pricing' },
+  { name: 'Blog', url: '/blog' }
+]
+
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
 export default function NavBar() {
@@ -61,8 +67,8 @@ export default function NavBar() {
           <Typography
             variant='h6'
             noWrap
-            component='a'
-            href='#app-bar-with-responsive-menu'
+            component={NavLink}
+            to='/'
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -76,6 +82,7 @@ export default function NavBar() {
             Tiny CRM
           </Typography>
 
+          {/* Mobile */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size='large'
@@ -87,6 +94,7 @@ export default function NavBar() {
             >
               <MenuIcon />
             </IconButton>
+
             <Menu
               id='menu-appbar'
               anchorEl={anchorElNav}
@@ -107,10 +115,20 @@ export default function NavBar() {
             >
               {pages.map((page) => (
                 <MenuItem
-                  key={page}
+                  key={page.name}
                   onClick={handleCloseNavMenu}
                 >
-                  <Typography textAlign='center'>{page}</Typography>
+                  <Typography
+                    textAlign='center'
+                    component={NavLink}
+                    to={page.url}
+                    sx={{
+                      color: 'inherit',
+                      textDecoration: 'none'
+                    }}
+                  >
+                    {page.name}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -129,11 +147,12 @@ export default function NavBar() {
             />
           )}
 
+          {/* Desktop */}
           <Typography
             variant='h5'
             noWrap
-            component='a'
-            href='#app-bar-with-responsive-menu'
+            component={NavLink}
+            to='/'
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -151,11 +170,21 @@ export default function NavBar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.name}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                <Typography
+                  textAlign='center'
+                  component={NavLink}
+                  to={page.url}
+                  sx={{
+                    color: 'inherit',
+                    textDecoration: 'none'
+                  }}
+                >
+                  {page.name}
+                </Typography>
               </Button>
             ))}
           </Box>
