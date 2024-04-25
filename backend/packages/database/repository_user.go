@@ -51,7 +51,7 @@ func (r Repository) GetUserByEmail(email string) (user *User, err error) {
 	return user, err
 }
 
-func (r Repository) GetUserByToken(token string) (user *User, err error) {
+func (r Repository) GetUserByToken(token string) (user User, err error) {
 	err = database.
 		Where(&User{
 			Token: &token,

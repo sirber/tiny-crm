@@ -20,7 +20,7 @@ func GetUserByEmail(email string) (*database.User, error) {
 	return repository.GetUserByEmail(email)
 }
 
-func GetUserByToken(token string) (*database.User, error) {
+func GetUserByToken(token string) (database.User, error) {
 	return repository.GetUserByToken(token)
 }
 
@@ -49,7 +49,7 @@ func UpdateUser(user *database.User) error {
 		return err
 	}
 
-	if user.Password != "" {
+	if user.Password != "" { // ! this is bad. param should be a DTO, not a database.User
 		hashedPassword, err := security.HashPassword(user.Password)
 		if err != nil {
 			return err

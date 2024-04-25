@@ -13,7 +13,7 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import Logo from '../assets/people.png'
 import { useMediaQuery, useTheme } from '@mui/material'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 const pages = [
   { name: 'Products', url: '/products' },
@@ -21,7 +21,10 @@ const pages = [
   { name: 'Blog', url: '/blog' }
 ]
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+const settings = [
+  { name: 'Profile', url: '/profile' },
+  { name: 'Logout', url: '/logout' }
+]
 
 export default function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
@@ -219,10 +222,20 @@ export default function NavBar() {
             >
               {settings.map((setting) => (
                 <MenuItem
-                  key={setting}
+                  key={setting.name}
                   onClick={handleCloseUserMenu}
                 >
-                  <Typography textAlign='center'>{setting}</Typography>
+                  <Typography
+                    textAlign='center'
+                    component={Link}
+                    to={setting.url}
+                    sx={{
+                      color: 'inherit',
+                      textDecoration: 'none'
+                    }}
+                  >
+                    {setting.name}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>

@@ -2,6 +2,7 @@ package router
 
 import (
 	"errors"
+	"fmt"
 	"main/packages/common"
 	"main/packages/dto"
 	"main/packages/security"
@@ -26,14 +27,14 @@ func getSessionRoute(c *gin.Context) {
 
 	// Get token from cookie
 	token, err := c.Cookie("token")
-	if err != nil {
+	if err != nil || token == "" {
 		c.JSON(http.StatusOK, sessionCheck)
 		return
 	}
 
 	// Get associated user
-	user, err := service.GetUserByToken(token)
-	if err != nil || user == nil {
+	_, err = service.GetUserByToken(token)
+	if err != nil {
 		c.JSON(http.StatusOK, sessionCheck)
 		return
 	}
@@ -80,6 +81,8 @@ func getLoginRoute(c *gin.Context) {
 
 	// Check user password
 	passwordCheck := security.CheckPasswordHash(login.Password, user.Password)
+	fmt.Println(login.Password, user.Password, passwordCheck)
+
 	if !passwordCheck {
 		c.AbortWithStatus(http.StatusUnauthorized)
 		return
@@ -95,37 +98,36 @@ func getLoginRoute(c *gin.Context) {
 
 	// Set session cookie (8h)
 	config := common.GetConfig()
-	c.SetCookie(common.TokenName, token, 28800, "/", config.Domain, config.SecureCookie, false) // TODO: use httpOnly, for security
+	c.SetCookie(common.TokenName, token, 28800, "/", config.Domain, config.SecureCookie, true)
 
 	c.Status(http.StatusOK)
 }
 
 func getLogoutRoute(c *gin.Context) {
-	token := c.Request.Header.Get("Authorization")
-	if token == "" {
+	token, err := c.Cookie(common.TokenName)
+	if err != nil || token == "" {
 		c.AbortWithError(http.StatusBadRequest, errors.New("request has no token"))
 		return
 	}
 
 	user, err := service.GetUserByToken(token)
 	if err != nil {
+		if err == common.ErrRecordNotFound {
+			c.Status(http.StatusNotFound)
+			return
+		}
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
-	if user == nil {
-		c.Status(http.StatusNotFound)
-		return
-	}
 
-	user.Token = nil
-	err = service.UpdateUser(user)
+	err = service.UpdateUserToken(user.ID, "")
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
 
 	config := common.GetConfig()
-	c.SetCookie(common.TokenName, "", -1, "/", config.Domain, config.SecureCookie, true)
+	c.SetCookie(common.TokenName, "", 0, "/", config.Domain, config.SecureCookie, true)
 
 	c.Status(http.StatusOK)
 }

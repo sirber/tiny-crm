@@ -9,6 +9,7 @@ import { login } from '../../features/auth'
 import { AppDispatch } from '../../store'
 import { LoginValues } from '../../types/auth'
 import { SubmitFunction } from '../../types/formik'
+import Logo from '../../assets/people.png'
 
 const initialValues: LoginValues = {
   email: '',
@@ -51,7 +52,20 @@ export default function Login() {
           <Typography
             variant='h5'
             gutterBottom
+            sx={{
+              display: 'flex',
+              alignItems: 'center'
+            }}
           >
+            <img
+              src={Logo}
+              alt='Logo'
+              style={{
+                height: 30,
+                width: 30,
+                marginRight: '10px'
+              }}
+            />
             TinyCRM - Login
           </Typography>
 

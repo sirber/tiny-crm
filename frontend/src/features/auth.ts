@@ -28,6 +28,16 @@ const authSlice = createSlice({
         // TODO: update "error state"
       })
 
+    // Logout
+    builder
+      .addCase(logout.fulfilled, (state) => {
+        state.isAuthenticated = false
+      })
+      .addCase(logout.rejected, (state, action) => {
+        console.error('Login failed:', action.payload) // action.payload contains the error message
+        // TODO: update "error state"
+      })
+
     // Session Check
     builder
       .addCase(sessionCheck.fulfilled, (state, action) => {

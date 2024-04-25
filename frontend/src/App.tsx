@@ -10,6 +10,7 @@ import { sessionCheck } from './features/auth'
 import Dashboard from './pages/Dashboard'
 import NavBar from './components/NavBar'
 import { Box } from '@mui/material'
+import Logout from './pages/Auth/Logout'
 
 export default function App() {
   // Store
@@ -50,6 +51,11 @@ export default function App() {
         />
 
         <Route
+          path='/logout'
+          element={<Logout />}
+        />
+
+        <Route
           path='*'
           element={<NotFound />}
         />
@@ -60,10 +66,10 @@ export default function App() {
   return (
     <>
       <BrowserRouter>
-        <NavBar />
+        {isAuthenticated && <NavBar />}
         <Box
           sx={{
-            px: 2
+            padding: 2
           }}
         >
           <Routes>{routes}</Routes>
