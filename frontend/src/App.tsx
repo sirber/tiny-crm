@@ -7,8 +7,8 @@ import NotFound from './pages/NotFound'
 import Loader from './components/Loader'
 import { useEffect } from 'react'
 import { sessionCheck } from './features/auth'
-import MainLayout from './components/layouts/MainLayout'
 import Dashboard from './pages/Dashboard'
+import NavBar from './components/NavBar'
 
 export default function App() {
   // Store
@@ -45,11 +45,7 @@ export default function App() {
       <>
         <Route
           path='/'
-          element={
-            <MainLayout>
-              <Dashboard />
-            </MainLayout>
-          }
+          element={<Dashboard />}
         />
 
         <Route
@@ -63,6 +59,7 @@ export default function App() {
   return (
     <>
       <BrowserRouter>
+        <NavBar />
         <Routes>{routes}</Routes>
       </BrowserRouter>
     </>
