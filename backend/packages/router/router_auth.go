@@ -11,9 +11,36 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type SessionCheck struct {
+	Active bool `json:"active"`
+}
+
 func (r *GinRouter) getAuthRouter(rg *gin.RouterGroup) {
 	rg.POST("/login", getLoginRoute)
 	rg.POST("/logout", getLogoutRoute)
+	rg.GET("/session", getSessionRoute)
+}
+
+func getSessionRoute(c *gin.Context) {
+	sessionCheck := SessionCheck{}
+
+	// Get token from cookie
+	token, err := c.Cookie("token")
+	if err != nil {
+		c.JSON(http.StatusOK, sessionCheck)
+		return
+	}
+
+	// Get associated user
+	user, err := service.GetUserByToken(token)
+	if err != nil || user == nil {
+		c.JSON(http.StatusOK, sessionCheck)
+		return
+	}
+
+	// Session is active!
+	sessionCheck.Active = true
+	c.JSON(http.StatusOK, sessionCheck)
 }
 
 func getLoginRoute(c *gin.Context) {
@@ -66,9 +93,9 @@ func getLoginRoute(c *gin.Context) {
 		return
 	}
 
-	// Set session cookie
+	// Set session cookie (8h)
 	config := common.GetConfig()
-	c.SetCookie(common.TokenName, token, 0, "/", config.Domain, config.SecureCookie, true)
+	c.SetCookie(common.TokenName, token, 28800, "/", config.Domain, config.SecureCookie, false) // TODO: use httpOnly, for security
 
 	c.Status(http.StatusOK)
 }

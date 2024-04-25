@@ -23,6 +23,7 @@ async function handleResponse(response: Response) {
 export async function get(endpoint: string) {
   const response = await fetch(`${BASE_URL}${endpoint}`, {
     method: 'GET',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
     }
@@ -35,6 +36,7 @@ export async function get(endpoint: string) {
 export async function post(endpoint: string, data: unknown = {}) {
   const response = await fetch(`${BASE_URL}${endpoint}`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
     },
@@ -48,6 +50,7 @@ export async function post(endpoint: string, data: unknown = {}) {
 export async function put(endpoint: string, data: unknown = {}) {
   const response = await fetch(`${BASE_URL}${endpoint}`, {
     method: 'PUT',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
     },
@@ -61,6 +64,7 @@ export async function put(endpoint: string, data: unknown = {}) {
 export async function del(endpoint: string) {
   const response = await fetch(`${BASE_URL}${endpoint}`, {
     method: 'DELETE',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
     }

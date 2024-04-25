@@ -66,7 +66,6 @@ export default function Login() {
                   {({ field }) => (
                     <TextField
                       {...field}
-                      autoFocus={true}
                       type='text'
                       label='Email'
                       fullWidth
