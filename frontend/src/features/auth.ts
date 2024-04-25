@@ -24,11 +24,9 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state) => {
-        alert('fulfilled')
         state.isAuthenticated = true
       })
       .addCase(login.rejected, (state, action) => {
-        alert('error')
         state.isAuthenticated = false
 
         console.error('Login failed:', action.payload) // action.payload contains the error message
