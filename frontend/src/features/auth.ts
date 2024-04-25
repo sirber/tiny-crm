@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 import { AuthState, LoginValues } from '../types/auth'
 import * as api from '../api/auth'
+import { getErrorMessage } from '../helpers/error'
 
 // Initial state
 const initialState: AuthState = {
@@ -46,14 +47,7 @@ export const login = createAsyncThunk(
       await api.login(credentials)
       return loginSuccess()
     } catch (error) {
-      let errorMessage = 'unknown error'
-      if (typeof error === 'string') {
-        errorMessage = error
-      } else if (error instanceof Error) {
-        errorMessage = error.message
-      }
-
-      return rejectWithValue(errorMessage)
+      return rejectWithValue(getErrorMessage(error))
     }
   }
 )
