@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { login } from '../../features/auth'
 import { AppDispatch } from '../../store'
 import { LoginValues } from '../../types/auth'
-import { SubmitFunction } from '../../types/formix'
+import { SubmitFunction } from '../../types/formik'
 
 const initialValues: LoginValues = {
   email: '',
