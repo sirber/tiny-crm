@@ -22,6 +22,7 @@ func getLoginRoute(c *gin.Context) {
 		err   error
 	)
 
+	// Decode body
 	err = c.BindJSON(&login)
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
@@ -34,6 +35,7 @@ func getLoginRoute(c *gin.Context) {
 		return
 	}
 
+	// Find user by email
 	user, err := service.GetUserByEmail(login.Email)
 	if err != nil {
 		if err == common.ErrRecordNotFound {
@@ -49,27 +51,26 @@ func getLoginRoute(c *gin.Context) {
 		return
 	}
 
+	// Check user password
 	passwordCheck := security.CheckPasswordHash(login.Password, user.Password)
 	if !passwordCheck {
 		c.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
 
+	// Generate token
 	token, _ := security.RandomHex(common.TokenLength)
-	user.Token = &token
-
-	err = service.UpdateUser(user)
+	err = service.UpdateUserToken(user.ID, token)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
 
+	// Set session cookie
 	config := common.GetConfig()
 	c.SetCookie(common.TokenName, token, 0, "/", config.Domain, config.SecureCookie, true)
 
-	c.JSON(http.StatusOK, gin.H{
-		token: token,
-	})
+	c.Status(http.StatusOK)
 }
 
 func getLogoutRoute(c *gin.Context) {

@@ -22,10 +22,18 @@ const authSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(login.rejected, (state, action) => {
-      console.error('Login failed:', action.payload) // action.payload contains the error message
-      // TODO: update "error state"
-    })
+    builder
+      .addCase(login.fulfilled, (state) => {
+        alert('fulfilled')
+        state.isAuthenticated = true
+      })
+      .addCase(login.rejected, (state, action) => {
+        alert('error')
+        state.isAuthenticated = false
+
+        console.error('Login failed:', action.payload) // action.payload contains the error message
+        // TODO: update "error state"
+      })
   }
 })
 
@@ -44,8 +52,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async (credentials: LoginValues, { rejectWithValue }) => {
     try {
-      await api.login(credentials)
-      return loginSuccess()
+      return api.login(credentials)
     } catch (error) {
       return rejectWithValue(getErrorMessage(error))
     }

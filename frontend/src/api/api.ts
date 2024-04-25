@@ -2,11 +2,18 @@ import { BASE_URL } from '../constants'
 
 // Function to handle common options and error checking for fetch requests
 async function handleResponse(response: Response) {
+  // Error check
   if (!response.ok) {
     const errorMessage = await response.text()
     throw new Error(
       `HTTP error! Status: ${response.status}, Message: ${errorMessage}`
     )
+  }
+
+  // Check if response body is empty
+  const contentType = response.headers.get('content-type')
+  if (!contentType || !contentType.includes('application/json')) {
+    return {} // Return empty JSON object if body is empty
   }
 
   return response.json()

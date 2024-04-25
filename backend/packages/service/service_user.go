@@ -61,8 +61,17 @@ func UpdateUser(user *database.User) error {
 	}
 
 	user.Token = currentUser.Token
-	user.CreatedAt = currentUser.CreatedAt
-	user.UpdatedAt = currentUser.UpdatedAt
+
+	return repository.UpdateUser(user)
+}
+
+func UpdateUserToken(userID uuid.UUID, token string) error {
+	user, err := GetUser(userID)
+	if err != nil {
+		return err
+	}
+
+	user.Token = &token
 
 	return repository.UpdateUser(user)
 }
