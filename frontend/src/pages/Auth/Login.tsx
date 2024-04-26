@@ -10,6 +10,7 @@ import { AppDispatch } from '../../store'
 import { LoginValues } from '../../types/auth'
 import { SubmitFunction } from '../../types/formik'
 import Logo from '../../assets/people.png'
+import { useNavigate } from 'react-router-dom'
 
 const initialValues: LoginValues = {
   email: '',
@@ -23,15 +24,24 @@ const LoginSchema = Yup.object().shape({
 
 export default function Login() {
   const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate()
 
-  const handleSubmit = async (
+  const handleSubmit = (
     values: LoginValues,
     { setSubmitting }: SubmitFunction
   ) => {
     const { email, password } = values
 
-    await dispatch(login({ email, password }))
-    setSubmitting(false)
+    dispatch(login({ email, password }))
+      .then(() => {
+        navigate('/', { replace: true })
+      })
+      .catch((error) => {
+        alert(error)
+      })
+      .finally(() => {
+        setSubmitting(false)
+      })
   }
 
   return (

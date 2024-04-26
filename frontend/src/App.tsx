@@ -11,6 +11,9 @@ import Dashboard from './pages/Dashboard'
 import NavBar from './components/NavBar'
 import { Box } from '@mui/material'
 import Logout from './pages/Auth/Logout'
+import Customers from './pages/Customers/Customers'
+import Payments from './pages/Payments/Payments'
+import Products from './pages/Products/Products'
 
 export default function App() {
   // Store
@@ -48,6 +51,21 @@ export default function App() {
         <Route
           path='/'
           element={<Dashboard />}
+        />
+
+        <Route
+          path='/customers'
+          element={<Customers />}
+        />
+
+        <Route
+          path='/products'
+          element={<Products />}
+        />
+
+        <Route
+          path='/payments'
+          element={<Payments />}
         />
 
         <Route

@@ -16,9 +16,9 @@ import { useMediaQuery, useTheme } from '@mui/material'
 import { Link, NavLink } from 'react-router-dom'
 
 const pages = [
+  { name: 'Customers', url: '/customers' },
   { name: 'Products', url: '/products' },
-  { name: 'Pricing', url: '/pricing' },
-  { name: 'Blog', url: '/blog' }
+  { name: 'Payments', url: '/payments' }
 ]
 
 const settings = [
