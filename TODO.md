@@ -17,7 +17,12 @@
 
   - Parameters (create, update) and Returns should be a DTO
 
+- DTO
+
+  - add validations
+
 - Tests
+
   - unit tests
   - end-to-end tests
 
