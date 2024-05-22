@@ -23,8 +23,8 @@
 
 - Tests
 
-  - unit tests
-  - end-to-end tests
+  - add unit tests
+  - add end-to-end tests
 
 ## Frontend
 
