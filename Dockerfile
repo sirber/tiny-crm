@@ -1,4 +1,4 @@
-FROM golang:1
+FROM golang:1.21-alpine
 
 COPY ./dist/tiny-crm /app/
 COPY ./dist/static/* /app/static/
