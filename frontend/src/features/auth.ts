@@ -34,7 +34,8 @@ const authSlice = createSlice({
         state.isAuthenticated = false
       })
       .addCase(logout.rejected, (state, action) => {
-        console.error('Login failed:', action.payload) // action.payload contains the error message
+        state.isAuthenticated = false
+        console.error('Logout failed:', action.payload) // action.payload contains the error message
         // TODO: update "error state"
       })
 
