@@ -1,20 +1,24 @@
-.PHONY: backend frontend build-backend build-frontend build clean docker test
+.PHONY: backend frontend build-backend build-frontend build clean docker test deps
 
 BACKEND := ./backend
 FRONTEND := ./frontend
 
 help:
-	@echo "make [build, backend, frontend, clean, docker, test]"
+	@echo "make [deps, build, backend, frontend, clean, docker, test]"
+
+deps:
+	cd $(BACKEND) && go get
+	cd $(FRONTEND) && npm i
 
 test:
-	@cd backend && make test
-	# @cd frontend && npm run test:unit
+	@cd $(FRONTEND) && make test
+	# @cd $(FRONTEND) && npm run test:unit
 
 backend:
-	@cd backend && go run .
+	@cd $(BACKEND) && go run .
 
 frontend:
-	@cd frontend && npm run dev
+	@cd $(FRONTEND) && npm run dev
 
 build-backend:
 	@mkdir -p ./dist/data
