@@ -12,11 +12,11 @@ func GetUsers() ([]database.User, error) {
 	return repository.GetUsers()
 }
 
-func GetUser(id uuid.UUID) (*database.User, error) {
+func GetUser(id uuid.UUID) (database.User, error) {
 	return repository.GetUser(id)
 }
 
-func GetUserByEmail(email string) (*database.User, error) {
+func GetUserByEmail(email string) (database.User, error) {
 	return repository.GetUserByEmail(email)
 }
 
@@ -24,7 +24,7 @@ func GetUserByToken(token string) (database.User, error) {
 	return repository.GetUserByToken(token)
 }
 
-func CreateUser(user *database.User) error {
+func CreateUser(user database.User) error {
 	if user.ID != uuid.Nil {
 		return errors.New("new user cannot have an ID set")
 	}
@@ -39,7 +39,7 @@ func CreateUser(user *database.User) error {
 	return repository.CreateUser(user)
 }
 
-func UpdateUser(user *database.User) error {
+func UpdateUser(user database.User) error {
 	if user.ID == uuid.Nil {
 		return errors.New("updated user must have an ID set")
 	}

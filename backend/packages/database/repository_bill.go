@@ -22,7 +22,7 @@ func (r Repository) GetBills(userId uuid.UUID) (bills []Bill, err error) {
 	return bills, err
 }
 
-func (r Repository) GetBill(id uuid.UUID) (bill *Bill, err error) {
+func (r Repository) GetBill(id uuid.UUID) (bill Bill, err error) {
 	err = database.
 		Joins("Payment").
 		Where("id = ?", id).
@@ -36,11 +36,11 @@ func (r Repository) GetBill(id uuid.UUID) (bill *Bill, err error) {
 	return bill, err
 }
 
-func (r Repository) CreateBill(bill *Bill) (err error) {
+func (r Repository) CreateBill(bill Bill) (err error) {
 	return database.Create(&bill).Error
 }
 
-func (r Repository) UpdateBill(bill *Bill) (err error) {
+func (r Repository) UpdateBill(bill Bill) (err error) {
 	return database.Updates(&bill).Error
 }
 

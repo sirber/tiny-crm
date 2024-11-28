@@ -1,6 +1,7 @@
 package database
 
 import (
+	"main/packages/common"
 	"time"
 
 	uuid "github.com/satori/go.uuid"
@@ -14,30 +15,30 @@ func (r Repository) GetCustomers() (customers []Customer, err error) {
 		Error
 
 	if err == gorm.ErrRecordNotFound {
-		return nil, nil
+		return customers, common.ErrRecordNotFound
 	}
 
 	return customers, err
 }
 
-func (r Repository) GetCustomer(id uuid.UUID) (customer *Customer, err error) {
+func (r Repository) GetCustomer(id uuid.UUID) (customer Customer, err error) {
 	err = database.
 		Where("id = ?", id).
 		First(&customer).
 		Error
 
 	if err == gorm.ErrRecordNotFound {
-		return nil, nil
+		return customer, common.ErrRecordNotFound
 	}
 
 	return customer, err
 }
 
-func (r Repository) CreateCustomer(customer *Customer) (err error) {
+func (r Repository) CreateCustomer(customer Customer) (err error) {
 	return database.Create(&customer).Error
 }
 
-func (r Repository) UpdateCustomer(customer *Customer) (err error) {
+func (r Repository) UpdateCustomer(customer Customer) (err error) {
 	return database.Updates(&customer).Error
 }
 

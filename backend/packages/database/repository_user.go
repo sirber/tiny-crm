@@ -21,7 +21,7 @@ func (r Repository) GetUsers() (users []User, err error) {
 	return users, err
 }
 
-func (r Repository) GetUser(id uuid.UUID) (user *User, err error) {
+func (r Repository) GetUser(id uuid.UUID) (user User, err error) {
 	err = database.
 		Where("id = ?", id).
 		First(&user).
@@ -34,7 +34,7 @@ func (r Repository) GetUser(id uuid.UUID) (user *User, err error) {
 	return user, err
 }
 
-func (r Repository) GetUserByEmail(email string) (user *User, err error) {
+func (r Repository) GetUserByEmail(email string) (user User, err error) {
 	err = database.
 		Where(&User{
 			Email: email,
@@ -69,11 +69,11 @@ func (r Repository) GetUserByToken(token string) (user User, err error) {
 	return user, err
 }
 
-func (r Repository) CreateUser(user *User) (err error) {
+func (r Repository) CreateUser(user User) (err error) {
 	return database.Create(&user).Error
 }
 
-func (r Repository) UpdateUser(user *User) (err error) {
+func (r Repository) UpdateUser(user User) (err error) {
 	return database.Updates(&user).Error
 }
 

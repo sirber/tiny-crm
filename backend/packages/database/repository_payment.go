@@ -1,6 +1,7 @@
 package database
 
 import (
+	"main/packages/common"
 	"time"
 
 	uuid "github.com/satori/go.uuid"
@@ -15,30 +16,30 @@ func (r Repository) GetPayments(userId uuid.UUID) (payments []Payment, err error
 		Error
 
 	if err == gorm.ErrRecordNotFound {
-		return nil, nil
+		return payments, common.ErrRecordNotFound
 	}
 
 	return payments, err
 }
 
-func (r Repository) GetPayment(id uuid.UUID) (payment *Payment, err error) {
+func (r Repository) GetPayment(id uuid.UUID) (payment Payment, err error) {
 	err = database.
 		Where("id = ?", id).
 		First(&payment).
 		Error
 
 	if err == gorm.ErrRecordNotFound {
-		return nil, nil
+		return payment, common.ErrRecordNotFound
 	}
 
 	return payment, err
 }
 
-func (r Repository) CreatePayment(payment *Payment) (err error) {
+func (r Repository) CreatePayment(payment Payment) (err error) {
 	return database.Create(&payment).Error
 }
 
-func (r Repository) UpdatePayment(payment *Payment) (err error) {
+func (r Repository) UpdatePayment(payment Payment) (err error) {
 	return database.Updates(&payment).Error
 }
 

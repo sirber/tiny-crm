@@ -74,10 +74,6 @@ func getLoginRoute(c *gin.Context) {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
-	if user == nil {
-		c.AbortWithStatus(http.StatusUnauthorized)
-		return
-	}
 
 	// Check user password
 	passwordCheck := security.CheckPasswordHash(login.Password, user.Password)
