@@ -1,42 +1,49 @@
-.PHONY: backend frontend build-backend build-frontend build clean docker test deps
-
 BACKEND := ./backend
 FRONTEND := ./frontend
 
-help:
-	@echo "make [deps, build, backend, frontend, clean, docker, test]"
+## Help
+.PHONY: help
+help: 
+	@awk '/^## / { if (c) {print c}; c=substr($$0, 4); next } c && /([[:alpha:]][[:alnum:]_-]+:)/ {print $$1, "\t", c; c=0} END { print c }' $(MAKEFILE_LIST)
 
-deps:
+## Install dependencies
+.PHONY: deps
+deps: 
 	cd $(BACKEND) && go get
 	cd $(FRONTEND) && npm i
 
+## Run development
+.PHONY: dev
+dev:
+	@docker compose up -d
+
+## Run tests
+.PHONY: test
 test:
 	@cd $(FRONTEND) && make test
 	# @cd $(FRONTEND) && npm run test:unit
 
-backend:
-	@cd $(BACKEND) && go run .
-
-frontend:
-	@cd $(FRONTEND) && npm run dev
-
+.PHONY: build-backend
 build-backend:
 	@mkdir -p ./dist/data
 	@echo "Building backend..."
 	@cd $(BACKEND) && make build
 
+.PHONY: build-frontend
 build-frontend:
 	@mkdir -p ./dist/static
 	@echo "Building frontend..."
 	@cd $(FRONTEND) && npm i && npm run build
 	@cd $(FRONTEND) && cp -r ./dist/* ../dist/static/
 
-build: clean build-backend build-frontend 
+## Build for production
+.PHONY: prod
+prod: clean build-backend build-frontend 
+	@docker build . -t tiny-crm
 	@echo "done!"
 
-docker: build
-	@docker build . -t tiny-crm
-
+## Clean solution
+.PHONY: clean
 clean:
 	@echo "Cleaning..."
 	@rm -fr ./dist

@@ -1,0 +1,22 @@
+services:
+  backend:
+    image: golang:1.23
+    container_name: backend
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    ports:
+      - "5000:5000"
+    command: ["go", "run", "."]
+
+  frontend:
+    image: node:22
+    container_name: frontend
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    command: ["npm", "run", "dev"]
+    depends_on:
+      - backend
