@@ -13,6 +13,8 @@ services:
     image: node:22
     container_name: frontend
     working_dir: /app
+    environment:
+      DEV: 1
     volumes:
       - ./frontend:/app
     ports:

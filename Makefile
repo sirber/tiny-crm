@@ -14,8 +14,11 @@ deps:
 
 ## Run development
 .PHONY: dev
-dev:
+dev: stop deps
 	@docker compose up -d
+
+stop:
+	@docker compose stop
 
 ## Run tests
 .PHONY: test
