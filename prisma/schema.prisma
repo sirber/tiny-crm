@@ -14,7 +14,7 @@ model User {
   password  String
   role      String     @default("user") // user, admin
   createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  updatedAt DateTime   @default(now()) @updatedAt
   deletedAd DateTime
   products  Product[]
   customers Customer[]
@@ -28,7 +28,7 @@ model Customer {
   email     String   @unique
   type      String // contact, prospect, customer
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
   deletedAd DateTime
   bills     Bill[]
 }
@@ -41,7 +41,7 @@ model Product {
   code        String
   price       Float
   createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  updatedAt   DateTime      @default(now()) @updatedAt
   deletedAd   DateTime
   BillProduct BillProduct[]
 }
@@ -50,12 +50,12 @@ model Bill {
   id         String        @id @default(uuid())
   Customer   Customer      @relation(fields: [customerId], references: [id])
   customerId String
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @updatedAt
-  deletedAd  DateTime
   taxes1     Float
   taxes2     Float
   total      Float
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @default(now()) @updatedAt
+  deletedAd  DateTime
   products   BillProduct[]
 }
 
