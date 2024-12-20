@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  name      String
+  password  String
+  role      String     @default("user") // user, admin
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  deletedAd DateTime
+  products  Product[]
+  customers Customer[]
+}
+
+model Customer {
+  id        String   @id @default(uuid())
+  User      User     @relation(fields: [userId], references: [id])
+  userId    String
+  name      String
+  email     String   @unique
+  type      String // contact, prospect, customer
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAd DateTime
+  bills     Bill[]
+}
+
+model Product {
+  id          String        @id @default(uuid())
+  User        User          @relation(fields: [userId], references: [id])
+  userId      String
+  name        String
+  code        String
+  price       Float
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  deletedAd   DateTime
+  BillProduct BillProduct[]
+}
+
+model Bill {
+  id         String        @id @default(uuid())
+  Customer   Customer      @relation(fields: [customerId], references: [id])
+  customerId String
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  deletedAd  DateTime
+  taxes1     Float
+  taxes2     Float
+  total      Float
+  products   BillProduct[]
+}
+
+model BillProduct {
+  id        String  @id @default(uuid())
+  Bill      Bill    @relation(fields: [billId], references: [id])
+  billId    String
+  Product   Product @relation(fields: [productId], references: [id])
+  productId String
+  price     Float
+  quantity  Int
+}
