@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "clean": "rm -fr ./.next",
-    "migrate:dev": "DATABASE_URL=\"file:./dev.db\" npx prisma migrate dev",
-    "migrate:prod": "DATABASE_URL=\"file:./prod.db\" npx prisma migrate deploy"
+    "migrate:dev": "npx prisma migrate dev",
+    "migrate:prod": "npx prisma migrate deploy"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

@@ -1,0 +1,13 @@
+services:
+  crm:
+    restart: always
+    build:
+      context: . # Use the current directory as the build context
+      dockerfile: Dockerfile
+    working_dir: /app
+    volumes:
+      - ./database:/app/prisma/database
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
