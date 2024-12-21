@@ -8,11 +8,23 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { login } from "@/features/auth/actions";
+import { useRouter } from "next/navigation";
+import { isRegisterEnabled } from "@/config";
 
 export function LoginForm() {
+  const router = useRouter();
   const [state, action] = useActionState(login, null);
+  const [showRegisterButton, setShowRegisterButton] = useState(false);
+
+  useEffect(() => {
+    setShowRegisterButton(isRegisterEnabled());
+  }, []);
+
+  function goRegister() {
+    router.push("/auth/register");
+  }
 
   return (
     <Box
@@ -60,6 +72,19 @@ export function LoginForm() {
               >
                 Login
               </Button>
+
+              {showRegisterButton && (
+                <Button
+                  type="button"
+                  onClick={goRegister}
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  fullWidth
+                >
+                  Register
+                </Button>
+              )}
             </Box>
           </form>
         </CardContent>
