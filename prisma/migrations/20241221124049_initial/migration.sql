@@ -5,9 +5,10 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "role" TEXT NOT NULL DEFAULT 'user',
+    "sessionToken" TEXT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "deletedAd" DATETIME NOT NULL
+    "deletedAt" DATETIME
 );
 
 -- CreateTable
@@ -19,7 +20,7 @@ CREATE TABLE "Customer" (
     "type" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "deletedAd" DATETIME NOT NULL,
+    "deletedAt" DATETIME,
     CONSTRAINT "Customer_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -32,7 +33,7 @@ CREATE TABLE "Product" (
     "price" REAL NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "deletedAd" DATETIME NOT NULL,
+    "deletedAt" DATETIME,
     CONSTRAINT "Product_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -45,7 +46,7 @@ CREATE TABLE "Bill" (
     "total" REAL NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "deletedAd" DATETIME NOT NULL,
+    "deletedAt" DATETIME,
     CONSTRAINT "Bill_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "Customer" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 

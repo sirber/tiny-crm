@@ -1,22 +1,40 @@
-import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { PrismaClient } from "@prisma/client";
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
+
+const prisma = new PrismaClient();
 
 export async function middleware(req: Request) {
-  if (req.url.includes('/_next/')) {
+  // Skip unprotected routes
+  if (req.url.includes("/_next/")) {
     return NextResponse.next();
   }
 
-  if (req.url.includes('/login')) {
+  if (req.url.includes("/login")) {
     return NextResponse.next();
   }
 
+  // CHeck User Session
   const cookieStore = await cookies();
-  const sessionToken = cookieStore.get('sessionToken'); 
+  const sessionToken = cookieStore.get("sessionToken")?.value;
   if (sessionToken) {
-    // TODO: validate with user
-    return NextResponse.next();
+    const user = prisma.user.findFirst({
+      where: {
+        sessionToken: {
+          equals: sessionToken,
+        },
+        deletedAt: {
+          not: null,
+        },
+      },
+    });
+
+    if (null !== user) {
+      return NextResponse.next();
+    }
   }
 
-  const loginUrl = new URL('/login', req.url); 
+  // Redirect to Login
+  const loginUrl = new URL("/login", req.url);
   return NextResponse.redirect(loginUrl);
 }
