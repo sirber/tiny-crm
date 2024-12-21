@@ -1,7 +1,12 @@
+'use client';
+
 import { Card, CardContent, Typography, TextField, Button, Box } from '@mui/material';
-import { login } from '@/app/actions/auth';
+import { useActionState } from 'react';
+import { loginAction } from '@/app/actions/auth';
 
 export function LoginForm() {
+  const [state, action] = useActionState(loginAction, null);
+
   return (
     <Box 
       display="flex" 
@@ -15,7 +20,7 @@ export function LoginForm() {
           <Typography variant="h5" component="div" align="center" gutterBottom>
             TinyCRM - Login
           </Typography>
-          <form action={login}>
+          <form action={action}>
             <Box display="flex" flexDirection="column" gap={2}>
               <TextField 
                 id="email" 
