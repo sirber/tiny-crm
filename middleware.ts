@@ -10,7 +10,7 @@ export async function middleware(req: Request) {
     return NextResponse.next();
   }
 
-  if (req.url.includes("/login")) {
+  if (req.url.includes("/auth/")) {
     return NextResponse.next();
   }
 
@@ -35,6 +35,6 @@ export async function middleware(req: Request) {
   }
 
   // Redirect to Login
-  const loginUrl = new URL("/login", req.url);
+  const loginUrl = new URL("/auth/login", req.url);
   return NextResponse.redirect(loginUrl);
 }
