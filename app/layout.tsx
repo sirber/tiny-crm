@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ThemeRegistry from './ThemeRegistry';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeRegistry>{children}</ThemeRegistry>
+        <AppRouterCacheProvider>
+          {children}
+        </AppRouterCacheProvider>
       </body>
     </html>
   );

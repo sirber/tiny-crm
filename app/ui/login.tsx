@@ -15,7 +15,7 @@ export function LoginForm() {
           <Typography variant="h5" component="div" align="center" gutterBottom>
             TinyCRM - Login
           </Typography>
-          <form action={login} noValidate>
+          <form action={login}>
             <Box display="flex" flexDirection="column" gap={2}>
               <TextField 
                 id="email" 
