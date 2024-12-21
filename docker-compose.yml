@@ -1,8 +1,8 @@
 services:
-  crm:
+  app:
     restart: always
     build:
-      context: . # Use the current directory as the build context
+      context: .
       dockerfile: Dockerfile
     working_dir: /app
     volumes:
