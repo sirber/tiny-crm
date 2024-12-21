@@ -9,10 +9,10 @@ import {
   Box,
 } from "@mui/material";
 import { useActionState } from "react";
-import { loginAction } from "@/app/actions/auth";
+import { login } from "@/features/auth/actions";
 
 export function LoginForm() {
-  const [state, action] = useActionState(loginAction, null);
+  const [state, action] = useActionState(login, null);
 
   return (
     <Box
