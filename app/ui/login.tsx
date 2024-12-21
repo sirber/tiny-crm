@@ -25,6 +25,7 @@ export function LoginForm() {
                 placeholder="Enter your email" 
                 fullWidth 
                 required
+                autoFocus
               />
               <TextField 
                 id="password" 
