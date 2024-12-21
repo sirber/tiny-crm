@@ -1,5 +1,5 @@
-import { LoginForm } from "../features/auth/LoginForm";
+import { Dashboard } from "@/features/dashboard/Dashboard";
 
 export default function Home() {
-  return <LoginForm />;
+  return <Dashboard />;
 }
