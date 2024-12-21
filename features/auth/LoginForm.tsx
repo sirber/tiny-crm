@@ -8,7 +8,7 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState } from "react";
 import { login } from "@/features/auth/actions";
 import { useRouter } from "next/navigation";
 import { isRegisterEnabled } from "@/config";
@@ -16,11 +16,8 @@ import { isRegisterEnabled } from "@/config";
 export function LoginForm() {
   const router = useRouter();
   const [state, action] = useActionState(login, null);
-  const [showRegisterButton, setShowRegisterButton] = useState(false);
 
-  useEffect(() => {
-    setShowRegisterButton(isRegisterEnabled());
-  }, []);
+  const showRegisterButton = isRegisterEnabled();
 
   function goRegister() {
     router.push("/auth/register");
