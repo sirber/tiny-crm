@@ -64,7 +64,7 @@ async function createSession(sessionToken: string) {
   });
 }
 
-export async function check(): Promise<boolean> {
+export const check = async (): Promise<boolean> => {
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
 
@@ -81,4 +81,4 @@ export async function check(): Promise<boolean> {
   });
 
   return !!user;
-}
+};
