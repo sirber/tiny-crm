@@ -14,7 +14,7 @@ export async function middleware(req: Request) {
     return NextResponse.next();
   }
 
-  // CHeck User Session
+  // Check User Session
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get("sessionToken")?.value;
   if (sessionToken) {
