@@ -3,8 +3,8 @@
 import { PrismaClient } from "@prisma/client";
 import { v4 as uuid } from "uuid";
 import argon2 from "argon2";
-import { createSession } from "@/lib/session";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 const prisma = new PrismaClient();
 
@@ -49,4 +49,36 @@ export async function login(
   await createSession(sessionToken);
 
   redirect("/");
+}
+
+async function createSession(sessionToken: string) {
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  const cookieStore = await cookies();
+
+  cookieStore.set("session", sessionToken, {
+    httpOnly: true,
+    secure: true,
+    expires: expiresAt,
+    sameSite: "lax",
+    path: "/",
+  });
+}
+
+export async function check(): Promise<boolean> {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("session")?.value;
+
+  if (!token) {
+    return false;
+  }
+
+  const user = await prisma.user.findFirst({
+    where: {
+      sessionToken: {
+        equals: token,
+      },
+    },
+  });
+
+  return !!user;
 }
