@@ -14,13 +14,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const hasSession: boolean = await check();
+  const hasSession = await check();
 
   return (
     <html lang="en">
       <body>
         <AppRouterCacheProvider>
-          {hasSession && <NavBar></NavBar>}
+          <NavBar hasSession={hasSession}></NavBar>
           {children}
         </AppRouterCacheProvider>
       </body>

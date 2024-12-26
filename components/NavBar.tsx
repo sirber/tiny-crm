@@ -29,7 +29,7 @@ const settings = [
   { name: "Logout", url: "/logout" },
 ];
 
-export default function NavBar() {
+export default function NavBar({ hasSession }: { hasSession: boolean }) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -54,6 +54,10 @@ export default function NavBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  if (!hasSession) {
+    return null;
+  }
 
   return (
     <AppBar position="static">
