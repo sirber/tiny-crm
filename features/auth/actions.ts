@@ -51,7 +51,18 @@ export async function login(
   redirect("/");
 }
 
-async function createSession(sessionToken: string) {
+export async function register(
+  state: string | null,
+  formData: FormData
+): Promise<string> {
+  // TODO
+
+  return "TODO";
+}
+
+// Session Management
+
+async function createSession(sessionToken: string): Promise<void> {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   const cookieStore = await cookies();
 
