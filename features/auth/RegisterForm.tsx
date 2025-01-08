@@ -9,9 +9,9 @@ import {
   Box,
 } from "@mui/material";
 import { useActionState } from "react";
-import { register } from "./formActions";
 import { useRouter } from "next/navigation";
 import { isRegisterEnabled } from "@/config";
+import { register } from "@/actions/auth/register";
 
 export function RegisterForm() {
   const router = useRouter();
