@@ -17,19 +17,21 @@ export async function register(
 
   // Validation
   if (!name) {
-    return "name must not be empty";
+    throw new Response("Name is required.", { status: 400 });
   }
 
   if (!email) {
-    return "email must not be empty";
+    throw new Response("Email is required.", { status: 400 });
   }
 
   if (!password || !confirmPassword) {
-    return "password must not be empty";
+    throw new Response("Password is required.", { status: 400 });
   }
 
   if (password != confirmPassword) {
-    return "password does not match";
+    throw new Response("Password does not match confirmation.", {
+      status: 400,
+    });
   }
 
   // Create new user
