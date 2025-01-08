@@ -22,9 +22,8 @@ export async function login(
 
   const user = await prisma.user.findFirst({
     where: {
-      email: {
-        equals: email,
-      },
+      email: email,
+      deletedAt: null,
     },
   });
 
