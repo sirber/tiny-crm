@@ -3,6 +3,7 @@
 import { PrismaClient } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { hash } from "@/lib/password";
+import { isRegisterEnabled } from "@/config";
 
 const prisma = new PrismaClient();
 
@@ -14,6 +15,13 @@ export async function register(
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
   const confirmPassword = formData.get("confirmPassword")?.toString();
+
+  // Security
+  if (!isRegisterEnabled()) {
+    throw new Response("Registration is not permitted at the moment.", {
+      status: 403,
+    });
+  }
 
   // Validation
   if (!name) {
