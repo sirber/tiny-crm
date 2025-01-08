@@ -6,6 +6,11 @@ made with NextJS. The database is in MySQL format.
 ### Requirements
 - Docker
 
+### Stack
+- NextJS
+- MySQL 8
+- Prisma
+
 ## Development
 
 ### Bootstrap
