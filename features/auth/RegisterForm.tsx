@@ -97,7 +97,7 @@ export function RegisterForm() {
                   size="large"
                   fullWidth
                 >
-                  Login
+                  Back to Login
                 </Button>
               )}
             </Box>

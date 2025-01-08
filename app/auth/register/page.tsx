@@ -1,6 +1,7 @@
 "use client";
 
 import { isRegisterEnabled } from "@/config";
+import { RegisterForm } from "@/features/auth/RegisterForm";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -13,5 +14,5 @@ export default function Register() {
     }
   }, [router]);
 
-  return <>Register</>;
+  return <RegisterForm />;
 }

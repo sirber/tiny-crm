@@ -5,6 +5,7 @@ import { v4 as uuid } from "uuid";
 import argon2 from "argon2";
 import { redirect } from "next/navigation";
 import { createSession } from "./session";
+import { hash } from "./password";
 
 const prisma = new PrismaClient();
 
@@ -78,13 +79,19 @@ export async function register(
   }
 
   // Create new user
-  await prisma.user.create({
-    data: {
-      name,
-      email,
-      password,
-    },
-  });
+  const hashedPassword = await hash(password);
+
+  try {
+    await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+      },
+    });
+  } catch {
+    return "could not create user";
+  }
 
   // TODO: banner of some sort
 
