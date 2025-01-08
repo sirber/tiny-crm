@@ -9,7 +9,7 @@ import {
   Box,
 } from "@mui/material";
 import { useActionState } from "react";
-import { register } from "@/features/auth/actions";
+import { register } from "./formActions";
 import { useRouter } from "next/navigation";
 import { isRegisterEnabled } from "@/config";
 
@@ -39,6 +39,16 @@ export function RegisterForm() {
           <form action={action}>
             <Box display="flex" flexDirection="column" gap={2}>
               <TextField
+                id="name"
+                name="name"
+                label="Name"
+                type="text"
+                placeholder="Enter your name"
+                fullWidth
+                required
+                autoFocus
+              />
+              <TextField
                 id="email"
                 name="email"
                 label="Email"
@@ -46,7 +56,6 @@ export function RegisterForm() {
                 placeholder="Enter your email"
                 fullWidth
                 required
-                autoFocus
               />
               <TextField
                 id="password"

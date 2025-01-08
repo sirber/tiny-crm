@@ -9,7 +9,7 @@ import {
   Box,
 } from "@mui/material";
 import { useActionState } from "react";
-import { login } from "@/features/auth/actions";
+import { login } from "./formActions";
 import { useRouter } from "next/navigation";
 import { isRegisterEnabled } from "@/config";
 

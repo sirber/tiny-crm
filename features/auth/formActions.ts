@@ -4,12 +4,12 @@ import { PrismaClient } from "@prisma/client";
 import { v4 as uuid } from "uuid";
 import argon2 from "argon2";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
+import { createSession } from "./session";
 
 const prisma = new PrismaClient();
 
 export async function login(
-  previousState: string | null,
+  state: string | null,
   formData: FormData
 ): Promise<string> {
   const email = formData.get("email")?.toString();
@@ -55,41 +55,38 @@ export async function register(
   state: string | null,
   formData: FormData
 ): Promise<string> {
-  // TODO
+  const name = formData.get("name")?.toString();
+  const email = formData.get("email")?.toString();
+  const password = formData.get("password")?.toString();
+  const confirmPassword = formData.get("confirmPassword")?.toString();
 
-  return "TODO";
-}
-
-// Session Management
-
-async function createSession(sessionToken: string): Promise<void> {
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  const cookieStore = await cookies();
-
-  cookieStore.set("session", sessionToken, {
-    httpOnly: true,
-    secure: true,
-    expires: expiresAt,
-    sameSite: "lax",
-    path: "/",
-  });
-}
-
-export const check = async (): Promise<boolean> => {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("session")?.value;
-
-  if (!token) {
-    return false;
+  // Validation
+  if (!name) {
+    return "name must not be empty";
   }
 
-  const user = await prisma.user.findFirst({
-    where: {
-      sessionToken: {
-        equals: token,
-      },
+  if (!email) {
+    return "email must not be empty";
+  }
+
+  if (!password || !confirmPassword) {
+    return "password must not be empty";
+  }
+
+  if (password != confirmPassword) {
+    return "password does not match";
+  }
+
+  // Create new user
+  await prisma.user.create({
+    data: {
+      name,
+      email,
+      password,
     },
   });
 
-  return !!user;
-};
+  // TODO: banner of some sort
+
+  redirect("/");
+}
