@@ -16,6 +16,9 @@ build: ## Build a production image
 prod: build ## Start a production server
 	@docker compose -f docker-compose.prod.yml run -d
 
+migrate-prod: ## Migrate the database for production
+	@docker compose exec app npm run migrate:prod
+
 stop: ## Stop running server
 	@docker compose down
 	@docker compose -f docker-compose.prod.yml down 

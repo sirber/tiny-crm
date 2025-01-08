@@ -22,5 +22,5 @@ This software is best run with the [Docker Infra](https://github.com/sirber/infr
 ```bash
 make build
 make prod
-make migrate
+make migrate-prod
 ```
