@@ -1,20 +1,18 @@
 # Tiny CRM
 
 Small CRM for small business. This is a "learning project", 
-made with NextJS. The database is in SQLite format.
-
-## Development
+made with NextJS. The database is in MySQL format.
 
 ### Requirements
-- NodeJS 22 w/ npm
 - Docker
+
+## Development
 
 ### Bootstrap
 
 ```bash
-npm install
-npm run migrate:dev
-npm run dev
+make dev
+make migration
 ```
 
 ## Production
@@ -23,5 +21,5 @@ This software is best run with the [Docker Infra](https://github.com/sirber/infr
 
 ```bash
 docker compose build
-docker compose run -d
+docker compose run -f docker-compose.prod.yml -d
 ```

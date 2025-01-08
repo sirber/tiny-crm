@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -27,7 +27,7 @@ model Customer {
   userId    String
   name      String
   email     String    @unique
-  type      String // contact, prospect, customer
+  type      String // contact, prospect, customer // TODO: enum
   createdAt DateTime  @default(now())
   updatedAt DateTime  @default(now()) @updatedAt
   deletedAt DateTime?
