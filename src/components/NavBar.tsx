@@ -13,7 +13,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import Logo from "@/public/people.png";
+import Logo from "@/assets/people.png";
 import { useMediaQuery, useTheme } from "@mui/material";
 import Link from "next/link"; // Updated import
 import Image from "next/image"; // Import Image from Next.js
