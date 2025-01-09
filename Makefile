@@ -15,6 +15,6 @@ migrate: dev ## Migrate the database
 stop: ## Stop running server
 	@docker compose down
 
-.PHONY: clean
-clean: stop ## Clean the project
-	@docker compose --rm exec app npm run clean
+.PHONY: build
+build: ## Make a production docker image
+	@docker build -t tiny-crm .
