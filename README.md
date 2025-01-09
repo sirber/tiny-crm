@@ -22,6 +22,11 @@ make dev
 make migrate
 ```
 
+### Update the database schema
+
+1. modify `prisma/schema.prisma`
+2. run `make migration`
+
 ## Production
 
 This software is best run with the [Docker Infra](https://github.com/sirber/infra).
