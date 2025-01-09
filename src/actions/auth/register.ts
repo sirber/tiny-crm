@@ -57,7 +57,5 @@ export async function register(
     return "could not create user";
   }
 
-  // TODO: banner of some sort
-
   redirect("/");
 }
