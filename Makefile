@@ -16,5 +16,5 @@ stop: ## Stop running server
 	@docker compose down
 
 .PHONY: clean
-clean: stop-dev stop-prod ## Clean the project
-	@docker compose exec app npm run clean
+clean: stop ## Clean the project
+	@docker compose --rm exec app npm run clean

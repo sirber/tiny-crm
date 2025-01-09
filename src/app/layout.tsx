@@ -3,7 +3,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import { check } from "@/lib/session";
-import { Login } from "@/features/auth/Login";
+import { Auth } from "@/features/auth/Auth";
 
 export const metadata: Metadata = {
   title: "Tiny CRM",
@@ -22,7 +22,7 @@ export default async function RootLayout({
       <body>
         <AppRouterCacheProvider>
           <NavBar hasSession={hasSession}></NavBar>
-          {hasSession ? children : <Login />}
+          {hasSession ? children : <Auth />}
         </AppRouterCacheProvider>
       </body>
     </html>

@@ -9,18 +9,20 @@ import {
   Box,
 } from "@mui/material";
 import { useActionState } from "react";
-import { useRouter } from "next/navigation";
 import { isRegisterEnabled } from "@/config";
 import { register } from "@/actions/auth/register";
 
-export function Register() {
-  const router = useRouter();
+export function Register({
+  setShowRegister,
+}: {
+  setShowRegister: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [state, action] = useActionState(register, null);
 
   const showLoginButton = isRegisterEnabled();
 
   function goLogin() {
-    router.push("/auth/login");
+    setShowRegister(false);
   }
 
   return (
