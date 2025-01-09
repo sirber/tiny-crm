@@ -2,9 +2,9 @@
 
 import { PrismaClient } from "@prisma/client";
 import { v4 as uuid } from "uuid";
-import argon2 from "argon2";
 import { redirect } from "next/navigation";
 import { createSession } from "@/lib/session";
+import { verify } from "@/lib/password";
 
 const prisma = new PrismaClient();
 
@@ -30,7 +30,7 @@ export async function login(
     return "user not found";
   }
 
-  if (!argon2.verify(user.password, password)) {
+  if (!(await verify(password, user.password))) {
     return "user not found";
   }
 

@@ -1,11 +1,11 @@
 "use client";
 
 import { isRegisterEnabled } from "@/config";
-import { RegisterForm } from "@/features/auth/RegisterForm";
+import { Register } from "@/features/auth/Register";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export default function Register() {
+export default function PageRegister() {
   const router = useRouter();
 
   useEffect(() => {
@@ -14,5 +14,5 @@ export default function Register() {
     }
   }, [router]);
 
-  return <RegisterForm />;
+  return <Register />;
 }

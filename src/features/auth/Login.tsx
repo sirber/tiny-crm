@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { isRegisterEnabled } from "@/config";
 import { login } from "@/actions/auth/login";
 
-export function LoginForm() {
+export function Login() {
   const router = useRouter();
   const [state, action] = useActionState(login, null);
 
