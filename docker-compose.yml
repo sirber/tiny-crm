@@ -1,6 +1,7 @@
 services:
   app:
     image: node:22-alpine
+    user: "1000:1000"
     restart: unless-stopped
     working_dir: /app
     command: >
