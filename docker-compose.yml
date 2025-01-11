@@ -10,20 +10,20 @@ services:
     ports:
       - '3000:3000'
     environment:
-      - DATABASE_URL=mysql://root:crm@db:3306/tiny-crm
+      - DATABASE_URL=postgresql://postgres:crm@db:5432/tiny-crm
       - NODE_ENV=development
     volumes:
       - ./:/app
 
   db:
-    image: mysql:8
+    image: postgres:17-alpine
     restart: unless-stopped
     environment:
-    - MYSQL_ROOT_PASSWORD=crm
+    - POSTGRES_PASSWORD=crm
     ports:
-    - '3306:3306'
+    - '5432:5432'
     volumes:
-      - db_data:/var/lib/mysql
+      - db_data:/var/lib/postgresql/data
 
 volumes:
   db_data:
