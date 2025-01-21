@@ -17,16 +17,12 @@ import Logo from "@/assets/people.png";
 import { useMediaQuery, useTheme } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 
 const pages = [
-  {
-    name: "People",
-    children: [
-      { name: "Contacts", url: "/people/contacts" },
-      { name: "Prospects", url: "/people/prospects" },
-      { name: "Customers", url: "/people/customers" },
-    ],
-  },
+  { name: "Contacts", url: "/people/contacts" },
+  { name: "Prospects", url: "/people/prospects" },
+  { name: "Customers", url: "/people/customers" },
   { name: "Products", url: "/products" },
   { name: "Payments", url: "/payments" },
 ];
@@ -37,36 +33,25 @@ const settings = [
 ];
 
 export default function NavBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElCustomers, setAnchorElCustomers] =
-    React.useState<null | HTMLElement>(null);
-
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
-  };
-  const handleOpenCustomersMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElCustomers(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-  };
-  const handleCloseCustomersMenu = () => {
-    setAnchorElCustomers(null);
   };
 
   return (
@@ -136,57 +121,17 @@ export default function NavBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  {page.url ? (
-                    <Link href={page.url} passHref>
-                      <Typography
-                        textAlign="center"
-                        sx={{
-                          color: "inherit",
-                          textDecoration: "none",
-                        }}
-                      >
-                        {page.name}
-                      </Typography>
-                    </Link>
-                  ) : (
-                    <Typography
-                      textAlign="center"
-                      sx={{
-                        color: "inherit",
-                        textDecoration: "none",
-                      }}
-                    >
-                      {page.name}
-                    </Typography>
-                  )}
-
-                  {page.children && (
-                    <Menu
-                      id={`submenu-${page.name}`}
-                      anchorEl={anchorElCustomers}
-                      open={Boolean(anchorElCustomers)}
-                      onClose={handleCloseCustomersMenu}
-                    >
-                      {page.children.map((child) => (
-                        <MenuItem
-                          key={child.name}
-                          onClick={handleCloseCustomersMenu}
-                        >
-                          <Typography
-                            textAlign="center"
-                            component={Link}
-                            href={child.url}
-                            sx={{
-                              color: "inherit",
-                              textDecoration: "none",
-                            }}
-                          >
-                            {child.name}
-                          </Typography>
-                        </MenuItem>
-                      ))}
-                    </Menu>
-                  )}
+                  <Typography
+                    textAlign="center"
+                    component={Link}
+                    href={page.url}
+                    sx={{
+                      color: "inherit",
+                      textDecoration: "none",
+                    }}
+                  >
+                    {page.name}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -196,49 +141,20 @@ export default function NavBar() {
             {pages.map((page) => (
               <Button
                 key={page.name}
-                onClick={
-                  page.children ? handleOpenCustomersMenu : handleCloseNavMenu
-                }
+                onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                <Link href={page.url || ""}>
-                  <Typography
-                    textAlign="center"
-                    sx={{
-                      color: "inherit",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {page.name}
-                  </Typography>
-                </Link>
-                {page.children && (
-                  <Menu
-                    id={`submenu-${page.name}`}
-                    anchorEl={anchorElCustomers}
-                    open={Boolean(anchorElCustomers)}
-                    onClose={handleCloseCustomersMenu}
-                  >
-                    {page.children.map((child) => (
-                      <MenuItem
-                        key={child.name}
-                        onClick={handleCloseCustomersMenu}
-                      >
-                        <Typography
-                          textAlign="center"
-                          component={Link}
-                          href={child.url}
-                          sx={{
-                            color: "inherit",
-                            textDecoration: "none",
-                          }}
-                        >
-                          {child.name}
-                        </Typography>
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                )}
+                <Typography
+                  href={page.url}
+                  component={Link}
+                  textAlign="center"
+                  sx={{
+                    color: "inherit",
+                    textDecoration: "none",
+                  }}
+                >
+                  {page.name}
+                </Typography>
               </Button>
             ))}
           </Box>
