@@ -7,6 +7,7 @@ help:
 dev: ## Start a development server
 	@docker compose up -d
 	@docker compose exec app npm run migrate:dev
+	@echo Open http://localhost:3000
 
 migrate: dev ## Migrate the database
 	@docker compose exec app npm run migrate:dev

@@ -15,11 +15,18 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Logo from "@/assets/people.png";
 import { useMediaQuery, useTheme } from "@mui/material";
-import Link from "next/link"; // Updated import
-import Image from "next/image"; // Import Image from Next.js
+import Link from "next/link";
+import Image from "next/image";
 
 const pages = [
-  { name: "Customers", url: "/customers" },
+  {
+    name: "People",
+    children: [
+      { name: "Contacts", url: "/people/contacts" },
+      { name: "Prospects", url: "/people/prospects" },
+      { name: "Customers", url: "/people/customers" },
+    ],
+  },
   { name: "Products", url: "/products" },
   { name: "Payments", url: "/payments" },
 ];
@@ -29,13 +36,15 @@ const settings = [
   { name: "Logout", url: "/logout" },
 ];
 
-export default function NavBar({ hasSession }: { hasSession: boolean }) {
+export default function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+  const [anchorElCustomers, setAnchorElCustomers] =
+    React.useState<null | HTMLElement>(null);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -46,18 +55,19 @@ export default function NavBar({ hasSession }: { hasSession: boolean }) {
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
+  const handleOpenCustomersMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElCustomers(event.currentTarget);
+  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  if (!hasSession) {
-    return null;
-  }
+  const handleCloseCustomersMenu = () => {
+    setAnchorElCustomers(null);
+  };
 
   return (
     <AppBar position="static">
@@ -67,8 +77,8 @@ export default function NavBar({ hasSession }: { hasSession: boolean }) {
             <Image
               src={Logo}
               alt="Logo"
-              height={40} // Set the height
-              width={40} // Set the width
+              height={40}
+              width={40}
               style={{
                 marginRight: "10px",
                 display: "flex",
@@ -80,8 +90,8 @@ export default function NavBar({ hasSession }: { hasSession: boolean }) {
           <Typography
             variant="h6"
             noWrap
-            component={Link} // Updated to Next.js Link
-            href="/" // Updated href for Next.js
+            component={Link}
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -95,7 +105,6 @@ export default function NavBar({ hasSession }: { hasSession: boolean }) {
             Tiny CRM
           </Typography>
 
-          {/* Mobile */}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -107,7 +116,6 @@ export default function NavBar({ hasSession }: { hasSession: boolean }) {
             >
               <MenuIcon />
             </IconButton>
-
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -128,10 +136,74 @@ export default function NavBar({ hasSession }: { hasSession: boolean }) {
             >
               {pages.map((page) => (
                 <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                  {page.url ? (
+                    <Link href={page.url} passHref>
+                      <Typography
+                        textAlign="center"
+                        sx={{
+                          color: "inherit",
+                          textDecoration: "none",
+                        }}
+                      >
+                        {page.name}
+                      </Typography>
+                    </Link>
+                  ) : (
+                    <Typography
+                      textAlign="center"
+                      sx={{
+                        color: "inherit",
+                        textDecoration: "none",
+                      }}
+                    >
+                      {page.name}
+                    </Typography>
+                  )}
+
+                  {page.children && (
+                    <Menu
+                      id={`submenu-${page.name}`}
+                      anchorEl={anchorElCustomers}
+                      open={Boolean(anchorElCustomers)}
+                      onClose={handleCloseCustomersMenu}
+                    >
+                      {page.children.map((child) => (
+                        <MenuItem
+                          key={child.name}
+                          onClick={handleCloseCustomersMenu}
+                        >
+                          <Typography
+                            textAlign="center"
+                            component={Link}
+                            href={child.url}
+                            sx={{
+                              color: "inherit",
+                              textDecoration: "none",
+                            }}
+                          >
+                            {child.name}
+                          </Typography>
+                        </MenuItem>
+                      ))}
+                    </Menu>
+                  )}
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            {pages.map((page) => (
+              <Button
+                key={page.name}
+                onClick={
+                  page.children ? handleOpenCustomersMenu : handleCloseNavMenu
+                }
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                <Link href={page.url || ""}>
                   <Typography
                     textAlign="center"
-                    component={Link} // Updated to Next.js Link
-                    href={page.url} // Updated href for Next.js
                     sx={{
                       color: "inherit",
                       textDecoration: "none",
@@ -139,63 +211,34 @@ export default function NavBar({ hasSession }: { hasSession: boolean }) {
                   >
                     {page.name}
                   </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-
-          {isMobile && (
-            <Image
-              src={Logo}
-              alt="Logo"
-              height={40} // Set the height
-              width={40} // Set the width
-              style={{
-                marginRight: "10px",
-                display: "flex",
-                alignItems: "center",
-              }}
-            />
-          )}
-
-          {/* Desktop */}
-          <Typography
-            variant="h5"
-            noWrap
-            component={Link} // Updated to Next.js Link
-            href="/" // Updated href for Next.js
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Tiny CRM
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.name}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                <Typography
-                  textAlign="center"
-                  component={Link} // Updated to Next.js Link
-                  href={page.url} // Updated href for Next.js
-                  sx={{
-                    color: "inherit",
-                    textDecoration: "none",
-                  }}
-                >
-                  {page.name}
-                </Typography>
+                </Link>
+                {page.children && (
+                  <Menu
+                    id={`submenu-${page.name}`}
+                    anchorEl={anchorElCustomers}
+                    open={Boolean(anchorElCustomers)}
+                    onClose={handleCloseCustomersMenu}
+                  >
+                    {page.children.map((child) => (
+                      <MenuItem
+                        key={child.name}
+                        onClick={handleCloseCustomersMenu}
+                      >
+                        <Typography
+                          textAlign="center"
+                          component={Link}
+                          href={child.url}
+                          sx={{
+                            color: "inherit",
+                            textDecoration: "none",
+                          }}
+                        >
+                          {child.name}
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                )}
               </Button>
             ))}
           </Box>
@@ -226,8 +269,8 @@ export default function NavBar({ hasSession }: { hasSession: boolean }) {
                 <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
                   <Typography
                     textAlign="center"
-                    component={Link} // Updated to Next.js Link
-                    href={setting.url} // Updated href for Next.js
+                    component={Link}
+                    href={setting.url}
                     sx={{
                       color: "inherit",
                       textDecoration: "none",
