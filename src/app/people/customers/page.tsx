@@ -12,7 +12,7 @@ export default async function Customer() {
 
   const rows = await prisma.customer.findMany({
     where: {
-      userId: user?.id,
+      userId: user.id,
       type: "customer",
     },
   });
