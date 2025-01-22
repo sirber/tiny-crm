@@ -9,8 +9,8 @@ made with NextJS. The database is in MySQL format.
 
 ### Stack
 
-- NextJS
-- MySQL 8
+- NextJS 15
+- PostgreSQL 17
 - Prisma
 
 ## Development
@@ -19,7 +19,6 @@ made with NextJS. The database is in MySQL format.
 
 ```bash
 make dev
-make migrate
 ```
 
 ### Update the database schema
@@ -43,21 +42,19 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DATABASE_URL=mysql://root:crm@db:3306/tiny-crm
+      - DATABASE_URL=postgresql://postgres:crm@db:5432/tiny-crm?connection_limit=800
       - NODE_ENV=production
 
   db:
+    image: postgres:17-alpine
     restart: unless-stopped
-    image: mysql:8
+    command: -c 'max_connections=1000'
     environment:
-      - MYSQL_ROOT_PASSWORD=crm
+      - POSTGRES_PASSWORD=crm
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - db_data:/var/lib/mysql
-
-volumes:
-  db_data:
+      - ./data:/var/lib/postgresql/data
 ```
 
 TODO: migrate in an entrypoint?
