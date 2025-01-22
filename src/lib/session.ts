@@ -18,12 +18,10 @@ export async function createSession(sessionToken: string): Promise<void> {
   });
 }
 
-export const check = async (): Promise<boolean> => {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("session")?.value;
-
+export async function getUser() {
+  const token = await getToken();
   if (!token) {
-    return false;
+    return null;
   }
 
   const user = await prisma.user.findFirst({
@@ -34,5 +32,18 @@ export const check = async (): Promise<boolean> => {
     },
   });
 
+  return user;
+}
+
+export async function getToken(): Promise<string | null> {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("session")?.value;
+
+  return token || null;
+}
+
+export async function check(): Promise<boolean> {
+  const user = await getUser();
+
   return !!user;
-};
+}
