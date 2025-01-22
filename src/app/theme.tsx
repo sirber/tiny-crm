@@ -6,7 +6,7 @@ import { ThemeProvider, createTheme } from "@mui/material";
 const createAppTheme = (prefersDarkMode: boolean) => {
   return createTheme({
     palette: {
-      mode: prefersDarkMode ? "dark" : "light", // Dynamically set theme mode
+      mode: prefersDarkMode ? "dark" : "light",
     },
   });
 };
@@ -15,19 +15,38 @@ interface ThemeProps {
   children: React.ReactNode;
 }
 
-const Theme: React.FC<ThemeProps> = ({ children }) => {
-  const [prefersDarkMode, setPrefersDarkMode] = useState(false);
+function useDarkMode() {
+  const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
 
-  // Detect system theme preference on mount
   useEffect(() => {
-    const isDarkMode = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    setPrefersDarkMode(isDarkMode);
+    if (typeof window !== "undefined" && window.matchMedia) {
+      const darkModeMediaQuery = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      );
+      setIsDarkMode(darkModeMediaQuery.matches);
+
+      const handleChange = (e: MediaQueryListEvent) => setIsDarkMode(e.matches);
+      darkModeMediaQuery.addEventListener("change", handleChange);
+
+      // Cleanup listener on unmount
+      return () =>
+        darkModeMediaQuery.removeEventListener("change", handleChange);
+    }
   }, []);
 
-  // Create theme based on system preference
-  const theme = createAppTheme(prefersDarkMode);
+  return isDarkMode;
+}
+
+const Theme: React.FC<ThemeProps> = ({ children }) => {
+  const isDarkMode = useDarkMode();
+
+  // Wait until client-side theme detection has run
+  if (!isDarkMode) {
+    return <>{children}</>;
+  }
+
+  // Create theme based on detected preference
+  const theme = createAppTheme(isDarkMode);
 
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };

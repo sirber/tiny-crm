@@ -29,6 +29,14 @@ export default function List({ title, columns, rows }: ListProps) {
         <DataGrid
           rows={rows}
           columns={columns}
+          sx={{
+            boxShadow: 2,
+            border: 2,
+            borderColor: "darkgray",
+            "& .MuiDataGrid-cell:hover": {
+              color: "primary.main",
+            },
+          }}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },

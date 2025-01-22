@@ -23,8 +23,18 @@ export default async function RootLayout({
       <body>
         <AppRouterCacheProvider>
           <Theme>
-            {hasSession && <NavBar />}
-            {hasSession ? children : <Auth />}
+            {hasSession ? (
+              <>
+                <nav>
+                  <NavBar />
+                </nav>
+                <main>{children}</main>
+              </>
+            ) : (
+              <main>
+                <Auth />
+              </main>
+            )}
           </Theme>
         </AppRouterCacheProvider>
       </body>
