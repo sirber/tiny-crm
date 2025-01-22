@@ -1,13 +1,30 @@
+"use client";
+
 import { Box, Button, ButtonGroup, Grid2, Typography } from "@mui/material";
-import { DataGrid, GridColDef, GridValidRowModel } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridValidRowModel,
+  GridRowParams,
+} from "@mui/x-data-grid";
 
 interface ListProps {
   title: string;
   columns: GridColDef[];
   rows: GridValidRowModel[];
+  onRowClick: (params: GridRowParams) => void;
+  onAddClick: () => void;
+  onRefreshClick: () => void;
 }
 
-export default function List({ title, columns, rows }: ListProps) {
+export default function List({
+  title,
+  columns,
+  rows,
+  onAddClick,
+  onRowClick,
+  onRefreshClick,
+}: ListProps) {
   return (
     <>
       <Grid2 container alignItems="center">
@@ -18,17 +35,17 @@ export default function List({ title, columns, rows }: ListProps) {
         </Grid2>
         <Grid2 size={6} textAlign="right">
           <ButtonGroup variant="contained">
-            <Button>Add</Button>
-            <Button>Remove</Button>
-            <Button>Refresh</Button>
+            <Button onClick={onAddClick}>Add</Button>
+            <Button onClick={onRefreshClick}>Refresh</Button>
           </ButtonGroup>
         </Grid2>
       </Grid2>
 
-      <Box sx={{ height: 400, width: "100%" }}>
+      <Box sx={{ minHeight: 400, width: "100%" }}>
         <DataGrid
           rows={rows}
           columns={columns}
+          onRowClick={onRowClick}
           sx={{
             boxShadow: 2,
             border: 2,

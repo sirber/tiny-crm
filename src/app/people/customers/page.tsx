@@ -1,14 +1,8 @@
-import List from "@/components/List";
-import { GridColDef } from "@mui/x-data-grid";
 import { PrismaClient } from "@prisma/client";
 import { getUser } from "@/lib/session";
+import { CustomerList } from "@/features/people/CustomerList";
 
 const prisma = new PrismaClient();
-
-const columns: GridColDef[] = [
-  { field: "name", headerName: "Name", width: 130 },
-  { field: "email", headerName: "Email", width: 130 },
-];
 
 export default async function Customer() {
   const user = await getUser();
@@ -23,5 +17,5 @@ export default async function Customer() {
     },
   });
 
-  return <List title="Customers" columns={columns} rows={rows}></List>;
+  return <CustomerList rows={rows} />;
 }

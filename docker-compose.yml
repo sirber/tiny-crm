@@ -19,6 +19,7 @@ services:
   db:
     image: postgres:17-alpine
     restart: unless-stopped
+    command: -c 'max_connections=500'
     environment:
     - POSTGRES_PASSWORD=crm
     ports:
