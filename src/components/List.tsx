@@ -46,6 +46,7 @@ export default function List({
           rows={rows}
           columns={columns}
           onRowClick={onRowClick}
+          disableRowSelectionOnClick
           sx={{
             boxShadow: 2,
             border: 2,

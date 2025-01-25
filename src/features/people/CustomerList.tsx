@@ -5,8 +5,8 @@ import { GridColDef, GridRowParams, GridValidRowModel } from "@mui/x-data-grid";
 import { useRouter } from "next/navigation";
 
 const columns: GridColDef[] = [
-  { field: "name", headerName: "Name", width: 130 },
-  { field: "email", headerName: "Email", width: 130 },
+  { field: "name", headerName: "Name", width: 200 },
+  { field: "email", headerName: "Email", width: 300 },
 ];
 
 export function CustomerList({ rows }: { rows: GridValidRowModel[] }) {
@@ -22,7 +22,7 @@ export function CustomerList({ rows }: { rows: GridValidRowModel[] }) {
 
   function onRowClick(params: GridRowParams) {
     console.log(params);
-    alert("TODO: onRemoveClick");
+    alert("TODO: onRowClick");
   }
 
   return (
