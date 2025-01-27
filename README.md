@@ -28,6 +28,8 @@ make dev
 
 ## Production
 
+### Via Docker Infra
+
 This software is best run with the [Docker Infra](https://github.com/sirber/infra).
 You can use this sample `docker-compose.yml`
 
@@ -42,8 +44,17 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DATABASE_URL=postgresql://postgres:crm@db:5432/tiny-crm?connection_limit=800
+      - DATABASE_URL=postgresql://postgres:crm@db:5432/tiny-crm?connection_limit=10
       - NODE_ENV=production
+
+  migrate:
+    image: my-app-migrate # The image built for migrations
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:crm@db:5432/tiny-crm?connection_limit=10
+    command: ["npx", "prisma", "migrate", "deploy"] # Command to run migrations
+    restart: "no" # Ensures it does not restart after completion
 
   db:
     image: postgres:17-alpine
@@ -55,6 +66,17 @@ services:
       - "5432:5432"
     volumes:
       - ./data:/var/lib/postgresql/data
+
 ```
 
-TODO: migrate in an entrypoint?
+### Via a Docker host
+
+To run elsewhere, you can use the image directly and configure using environment variables:
+
+``` 
+NEXT_PUBLIC_REGISTER_ENABLED=true
+DATABASE_URL=postgresql://[user:pass]@[db-name]:5432/[schema]?connection_limit=10
+```
+
+docker build --target migrate -t tiny-crm-migrate .
+docker build --target runner -t tiny-crm .

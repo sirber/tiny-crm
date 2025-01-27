@@ -13,6 +13,12 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build;
 
+FROM base AS migrate
+WORKDIR /app
+COPY prisma/ ./prisma
+COPY package*.json ./
+ENTRYPOINT ["sh", "-c", "npm install --no-save prisma && npx prisma generate && npx prisma migrate deploy"]
+
 FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV=production
