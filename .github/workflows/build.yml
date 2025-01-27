@@ -8,6 +8,10 @@ on:
     branches:
       - main # Trigger on pull request to the main branch
 
+permissions:
+  packages: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
