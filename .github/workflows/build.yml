@@ -36,10 +36,10 @@ jobs:
 
     - name: Build Docker images
       run: |
-        docker build --target migrate -t sirber/tiny-crm-migrate:${{ github.sha }} .
-        docker build --target runner -t sirber/tiny-crm:${{ github.sha }} .
+        docker build --target runner -t ghcr.io/${{ github.repository }}/tiny-crm:${{ github.sha }} . 
+        docker build --target migrate -t ghcr.io/${{ github.repository }}/tiny-crm-migrate:${{ github.sha }} .
         
     - name: Push Docker image
       run: |
-        docker push sirber/tiny-crm:${{ github.sha }}
-        docker push sirber/tiny-crm-migrate:${{ github.sha }}
+        docker push ghcr.io/${{ github.repository }}/tiny-crm:${{ github.sha }}
+        docker push ghcr.io/${{ github.repository }}/tiny-crm-migrate:${{ github.sha }}
