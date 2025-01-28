@@ -16,4 +16,5 @@ stop: ## Stop running server
 	@docker compose down
 
 build: ## Make a production docker image
-	@docker build -t tiny-crm .
+	@docker build --target runner -t tiny-crm .
+	@docker build --target migrate -t tiny-crm-migrate .

@@ -37,7 +37,7 @@ You can use this sample `docker-compose.yml`
 services:
   app:
     restart: unless-stopped
-    image: TODO
+    image: ghcr.io/sirber/tiny-crm:latest
     working_dir: /app
     depends_on:
       - db
@@ -48,13 +48,13 @@ services:
       - NODE_ENV=production
 
   migrate:
-    image: my-app-migrate # The image built for migrations
+    image: ghcr.io/sirber/tiny-crm-migrate:latest
+    restart: "no"
     depends_on:
       - db
     environment:
       - DATABASE_URL=postgresql://postgres:crm@db:5432/tiny-crm?connection_limit=10
     command: ["npx", "prisma", "migrate", "deploy"] # Command to run migrations
-    restart: "no" # Ensures it does not restart after completion
 
   db:
     image: postgres:17-alpine
@@ -66,14 +66,13 @@ services:
       - "5432:5432"
     volumes:
       - ./data:/var/lib/postgresql/data
-
 ```
 
 ### Via a Docker host
 
 To run elsewhere, you can use the image directly and configure using environment variables:
 
-``` 
+```
 NEXT_PUBLIC_REGISTER_ENABLED=true
 DATABASE_URL=postgresql://[user:pass]@[db-name]:5432/[schema]?connection_limit=10
 ```
