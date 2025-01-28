@@ -26,12 +26,16 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build Docker images
-      run: |
-        docker build --target runner -t ghcr.io/${{ github.repository }}/tiny-crm:latest . 
-        docker build --target migrate -t ghcr.io/${{ github.repository }}/tiny-crm-migrate:latest .
+    - name: Build and push main image
+      uses: docker/build-push-action@v4
+      with:
+        push: true
+        target: migrate
+        tags: ghcr.io/sirber/tiny-crm:latest
         
-    - name: Push Docker image
-      run: |
-        docker push ghcr.io/${{ github.repository }}/tiny-crm:latest
-        docker push ghcr.io/${{ github.repository }}/tiny-crm-migrate:latest
+    - name: Build and push migrate image
+      uses: docker/build-push-action@v4
+      with:
+        push: true
+        target: migrate
+        tags: ghcr.io/sirber/tiny-crm-migrate:latest
