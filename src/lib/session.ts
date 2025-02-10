@@ -1,9 +1,7 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
 import { cookies } from "next/headers";
-
-const prisma = new PrismaClient();
+import prisma from "./database";
 
 export async function createSession(sessionToken: string): Promise<void> {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
