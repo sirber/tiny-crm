@@ -1,13 +1,11 @@
 import { notFound } from "next/navigation";
 import { validate as isUUID } from "uuid";
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default async function CustomerEdit({ params }: PageProps) {
+export default async function CustomerEdit({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
 
   if (id === "new") {
