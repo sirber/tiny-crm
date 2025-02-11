@@ -1,6 +1,7 @@
 import { getUser } from "@/lib/session";
 import { CustomerList } from "@/features/people/CustomerList";
 import prisma from "@/lib/database";
+import { formatDate } from "@/lib/date";
 
 export default async function Customer() {
   const user = await getUser();
@@ -12,8 +13,15 @@ export default async function Customer() {
     where: {
       userId: user.id,
       type: "customer",
+      deletedAt: null,
     },
   });
 
-  return <CustomerList rows={rows} />;
+  const displayRows = rows.map((row) => ({
+    ...row,
+    createdAt: formatDate(new Date(row.createdAt)),
+    updatedAt: formatDate(new Date(row.updatedAt)),
+  }));
+
+  return <CustomerList rows={displayRows} />;
 }

@@ -2,11 +2,12 @@
 
 import List from "@/components/List";
 import { GridColDef, GridRowParams, GridValidRowModel } from "@mui/x-data-grid";
-import { useRouter } from "next/navigation";
-
+import { redirect, RedirectType, useRouter } from "next/navigation";
 const columns: GridColDef[] = [
   { field: "name", headerName: "Name", width: 200 },
   { field: "email", headerName: "Email", width: 300 },
+  { field: "createdAt", headerName: "Created At", width: 150 },
+  { field: "updatedAt", headerName: "Updated At", width: 150 },
 ];
 
 export function CustomerList({ rows }: { rows: GridValidRowModel[] }) {
@@ -21,8 +22,7 @@ export function CustomerList({ rows }: { rows: GridValidRowModel[] }) {
   }
 
   function onRowClick(params: GridRowParams) {
-    console.log(params);
-    alert("TODO: onRowClick");
+    redirect("/people/customers/" + params.id, RedirectType.push);
   }
 
   return (
