@@ -8,9 +8,7 @@ export default function LogoutPage() {
     const router = useRouter();
 
     useEffect(() => {
-        logoutUser().then(() => {
-            router.push("/");
-        });
+        logoutUser();
     }, [router]);
 
     return <p>Logging out...</p>;

@@ -5,6 +5,7 @@ import NavBar from "@/components/NavBar";
 import {check} from "@/lib/session";
 import {Auth} from "@/features/auth/Auth";
 import Theme from "./theme";
+import React from "react";
 
 export const metadata: Metadata = {
     title: "Tiny CRM",
@@ -23,18 +24,10 @@ export default async function RootLayout({
         <body>
         <AppRouterCacheProvider>
             <Theme>
-                {hasSession ? (
-                    <>
-                        <nav>
-                            <NavBar/>
-                        </nav>
-                        <main>{children}</main>
-                    </>
-                ) : (
-                    <main>
-                        <Auth/>
-                    </main>
-                )}
+                <NavBar hasSession={hasSession}/>
+                <main>
+                    {hasSession ? children : <Auth />}
+                </main>
             </Theme>
         </AppRouterCacheProvider>
         </body>

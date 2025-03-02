@@ -81,7 +81,11 @@ const menuData: MenuItemType[] = [
     }
 ];
 
-const MenuBar: React.FC = () => {
+interface NavBarInterface {
+    hasSession: boolean;
+}
+
+const NavBar = ({hasSession}: NavBarInterface) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -106,150 +110,156 @@ const MenuBar: React.FC = () => {
     const leftMenuItems = menuData.filter(item => item.align !== 'right');
     const rightMenuItems = menuData.filter(item => item.align === 'right');
 
+    if (!hasSession) {
+        return null;
+    }
+
     return (
-        <AppBar position="static">
-            <Toolbar>
-                {isMobile && (
-                    <IconButton edge="start" color="inherit" onClick={toggleDrawer(true)}>
-                        <MenuIcon/>
-                    </IconButton>
-                )}
-                <Image
-                    src={Logo}
-                    alt="Logo"
-                    height={40}
-                    width={40}
-                    style={{
-                        marginRight: "10px",
-                        display: "flex",
-                        alignItems: "center",
-                    }}
-                />
+        <nav>
+            <AppBar position="static">
+                <Toolbar>
+                    {isMobile && (
+                        <IconButton edge="start" color="inherit" onClick={toggleDrawer(true)}>
+                            <MenuIcon/>
+                        </IconButton>
+                    )}
+                    <Image
+                        src={Logo}
+                        alt="Logo"
+                        height={40}
+                        width={40}
+                        style={{
+                            marginRight: "10px",
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    />
 
-                <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
-                    <List sx={{width: 250}}>
-                        {menuData.map((menu) => (
-                            <div key={menu.label}>
-                                {menu.submenu ? (
-                                    <>
-                                        <ListItem>
-                                            <ListItemIcon>{menu.icon}</ListItemIcon>
-                                            <ListItemText primary={menu.label}/>
-                                        </ListItem>
-                                        {menu.submenu.map((subItem) => (
-                                            <Link key={subItem.label} href={subItem.link} passHref legacyBehavior>
-                                                <ListItem component="a" onClick={toggleDrawer(false)} sx={{pl: 4}}>
-                                                    <ListItemIcon>{subItem.icon}</ListItemIcon>
-                                                    <ListItemText primary={subItem.label}/>
-                                                </ListItem>
-                                            </Link>
-                                        ))}
-                                    </>
-                                ) : (
-                                    <Link key={menu.label} href={menu.link!} passHref legacyBehavior>
-                                        <ListItem component="a" onClick={toggleDrawer(false)}>
-                                            <ListItemIcon>{menu.icon}</ListItemIcon>
-                                            <ListItemText primary={menu.label}/>
-                                        </ListItem>
-                                    </Link>
-                                )}
-                            </div>
-                        ))}
-                    </List>
-                </Drawer>
-
-                {!isMobile && (
-                    <>
-                        {/* Left-aligned menu items */}
-                        <Box sx={{display: 'flex', flexGrow: 1}}>
-                            {leftMenuItems.map((menu) => (
+                    <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+                        <List sx={{width: 250}}>
+                            {menuData.map((menu) => (
                                 <div key={menu.label}>
                                     {menu.submenu ? (
                                         <>
+                                            <ListItem>
+                                                <ListItemIcon>{menu.icon}</ListItemIcon>
+                                                <ListItemText primary={menu.label}/>
+                                            </ListItem>
+                                            {menu.submenu.map((subItem) => (
+                                                <Link key={subItem.label} href={subItem.link} passHref legacyBehavior>
+                                                    <ListItem component="a" onClick={toggleDrawer(false)} sx={{pl: 4}}>
+                                                        <ListItemIcon>{subItem.icon}</ListItemIcon>
+                                                        <ListItemText primary={subItem.label}/>
+                                                    </ListItem>
+                                                </Link>
+                                            ))}
+                                        </>
+                                    ) : (
+                                        <Link key={menu.label} href={menu.link!} passHref legacyBehavior>
+                                            <ListItem component="a" onClick={toggleDrawer(false)}>
+                                                <ListItemIcon>{menu.icon}</ListItemIcon>
+                                                <ListItemText primary={menu.label}/>
+                                            </ListItem>
+                                        </Link>
+                                    )}
+                                </div>
+                            ))}
+                        </List>
+                    </Drawer>
+
+                    {!isMobile && (
+                        <>
+                            {/* Left-aligned menu items */}
+                            <Box sx={{display: 'flex', flexGrow: 1}}>
+                                {leftMenuItems.map((menu) => (
+                                    <div key={menu.label}>
+                                        {menu.submenu ? (
+                                            <>
+                                                <Button
+                                                    color="inherit"
+                                                    onClick={(event) => handleMenuOpen(event, menuData.indexOf(menu))}
+                                                    startIcon={menu.icon}
+                                                >
+                                                    {menu.label}
+                                                </Button>
+                                                <Menu
+                                                    anchorEl={anchorEl}
+                                                    open={activeSubmenu === menuData.indexOf(menu) && Boolean(anchorEl)}
+                                                    onClose={handleMenuClose}
+                                                >
+                                                    {menu.submenu.map((subItem) => (
+                                                        <MenuItem key={subItem.label} onClick={handleMenuClose}>
+                                                            <ListItemIcon>{subItem.icon}</ListItemIcon>
+                                                            <Link href={subItem.link}
+                                                                  style={{textDecoration: "none", color: "inherit"}}>
+                                                                {subItem.label}
+                                                            </Link>
+                                                        </MenuItem>
+                                                    ))}
+                                                </Menu>
+                                            </>
+                                        ) : (
                                             <Button
                                                 color="inherit"
-                                                onClick={(event) => handleMenuOpen(event, menuData.indexOf(menu))}
+                                                component={Link}
+                                                href={menu.link!}
                                                 startIcon={menu.icon}
                                             >
                                                 {menu.label}
                                             </Button>
-                                            <Menu
-                                                anchorEl={anchorEl}
-                                                open={activeSubmenu === menuData.indexOf(menu) && Boolean(anchorEl)}
-                                                onClose={handleMenuClose}
-                                            >
-                                                {menu.submenu.map((subItem) => (
-                                                    <MenuItem key={subItem.label} onClick={handleMenuClose}>
-                                                        <ListItemIcon>{subItem.icon}</ListItemIcon>
-                                                        <Link href={subItem.link}
-                                                              style={{textDecoration: "none", color: "inherit"}}>
-                                                            {subItem.label}
-                                                        </Link>
-                                                    </MenuItem>
-                                                ))}
-                                            </Menu>
-                                        </>
-                                    ) : (
-                                        <Button
-                                            color="inherit"
-                                            component={Link}
-                                            href={menu.link!}
-                                            startIcon={menu.icon}
-                                        >
-                                            {menu.label}
-                                        </Button>
-                                    )}
-                                </div>
-                            ))}
-                        </Box>
+                                        )}
+                                    </div>
+                                ))}
+                            </Box>
 
-                        {/* Right-aligned menu items */}
-                        <Box sx={{display: 'flex'}}>
-                            {rightMenuItems.map((menu) => (
-                                <div key={menu.label}>
-                                    {menu.submenu ? (
-                                        <>
+                            {/* Right-aligned menu items */}
+                            <Box sx={{display: 'flex'}}>
+                                {rightMenuItems.map((menu) => (
+                                    <div key={menu.label}>
+                                        {menu.submenu ? (
+                                            <>
+                                                <Button
+                                                    color="inherit"
+                                                    onClick={(event) => handleMenuOpen(event, menuData.indexOf(menu))}
+                                                    startIcon={menu.icon}
+                                                >
+                                                    {menu.label}
+                                                </Button>
+                                                <Menu
+                                                    anchorEl={anchorEl}
+                                                    open={activeSubmenu === menuData.indexOf(menu) && Boolean(anchorEl)}
+                                                    onClose={handleMenuClose}
+                                                >
+                                                    {menu.submenu.map((subItem) => (
+                                                        <MenuItem key={subItem.label} onClick={handleMenuClose}>
+                                                            <ListItemIcon>{subItem.icon}</ListItemIcon>
+                                                            <Link href={subItem.link}
+                                                                  style={{textDecoration: "none", color: "inherit"}}>
+                                                                {subItem.label}
+                                                            </Link>
+                                                        </MenuItem>
+                                                    ))}
+                                                </Menu>
+                                            </>
+                                        ) : (
                                             <Button
                                                 color="inherit"
-                                                onClick={(event) => handleMenuOpen(event, menuData.indexOf(menu))}
+                                                component={Link}
+                                                href={menu.link!}
                                                 startIcon={menu.icon}
                                             >
                                                 {menu.label}
                                             </Button>
-                                            <Menu
-                                                anchorEl={anchorEl}
-                                                open={activeSubmenu === menuData.indexOf(menu) && Boolean(anchorEl)}
-                                                onClose={handleMenuClose}
-                                            >
-                                                {menu.submenu.map((subItem) => (
-                                                    <MenuItem key={subItem.label} onClick={handleMenuClose}>
-                                                        <ListItemIcon>{subItem.icon}</ListItemIcon>
-                                                        <Link href={subItem.link}
-                                                              style={{textDecoration: "none", color: "inherit"}}>
-                                                            {subItem.label}
-                                                        </Link>
-                                                    </MenuItem>
-                                                ))}
-                                            </Menu>
-                                        </>
-                                    ) : (
-                                        <Button
-                                            color="inherit"
-                                            component={Link}
-                                            href={menu.link!}
-                                            startIcon={menu.icon}
-                                        >
-                                            {menu.label}
-                                        </Button>
-                                    )}
-                                </div>
-                            ))}
-                        </Box>
-                    </>
-                )}
-            </Toolbar>
-        </AppBar>
+                                        )}
+                                    </div>
+                                ))}
+                            </Box>
+                        </>
+                    )}
+                </Toolbar>
+            </AppBar>
+        </nav>
     );
 };
 
-export default MenuBar;
+export default NavBar;
