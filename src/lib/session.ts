@@ -1,7 +1,8 @@
 "use server";
 
-import { cookies } from "next/headers";
+import {cookies} from "next/headers";
 import prisma from "./database";
+import {User} from "@prisma/client";
 
 export async function createSession(sessionToken: string): Promise<void> {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
@@ -16,21 +17,19 @@ export async function createSession(sessionToken: string): Promise<void> {
   });
 }
 
-export async function getUser() {
+export async function getUser(): Promise<User | null> {
   const token = await getToken();
   if (!token) {
     return null;
   }
 
-  const user = await prisma.user.findFirst({
+  return prisma.user.findFirst({
     where: {
       sessionToken: {
         equals: token,
       },
     },
   });
-
-  return user;
 }
 
 export async function getToken(): Promise<string | null> {
@@ -38,6 +37,11 @@ export async function getToken(): Promise<string | null> {
   const token = cookieStore.get("session")?.value;
 
   return token || null;
+}
+
+export async function clearToken(): Promise<void> {
+  const cookieStore = await cookies();
+  cookieStore.delete("session");
 }
 
 export async function check(): Promise<boolean> {
