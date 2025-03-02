@@ -1,21 +1,21 @@
 "use client";
 
-import React, { useState, MouseEvent } from "react";
+import React, {MouseEvent, useState} from "react";
 import {
     AppBar,
-    Toolbar,
+    Box,
     Button,
-    Menu,
-    MenuItem,
-    IconButton,
     Drawer,
+    IconButton,
     List,
     ListItem,
-    ListItemText,
     ListItemIcon,
+    ListItemText,
+    Menu,
+    MenuItem,
+    Toolbar,
     useMediaQuery,
-    useTheme,
-    Box
+    useTheme
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import PeopleIcon from "@mui/icons-material/People";
@@ -47,36 +47,36 @@ interface MenuItemType {
 const menuData: MenuItemType[] = [
     {
         label: "People",
-        icon: <PeopleIcon />,
+        icon: <PeopleIcon/>,
         align: 'left',
         submenu: [
-            { label: "Contact", link: "/people/contact", icon: <ContactsIcon /> },
-            { label: "Prospect", link: "/people/prospect", icon: <PersonAddIcon /> },
-            { label: "Customer", link: "/people/customer", icon: <SupervisedUserCircleIcon /> },
+            {label: "Contact", link: "/people/contact", icon: <ContactsIcon/>},
+            {label: "Prospect", link: "/people/prospect", icon: <PersonAddIcon/>},
+            {label: "Customer", link: "/people/customer", icon: <SupervisedUserCircleIcon/>},
         ],
     },
     {
         label: "Store",
-        icon: <StoreIcon />,
+        icon: <StoreIcon/>,
         align: 'left',
         submenu: [
-            { label: "Product", link: "/product/inventory", icon: <InventoryIcon /> },
-            { label: "Transactions", link: "/product/transaction", icon: <ReceiptIcon /> },
+            {label: "Product", link: "/product/inventory", icon: <InventoryIcon/>},
+            {label: "Transactions", link: "/product/transaction", icon: <ReceiptIcon/>},
         ],
     },
     {
         label: "Profile",
-        icon: <AccountCircleIcon />,
+        icon: <AccountCircleIcon/>,
         align: 'right',
         submenu: [
-            { label: "My profile", link: "/profile", icon: <AccountCircleIcon /> },
-            { label: "Administration", link: "/admin", icon: <AdminPanelSettingsIcon /> },
+            {label: "My profile", link: "/profile", icon: <AccountCircleIcon/>},
+            {label: "Administration", link: "/admin", icon: <AdminPanelSettingsIcon/>},
         ],
     },
     {
         label: "Logout",
         link: "/logout",
-        icon: <LogoutIcon />,
+        icon: <LogoutIcon/>,
         align: 'right'
     }
 ];
@@ -111,7 +111,7 @@ const MenuBar: React.FC = () => {
             <Toolbar>
                 {isMobile && (
                     <IconButton edge="start" color="inherit" onClick={toggleDrawer(true)}>
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
                 )}
                 <Image
@@ -127,20 +127,20 @@ const MenuBar: React.FC = () => {
                 />
 
                 <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
-                    <List sx={{ width: 250 }}>
+                    <List sx={{width: 250}}>
                         {menuData.map((menu) => (
                             <div key={menu.label}>
                                 {menu.submenu ? (
                                     <>
                                         <ListItem>
                                             <ListItemIcon>{menu.icon}</ListItemIcon>
-                                            <ListItemText primary={menu.label} />
+                                            <ListItemText primary={menu.label}/>
                                         </ListItem>
                                         {menu.submenu.map((subItem) => (
                                             <Link key={subItem.label} href={subItem.link} passHref legacyBehavior>
-                                                <ListItem component="a" onClick={toggleDrawer(false)} sx={{ pl: 4 }}>
+                                                <ListItem component="a" onClick={toggleDrawer(false)} sx={{pl: 4}}>
                                                     <ListItemIcon>{subItem.icon}</ListItemIcon>
-                                                    <ListItemText primary={subItem.label} />
+                                                    <ListItemText primary={subItem.label}/>
                                                 </ListItem>
                                             </Link>
                                         ))}
@@ -149,7 +149,7 @@ const MenuBar: React.FC = () => {
                                     <Link key={menu.label} href={menu.link!} passHref legacyBehavior>
                                         <ListItem component="a" onClick={toggleDrawer(false)}>
                                             <ListItemIcon>{menu.icon}</ListItemIcon>
-                                            <ListItemText primary={menu.label} />
+                                            <ListItemText primary={menu.label}/>
                                         </ListItem>
                                     </Link>
                                 )}
@@ -161,7 +161,7 @@ const MenuBar: React.FC = () => {
                 {!isMobile && (
                     <>
                         {/* Left-aligned menu items */}
-                        <Box sx={{ display: 'flex', flexGrow: 1 }}>
+                        <Box sx={{display: 'flex', flexGrow: 1}}>
                             {leftMenuItems.map((menu) => (
                                 <div key={menu.label}>
                                     {menu.submenu ? (
@@ -181,7 +181,8 @@ const MenuBar: React.FC = () => {
                                                 {menu.submenu.map((subItem) => (
                                                     <MenuItem key={subItem.label} onClick={handleMenuClose}>
                                                         <ListItemIcon>{subItem.icon}</ListItemIcon>
-                                                        <Link href={subItem.link} style={{ textDecoration: "none", color: "inherit" }}>
+                                                        <Link href={subItem.link}
+                                                              style={{textDecoration: "none", color: "inherit"}}>
                                                             {subItem.label}
                                                         </Link>
                                                     </MenuItem>
@@ -203,7 +204,7 @@ const MenuBar: React.FC = () => {
                         </Box>
 
                         {/* Right-aligned menu items */}
-                        <Box sx={{ display: 'flex' }}>
+                        <Box sx={{display: 'flex'}}>
                             {rightMenuItems.map((menu) => (
                                 <div key={menu.label}>
                                     {menu.submenu ? (
@@ -223,7 +224,8 @@ const MenuBar: React.FC = () => {
                                                 {menu.submenu.map((subItem) => (
                                                     <MenuItem key={subItem.label} onClick={handleMenuClose}>
                                                         <ListItemIcon>{subItem.icon}</ListItemIcon>
-                                                        <Link href={subItem.link} style={{ textDecoration: "none", color: "inherit" }}>
+                                                        <Link href={subItem.link}
+                                                              style={{textDecoration: "none", color: "inherit"}}>
                                                             {subItem.label}
                                                         </Link>
                                                     </MenuItem>
