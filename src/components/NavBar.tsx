@@ -162,7 +162,7 @@ const MenuBar: React.FC = () => {
                     <>
                         {/* Left-aligned menu items */}
                         <Box sx={{ display: 'flex', flexGrow: 1 }}>
-                            {leftMenuItems.map((menu, index) => (
+                            {leftMenuItems.map((menu) => (
                                 <div key={menu.label}>
                                     {menu.submenu ? (
                                         <>
@@ -204,7 +204,7 @@ const MenuBar: React.FC = () => {
 
                         {/* Right-aligned menu items */}
                         <Box sx={{ display: 'flex' }}>
-                            {rightMenuItems.map((menu, index) => (
+                            {rightMenuItems.map((menu) => (
                                 <div key={menu.label}>
                                     {menu.submenu ? (
                                         <>
