@@ -1,205 +1,253 @@
 "use client";
 
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
+import React, { useState, MouseEvent } from "react";
+import {
+    AppBar,
+    Toolbar,
+    Button,
+    Menu,
+    MenuItem,
+    IconButton,
+    Drawer,
+    List,
+    ListItem,
+    ListItemText,
+    ListItemIcon,
+    useMediaQuery,
+    useTheme,
+    Box
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import Logo from "@/assets/people.png";
-import { useMediaQuery, useTheme } from "@mui/material";
+import PeopleIcon from "@mui/icons-material/People";
+import StoreIcon from "@mui/icons-material/Store";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
+import ContactsIcon from "@mui/icons-material/Contacts";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
+import InventoryIcon from "@mui/icons-material/Inventory";
+import ReceiptIcon from "@mui/icons-material/Receipt";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import Logo from "@/assets/people.png";
 
-const pages = [
-  { name: "Contacts", url: "/people/contacts" },
-  { name: "Prospects", url: "/people/prospects" },
-  { name: "Customers", url: "/people/customers" },
-  { name: "Products", url: "/products" },
-  { name: "Payments", url: "/payments" },
-];
-
-const settings = [
-  { name: "Profile", url: "/profile" },
-  { name: "Logout", url: "/logout" },
-];
-
-export default function NavBar() {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
-  return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          {!isMobile && (
-            <Image
-              src={Logo}
-              alt="Logo"
-              height={40}
-              width={40}
-              style={{
-                marginRight: "10px",
-                display: "flex",
-                alignItems: "center",
-              }}
-            />
-          )}
-
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Tiny CRM
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <Typography
-                    textAlign="center"
-                    component={Link}
-                    href={page.url}
-                    sx={{
-                      color: "inherit",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {page.name}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.name}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                <Typography
-                  href={page.url}
-                  component={Link}
-                  textAlign="center"
-                  sx={{
-                    color: "inherit",
-                    textDecoration: "none",
-                  }}
-                >
-                  {page.name}
-                </Typography>
-              </Button>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                  <Typography
-                    textAlign="center"
-                    component={Link}
-                    href={setting.url}
-                    sx={{
-                      color: "inherit",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {setting.name}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
-  );
+interface MenuItemType {
+    label: string;
+    link?: string;
+    icon: React.ReactNode;
+    submenu?: {
+        label: string;
+        link: string;
+        icon: React.ReactNode;
+    }[];
+    align?: 'left' | 'right';
 }
+
+const menuData: MenuItemType[] = [
+    {
+        label: "People",
+        icon: <PeopleIcon />,
+        align: 'left',
+        submenu: [
+            { label: "Contact", link: "/people/contact", icon: <ContactsIcon /> },
+            { label: "Prospect", link: "/people/prospect", icon: <PersonAddIcon /> },
+            { label: "Customer", link: "/people/customer", icon: <SupervisedUserCircleIcon /> },
+        ],
+    },
+    {
+        label: "Store",
+        icon: <StoreIcon />,
+        align: 'left',
+        submenu: [
+            { label: "Product", link: "/product/inventory", icon: <InventoryIcon /> },
+            { label: "Transactions", link: "/product/transaction", icon: <ReceiptIcon /> },
+        ],
+    },
+    {
+        label: "Profile",
+        icon: <AccountCircleIcon />,
+        align: 'right',
+        submenu: [
+            { label: "My profile", link: "/profile", icon: <AccountCircleIcon /> },
+            { label: "Administration", link: "/admin", icon: <AdminPanelSettingsIcon /> },
+        ],
+    },
+    {
+        label: "Logout",
+        link: "/logout",
+        icon: <LogoutIcon />,
+        align: 'right'
+    }
+];
+
+const MenuBar: React.FC = () => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [activeSubmenu, setActiveSubmenu] = useState<null | number>(null);
+    const [drawerOpen, setDrawerOpen] = useState(false);
+
+    const handleMenuOpen = (event: MouseEvent<HTMLElement>, index: number) => {
+        setAnchorEl(event.currentTarget);
+        setActiveSubmenu(index);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+        setActiveSubmenu(null);
+    };
+
+    const toggleDrawer = (open: boolean) => () => {
+        setDrawerOpen(open);
+    };
+
+    // Separate menu items by alignment
+    const leftMenuItems = menuData.filter(item => item.align !== 'right');
+    const rightMenuItems = menuData.filter(item => item.align === 'right');
+
+    return (
+        <AppBar position="static">
+            <Toolbar>
+                {isMobile && (
+                    <IconButton edge="start" color="inherit" onClick={toggleDrawer(true)}>
+                        <MenuIcon />
+                    </IconButton>
+                )}
+                <Image
+                    src={Logo}
+                    alt="Logo"
+                    height={40}
+                    width={40}
+                    style={{
+                        marginRight: "10px",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                />
+
+                <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+                    <List sx={{ width: 250 }}>
+                        {menuData.map((menu) => (
+                            <div key={menu.label}>
+                                {menu.submenu ? (
+                                    <>
+                                        <ListItem>
+                                            <ListItemIcon>{menu.icon}</ListItemIcon>
+                                            <ListItemText primary={menu.label} />
+                                        </ListItem>
+                                        {menu.submenu.map((subItem) => (
+                                            <Link key={subItem.label} href={subItem.link} passHref legacyBehavior>
+                                                <ListItem component="a" onClick={toggleDrawer(false)} sx={{ pl: 4 }}>
+                                                    <ListItemIcon>{subItem.icon}</ListItemIcon>
+                                                    <ListItemText primary={subItem.label} />
+                                                </ListItem>
+                                            </Link>
+                                        ))}
+                                    </>
+                                ) : (
+                                    <Link key={menu.label} href={menu.link!} passHref legacyBehavior>
+                                        <ListItem component="a" onClick={toggleDrawer(false)}>
+                                            <ListItemIcon>{menu.icon}</ListItemIcon>
+                                            <ListItemText primary={menu.label} />
+                                        </ListItem>
+                                    </Link>
+                                )}
+                            </div>
+                        ))}
+                    </List>
+                </Drawer>
+
+                {!isMobile && (
+                    <>
+                        {/* Left-aligned menu items */}
+                        <Box sx={{ display: 'flex', flexGrow: 1 }}>
+                            {leftMenuItems.map((menu, index) => (
+                                <div key={menu.label}>
+                                    {menu.submenu ? (
+                                        <>
+                                            <Button
+                                                color="inherit"
+                                                onClick={(event) => handleMenuOpen(event, menuData.indexOf(menu))}
+                                                startIcon={menu.icon}
+                                            >
+                                                {menu.label}
+                                            </Button>
+                                            <Menu
+                                                anchorEl={anchorEl}
+                                                open={activeSubmenu === menuData.indexOf(menu) && Boolean(anchorEl)}
+                                                onClose={handleMenuClose}
+                                            >
+                                                {menu.submenu.map((subItem) => (
+                                                    <MenuItem key={subItem.label} onClick={handleMenuClose}>
+                                                        <ListItemIcon>{subItem.icon}</ListItemIcon>
+                                                        <Link href={subItem.link} style={{ textDecoration: "none", color: "inherit" }}>
+                                                            {subItem.label}
+                                                        </Link>
+                                                    </MenuItem>
+                                                ))}
+                                            </Menu>
+                                        </>
+                                    ) : (
+                                        <Button
+                                            color="inherit"
+                                            component={Link}
+                                            href={menu.link!}
+                                            startIcon={menu.icon}
+                                        >
+                                            {menu.label}
+                                        </Button>
+                                    )}
+                                </div>
+                            ))}
+                        </Box>
+
+                        {/* Right-aligned menu items */}
+                        <Box sx={{ display: 'flex' }}>
+                            {rightMenuItems.map((menu, index) => (
+                                <div key={menu.label}>
+                                    {menu.submenu ? (
+                                        <>
+                                            <Button
+                                                color="inherit"
+                                                onClick={(event) => handleMenuOpen(event, menuData.indexOf(menu))}
+                                                startIcon={menu.icon}
+                                            >
+                                                {menu.label}
+                                            </Button>
+                                            <Menu
+                                                anchorEl={anchorEl}
+                                                open={activeSubmenu === menuData.indexOf(menu) && Boolean(anchorEl)}
+                                                onClose={handleMenuClose}
+                                            >
+                                                {menu.submenu.map((subItem) => (
+                                                    <MenuItem key={subItem.label} onClick={handleMenuClose}>
+                                                        <ListItemIcon>{subItem.icon}</ListItemIcon>
+                                                        <Link href={subItem.link} style={{ textDecoration: "none", color: "inherit" }}>
+                                                            {subItem.label}
+                                                        </Link>
+                                                    </MenuItem>
+                                                ))}
+                                            </Menu>
+                                        </>
+                                    ) : (
+                                        <Button
+                                            color="inherit"
+                                            component={Link}
+                                            href={menu.link!}
+                                            startIcon={menu.icon}
+                                        >
+                                            {menu.label}
+                                        </Button>
+                                    )}
+                                </div>
+                            ))}
+                        </Box>
+                    </>
+                )}
+            </Toolbar>
+        </AppBar>
+    );
+};
+
+export default MenuBar;
