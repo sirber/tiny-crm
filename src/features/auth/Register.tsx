@@ -3,7 +3,7 @@
 import {Box, Button, Card, CardContent, TextField, Typography,} from "@mui/material";
 import {useActionState} from "react";
 import {isRegisterEnabled} from "@/config";
-import {register} from "@/actions/auth/register";
+import {register} from "@/features/auth/actions/register";
 
 export function Register({
                              setShowRegister,
