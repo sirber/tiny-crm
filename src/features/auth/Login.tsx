@@ -1,7 +1,7 @@
 "use client";
 
 import {Box, Button, Card, CardContent, TextField, Typography,} from "@mui/material";
-import {useActionState} from "react";
+import React, {useActionState} from "react";
 import {isRegisterEnabled} from "@/config";
 import {login} from "@/actions/auth/login";
 
@@ -24,7 +24,6 @@ export function Login({
             justifyContent="center"
             alignItems="center"
             minHeight="100vh"
-            bgcolor="#f5f5f5"
         >
             <Card sx={{maxWidth: 400, width: "100%", padding: 3, boxShadow: 3}}>
                 <CardContent>
