@@ -1,23 +1,17 @@
-"use server"
+"use client";
 
-import {redirect} from "next/navigation";
-import prisma from "@/lib/database";
-import {clearToken, getUser} from "@/lib/session";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { logoutUser } from "./actions";
 
-export default async function Logout() {
-    const user = await getUser();
-    if (user) {
-        await prisma.user.update({
-            where: {
-                id: user.id,
-            },
-            data: {
-                sessionToken: null,
-            },
+export default function LogoutPage() {
+    const router = useRouter();
+
+    useEffect(() => {
+        logoutUser().then(() => {
+            router.push("/");
         });
-    }
+    }, [router]);
 
-    await clearToken();
-
-    redirect('/');
+    return <p>Logging out...</p>;
 }
