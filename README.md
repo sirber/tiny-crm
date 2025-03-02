@@ -17,6 +17,15 @@ made with NextJS. The database is in MySQL format.
 
 ### Bootstrap
 
+1. Generate a JWT secret
+
+```bash
+openssl rand -hex 64
+```
+
+2. Save it to `.env.local`
+3. Start the development server
+
 ```bash
 make dev
 ```

@@ -75,7 +75,7 @@ const menuData: MenuItemType[] = [
     },
     {
         label: "Logout",
-        link: "/logout",
+        link: "/auth/logout",
         icon: <LogoutIcon/>,
         align: 'right'
     }

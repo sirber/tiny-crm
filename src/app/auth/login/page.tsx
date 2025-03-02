@@ -3,19 +3,17 @@
 import {Box, Button, Card, CardContent, TextField, Typography,} from "@mui/material";
 import React, {useActionState} from "react";
 import {isRegisterEnabled} from "@/config";
-import {login} from "@/features/auth/actions/login";
+import {login} from "./actions";
+import {useRouter} from "next/navigation";
 
-export function Login({
-                          setShowRegister,
-                      }: {
-    setShowRegister: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export default function Login() {
     const [state, action] = useActionState(login, null);
+    const router = useRouter();
 
     const showRegisterButton = isRegisterEnabled();
 
     function goRegister() {
-        setShowRegister(true);
+        router.push('/auth/register');
     }
 
     return (
