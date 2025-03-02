@@ -26,6 +26,12 @@ make dev
 1. modify `prisma/schema.prisma`
 2. run `make migration`
 
+## Enable registration
+
+```env
+NEXT_PUBLIC_REGISTER_ENABLED=true
+```
+
 ## Production
 
 ### Via Docker Infra

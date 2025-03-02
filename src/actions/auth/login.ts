@@ -10,7 +10,7 @@ const prisma = new PrismaClient();
 
 export async function login(
   state: string | null,
-  formData: FormData
+  formData: FormData,
 ): Promise<string> {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
