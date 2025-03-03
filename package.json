@@ -22,6 +22,7 @@
     "@prisma/adapter-pg": "^6.2.1",
     "@prisma/client": "^6.1.0",
     "argon2": "^0.41.1",
+    "jose": "^6.0.8",
     "jsonwebtoken": "^9.0.2",
     "next": "15.1.2",
     "pg": "^8.13.1",

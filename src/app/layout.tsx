@@ -2,7 +2,7 @@ import type {Metadata} from "next";
 import {AppRouterCacheProvider} from "@mui/material-nextjs/v15-appRouter";
 import "./globals.css";
 import NavBar from "@/features/layout/NavBar";
-import {check} from "@/lib/session";
+import {validateToken} from "@/lib/session";
 import Theme from "./theme";
 import React from "react";
 
@@ -16,7 +16,7 @@ export default async function RootLayout({
                                          }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const hasSession = await check();
+    const hasSession = await validateToken();
 
     return (
         <html lang="en">
