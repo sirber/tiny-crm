@@ -1,7 +1,8 @@
 import {notFound} from "next/navigation";
 import {validate as isUUID} from "uuid";
+import CustomerNew from "@/features/people/CustomerNew";
 
-export default async function CustomerEdit({
+export default async function CustomerPage({
                                                params,
                                            }: {
     params: Promise<{ id: string }>;
@@ -9,7 +10,7 @@ export default async function CustomerEdit({
     const {id} = await params;
 
     if (id === "new") {
-        return <>New</>;
+        return <CustomerNew/>;
     }
 
     if (!isUUID(id)) {
