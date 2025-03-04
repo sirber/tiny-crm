@@ -1,13 +1,19 @@
 "use client";
 
-import React from "react";
+import React, {useState} from "react";
 import {Button, Card, CardActions, CardContent, TextField, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import {useRouter} from "next/navigation";
 import Extras from "@/features/extra/Extras";
+import {ExtraProps} from "@/features/extra";
 
 export default function CustomerNew() {
     const router = useRouter();
+    const [data, setData] = useState<ExtraProps>({
+        followups: [],
+        notes: [],
+        links: [],
+    });
 
     function cancel() {
         router.push('/people/customer');
@@ -15,7 +21,6 @@ export default function CustomerNew() {
 
     return (
         <Grid container spacing={1}>
-            {/* Add Contact Card */}
             <Grid size={6}>
                 <Card>
                     <CardContent>
@@ -31,9 +36,8 @@ export default function CustomerNew() {
                 </Card>
             </Grid>
 
-            {/* Right Side Cards - Stacked */}
             <Grid size={6}>
-                <Extras/>
+                <Extras data={data} setData={setData}/>
             </Grid>
         </Grid>
     );

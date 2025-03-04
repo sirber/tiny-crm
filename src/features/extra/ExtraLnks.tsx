@@ -1,7 +1,12 @@
 import {Card, CardContent, Typography} from "@mui/material";
-import React from "react";
+import {Link} from "@/features/extra/index";
 
-export default function ExtraLinks() {
+interface ExtraLinksProps {
+    data: Array<Link>;
+    setData: (newNotes: Array<Link>) => void;
+}
+
+export default function ExtraLinks({data, setData}: ExtraLinksProps) {
     return <Card>
         <CardContent>
             <Typography variant="h6">Follow Ups</Typography>

@@ -1,7 +1,12 @@
 import {Card, CardContent, Typography} from "@mui/material";
-import React from "react";
+import {FollowUp} from "@/features/extra/index";
 
-export default function ExtraFollowUps() {
+interface ExtraFollowUpsProps {
+    data: Array<FollowUp>;
+    setData: (newNotes: Array<FollowUp>) => void;
+}
+
+export default function ExtraFollowUps({data, setData}: ExtraFollowUpsProps) {
     return <Card>
         <CardContent>
             <Typography variant="h6">Follow Ups</Typography>
