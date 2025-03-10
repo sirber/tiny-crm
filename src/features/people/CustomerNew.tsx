@@ -9,7 +9,7 @@ import {ExtraProps} from "@/features/extra";
 
 export default function CustomerNew() {
     const router = useRouter();
-    const [data, setData] = useState<ExtraProps>({
+    const [data, setData] = useState<ExtraProps>({ // TODO: move to a useExtra hook
         followups: [],
         notes: [],
         links: [],
