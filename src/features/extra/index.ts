@@ -29,5 +29,5 @@ export interface ExtraProps {
 
 export interface ExtrasState {
     data: ExtraProps;
-    setData: Dispatch<SetStateAction<ExtraProps>>;
+    setData: Dispatch<SetStateAction<ExtraProps>> | ((props: ExtraProps) => void);
 }

@@ -11,7 +11,7 @@ const columns: GridColDef[] = [
     {field: "updatedAt", headerName: "Updated At", width: 150},
 ];
 
-export function CustomerList({rows}: { rows: GridValidRowModel[] }) {
+export const CustomerList = ({rows}: { rows: GridValidRowModel[] }) => {
     const router = useRouter();
 
     function onRefreshClick() {

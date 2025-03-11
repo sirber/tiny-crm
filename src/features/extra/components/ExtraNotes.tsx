@@ -1,5 +1,5 @@
 import {Card, CardContent, Typography} from "@mui/material";
-import {Note} from "@/features/extra/index";
+import {Note} from "@/features/extra";
 
 interface ExtraNotesProps {
     data: Array<Note>;

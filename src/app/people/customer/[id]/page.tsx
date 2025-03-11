@@ -1,12 +1,14 @@
 import {notFound} from "next/navigation";
 import {validate as isUUID} from "uuid";
-import CustomerNew from "@/features/people/CustomerNew";
+import {CustomerEdit, CustomerNew} from "@/features/people";
+
+interface PageParams {
+    params: Promise<{ id: string }>;
+}
 
 export default async function CustomerPage({
                                                params,
-                                           }: {
-    params: Promise<{ id: string }>;
-}) {
+                                           }: PageParams) {
     const {id} = await params;
 
     if (id === "new") {
@@ -19,5 +21,5 @@ export default async function CustomerPage({
 
     // TODO: Fetch customer data using the id
 
-    return <>Page for ID: {id}</>;
+    return <CustomerEdit/>;
 }

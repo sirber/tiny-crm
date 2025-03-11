@@ -1,5 +1,5 @@
 import {Card, CardContent, Typography} from "@mui/material";
-import {FollowUp} from "@/features/extra/index";
+import {FollowUp} from "@/features/extra";
 
 interface ExtraFollowUpsProps {
     data: Array<FollowUp>;

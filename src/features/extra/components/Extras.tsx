@@ -1,9 +1,9 @@
-import ExtraFollowUps from "@/features/extra/ExtraFollowUps";
-import ExtraLinks from "@/features/extra/ExtraLnks";
-import ExtraNotes from "@/features/extra/ExtraNotes";
+import ExtraFollowUps from "@/features/extra/components/ExtraFollowUps";
+import ExtraLinks from "@/features/extra/components/ExtraLnks";
+import ExtraNotes from "@/features/extra/components/ExtraNotes";
 import Grid from "@mui/material/Grid2";
 import {useCallback} from "react";
-import {ExtrasState, FollowUp, Link, Note} from "@/features/extra/index";
+import {ExtrasState, FollowUp, Link, Note} from "@/features/extra";
 
 export default function Extras({data, setData}: ExtrasState) {
     const {followups, links, notes} = data;

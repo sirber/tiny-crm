@@ -1,5 +1,5 @@
 import {Card, CardContent, Typography} from "@mui/material";
-import {Link} from "@/features/extra/index";
+import {Link} from "@/features/extra";
 
 interface ExtraLinksProps {
     data: Array<Link>;
