@@ -1,12 +1,9 @@
 name: Test, Build and Push Docker Image
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  release:
+    types:
+      - created  # Runs on release creation
 
 jobs:
   test:
@@ -26,13 +23,14 @@ jobs:
 
       - name: Run Lint
         run: npm run lint
-#
-#      - name: Run Tests
-#        run: npm test  # Modify this if you have a different test command
+
+      # Uncomment and modify this if you have tests
+      # - name: Run Tests
+      #   run: npm test
 
   build:
     runs-on: ubuntu-latest
-    needs: test # Ensures the test job passes before running the build
+    needs: test  # Ensures the test job passes before running the build
 
     steps:
       - name: Checkout code
@@ -53,4 +51,6 @@ jobs:
         with:
           push: true
           target: runner
-          tags: ghcr.io/sirber/tiny-crm:latest
+          tags: |
+            ghcr.io/sirber/tiny-crm:latest
+            ghcr.io/sirber/tiny-crm:${{ github.event.release.tag_name }}

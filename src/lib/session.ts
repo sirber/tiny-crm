@@ -3,12 +3,21 @@
 import {cookies} from "next/headers";
 import prisma from "./database";
 import {User} from "@prisma/client";
+import {jwtVerify} from "jose";
+
+const JWT_SECRET = process.env.JWT_SECRET;
+
+export interface TokenInterface {
+    id: string;
+    email: string;
+    role: string;
+}
 
 export async function createSession(sessionToken: string): Promise<void> {
-    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
     const cookieStore = await cookies();
 
-    cookieStore.set("session", sessionToken, {
+    cookieStore.set("token", sessionToken, {
         httpOnly: true,
         secure: true,
         expires: expiresAt,
@@ -18,34 +27,45 @@ export async function createSession(sessionToken: string): Promise<void> {
 }
 
 export async function getUser(): Promise<User | null> {
-    const token = await getToken();
-    if (!token) {
+    const payload = await getToken();
+    if (!payload) {
         return null;
     }
 
     return prisma.user.findFirst({
         where: {
-            sessionToken: {
-                equals: token,
+            id: {
+                equals: payload.id
             },
         },
     });
 }
 
-export async function getToken(): Promise<string | null> {
+export async function getToken(): Promise<TokenInterface | null> {
     const cookieStore = await cookies();
-    const token = cookieStore.get("session")?.value;
+    const token = cookieStore.get("token")?.value;
 
-    return token || null;
+    if (!token) {
+        return null;
+    }
+
+    try {
+        const secret = new TextEncoder().encode(JWT_SECRET);
+        const {payload} = await jwtVerify<TokenInterface>(token, secret);
+
+        return payload;
+    } catch {
+        return null;
+    }
+}
+
+export async function validateToken(): Promise<boolean> {
+    const token = await getToken();
+
+    return !!token;
 }
 
 export async function clearToken(): Promise<void> {
     const cookieStore = await cookies();
-    cookieStore.delete("session");
-}
-
-export async function check(): Promise<boolean> {
-    const user = await getUser();
-
-    return !!user;
+    cookieStore.delete("token");
 }

@@ -1,15 +1,18 @@
 import {notFound} from "next/navigation";
 import {validate as isUUID} from "uuid";
+import {CustomerEdit, CustomerNew} from "@/features/people";
 
-export default async function CustomerEdit({
-                                               params,
-                                           }: {
+interface PageParams {
     params: Promise<{ id: string }>;
-}) {
+}
+
+export default async function CustomerPage({
+                                               params,
+                                           }: PageParams) {
     const {id} = await params;
 
     if (id === "new") {
-        return <>New</>;
+        return <CustomerNew/>;
     }
 
     if (!isUUID(id)) {
@@ -18,5 +21,5 @@ export default async function CustomerEdit({
 
     // TODO: Fetch customer data using the id
 
-    return <>Page for ID: {id}</>;
+    return <CustomerEdit/>;
 }

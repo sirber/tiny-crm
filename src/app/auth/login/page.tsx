@@ -1,21 +1,19 @@
 "use client";
 
 import {Box, Button, Card, CardContent, TextField, Typography,} from "@mui/material";
-import {useActionState} from "react";
+import React, {useActionState} from "react";
 import {isRegisterEnabled} from "@/config";
-import {register} from "@/features/auth/actions/register";
+import {login} from "./actions";
+import {useRouter} from "next/navigation";
 
-export function Register({
-                             setShowRegister,
-                         }: {
-    setShowRegister: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
-    const [state, action] = useActionState(register, null);
+export default function Login() {
+    const [state, action] = useActionState(login, null);
+    const router = useRouter();
 
-    const showLoginButton = isRegisterEnabled();
+    const showRegisterButton = isRegisterEnabled();
 
-    function goLogin() {
-        setShowRegister(false);
+    function goRegister() {
+        router.push('/auth/register');
     }
 
     return (
@@ -24,25 +22,14 @@ export function Register({
             justifyContent="center"
             alignItems="center"
             minHeight="100vh"
-            bgcolor="#f5f5f5"
         >
             <Card sx={{maxWidth: 400, width: "100%", padding: 3, boxShadow: 3}}>
                 <CardContent>
                     <Typography variant="h5" component="div" align="center" gutterBottom>
-                        TinyCRM - Register
+                        TinyCRM - Login
                     </Typography>
                     <form action={action}>
                         <Box display="flex" flexDirection="column" gap={2}>
-                            <TextField
-                                id="name"
-                                name="name"
-                                label="Name"
-                                type="text"
-                                placeholder="Enter your name"
-                                fullWidth
-                                required
-                                autoFocus
-                            />
                             <TextField
                                 id="email"
                                 name="email"
@@ -51,6 +38,7 @@ export function Register({
                                 placeholder="Enter your email"
                                 fullWidth
                                 required
+                                autoFocus
                             />
                             <TextField
                                 id="password"
@@ -58,15 +46,6 @@ export function Register({
                                 label="Password"
                                 type="password"
                                 placeholder="Enter your password"
-                                fullWidth
-                                required
-                            />
-                            <TextField
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                label="Confirm Password"
-                                type="password"
-                                placeholder="Confirm your password"
                                 fullWidth
                                 required
                             />
@@ -80,19 +59,19 @@ export function Register({
                                 size="large"
                                 fullWidth
                             >
-                                Register
+                                Login
                             </Button>
 
-                            {showLoginButton && (
+                            {showRegisterButton && (
                                 <Button
                                     type="button"
-                                    onClick={goLogin}
+                                    onClick={goRegister}
                                     variant="contained"
                                     color="primary"
                                     size="large"
                                     fullWidth
                                 >
-                                    Back to Login
+                                    Register
                                 </Button>
                             )}
                         </Box>

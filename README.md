@@ -17,6 +17,20 @@ made with NextJS. The database is in MySQL format.
 
 ### Bootstrap
 
+1. Generate a JWT secret
+
+```bash
+openssl rand -hex 64
+```
+
+2. Save it to `.env.local`
+
+```env
+JWT_SECRET=[my secret]
+```
+
+3. Start the development server
+
 ```bash
 make dev
 ```
@@ -44,7 +58,6 @@ services:
   app:
     restart: unless-stopped
     image: ghcr.io/sirber/tiny-crm:latest
-    working_dir: /app
     depends_on:
       - db
     ports:
@@ -52,15 +65,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://postgres:crm@db:5432/tiny-crm?connection_limit=10
       - NODE_ENV=production
-
-  migrate:
-    image: ghcr.io/sirber/tiny-crm-migrate:latest
-    restart: "no"
-    depends_on:
-      - db
-    environment:
-      - DATABASE_URL=postgresql://postgres:crm@db:5432/tiny-crm?connection_limit=10
-    command: ["npx", "prisma", "migrate", "deploy"] # Command to run migrations
+      - JWT_SECRET=[my secret]
+      - NEXT_PUBLIC_REGISTER_ENABLED=false
 
   db:
     image: postgres:17-alpine

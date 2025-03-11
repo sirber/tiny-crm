@@ -1,9 +1,8 @@
 import type {Metadata} from "next";
 import {AppRouterCacheProvider} from "@mui/material-nextjs/v15-appRouter";
 import "./globals.css";
-import NavBar from "@/ui/NavBar";
-import {check} from "@/lib/session";
-import {Auth} from "@/features/auth/Auth";
+import NavBar from "@/features/layout/NavBar";
+import {getUser, validateToken} from "@/lib/session";
 import Theme from "./theme";
 import React from "react";
 
@@ -17,7 +16,13 @@ export default async function RootLayout({
                                          }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const hasSession = await check();
+    const hasSession = await validateToken();
+    if (hasSession) {
+        const user = await getUser();
+        if (!user) {
+            throw new Error('token is valid but user is not found');
+        }
+    }
 
     return (
         <html lang="en">
@@ -25,9 +30,7 @@ export default async function RootLayout({
         <AppRouterCacheProvider>
             <Theme>
                 <NavBar hasSession={hasSession}/>
-                <main>
-                    {hasSession ? children : <Auth/>}
-                </main>
+                <main>{children}</main>
             </Theme>
         </AppRouterCacheProvider>
         </body>

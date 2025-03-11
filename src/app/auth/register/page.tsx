@@ -1,21 +1,19 @@
 "use client";
 
 import {Box, Button, Card, CardContent, TextField, Typography,} from "@mui/material";
-import React, {useActionState} from "react";
+import {useActionState} from "react";
 import {isRegisterEnabled} from "@/config";
-import {login} from "@/features/auth/actions/login";
+import {register} from "./actions";
+import {useRouter} from "next/navigation";
 
-export function Login({
-                          setShowRegister,
-                      }: {
-    setShowRegister: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
-    const [state, action] = useActionState(login, null);
+export default function Register() {
+    const [state, action] = useActionState(register, null);
+    const router = useRouter();
 
-    const showRegisterButton = isRegisterEnabled();
+    const showLoginButton = isRegisterEnabled();
 
-    function goRegister() {
-        setShowRegister(true);
+    function goLogin() {
+        router.push('/auth/login');
     }
 
     return (
@@ -28,10 +26,20 @@ export function Login({
             <Card sx={{maxWidth: 400, width: "100%", padding: 3, boxShadow: 3}}>
                 <CardContent>
                     <Typography variant="h5" component="div" align="center" gutterBottom>
-                        TinyCRM - Login
+                        TinyCRM - Register
                     </Typography>
                     <form action={action}>
                         <Box display="flex" flexDirection="column" gap={2}>
+                            <TextField
+                                id="name"
+                                name="name"
+                                label="Name"
+                                type="text"
+                                placeholder="Enter your name"
+                                fullWidth
+                                required
+                                autoFocus
+                            />
                             <TextField
                                 id="email"
                                 name="email"
@@ -40,7 +48,6 @@ export function Login({
                                 placeholder="Enter your email"
                                 fullWidth
                                 required
-                                autoFocus
                             />
                             <TextField
                                 id="password"
@@ -48,6 +55,15 @@ export function Login({
                                 label="Password"
                                 type="password"
                                 placeholder="Enter your password"
+                                fullWidth
+                                required
+                            />
+                            <TextField
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                label="Confirm Password"
+                                type="password"
+                                placeholder="Confirm your password"
                                 fullWidth
                                 required
                             />
@@ -61,19 +77,19 @@ export function Login({
                                 size="large"
                                 fullWidth
                             >
-                                Login
+                                Register
                             </Button>
 
-                            {showRegisterButton && (
+                            {showLoginButton && (
                                 <Button
                                     type="button"
-                                    onClick={goRegister}
+                                    onClick={goLogin}
                                     variant="contained"
                                     color="primary"
                                     size="large"
                                     fullWidth
                                 >
-                                    Register
+                                    Back to Login
                                 </Button>
                             )}
                         </Box>

@@ -75,7 +75,7 @@ const menuData: MenuItemType[] = [
     },
     {
         label: "Logout",
-        link: "/logout",
+        link: "/auth/logout",
         icon: <LogoutIcon/>,
         align: 'right'
     }
@@ -123,17 +123,19 @@ const NavBar = ({hasSession}: NavBarInterface) => {
                             <MenuIcon/>
                         </IconButton>
                     )}
-                    <Image
-                        src={Logo}
-                        alt="Logo"
-                        height={40}
-                        width={40}
-                        style={{
-                            marginRight: "10px",
-                            display: "flex",
-                            alignItems: "center",
-                        }}
-                    />
+                    <Link key='home' href='/'>
+                        <Image
+                            src={Logo}
+                            alt="Logo"
+                            height={40}
+                            width={40}
+                            style={{
+                                marginRight: "10px",
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        />
+                    </Link>
 
                     <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
                         <List sx={{width: 250}}>
