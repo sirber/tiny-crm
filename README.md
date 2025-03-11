@@ -53,7 +53,6 @@ services:
   app:
     restart: unless-stopped
     image: ghcr.io/sirber/tiny-crm:latest
-    working_dir: /app
     depends_on:
       - db
     ports:
@@ -61,15 +60,6 @@ services:
     environment:
       - DATABASE_URL=postgresql://postgres:crm@db:5432/tiny-crm?connection_limit=10
       - NODE_ENV=production
-
-  migrate:
-    image: ghcr.io/sirber/tiny-crm-migrate:latest
-    restart: "no"
-    depends_on:
-      - db
-    environment:
-      - DATABASE_URL=postgresql://postgres:crm@db:5432/tiny-crm?connection_limit=10
-    command: ["npx", "prisma", "migrate", "deploy"] # Command to run migrations
 
   db:
     image: postgres:17-alpine
