@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint && tsc --noEmit",
     "clean": "rm -fr ./.next",
     "migrate:dev": "npx prisma migrate dev",
     "migrate:prod": "npx prisma migrate deploy",
