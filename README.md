@@ -24,6 +24,11 @@ openssl rand -hex 64
 ```
 
 2. Save it to `.env.local`
+
+```env
+JWT_SECRET=[my secret]
+```
+
 3. Start the development server
 
 ```bash
@@ -60,6 +65,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://postgres:crm@db:5432/tiny-crm?connection_limit=10
       - NODE_ENV=production
+      - JWT_SECRET=[my secret]
+      - NEXT_PUBLIC_REGISTER_ENABLED=false
 
   db:
     image: postgres:17-alpine
