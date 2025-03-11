@@ -6,6 +6,7 @@ interface ExtraLinksProps {
     setData: (newNotes: Array<Link>) => void;
 }
 
+// eslint-disable-next-line
 export default function ExtraLinks({data, setData}: ExtraLinksProps) {
     return <Card>
         <CardContent>

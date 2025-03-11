@@ -6,6 +6,7 @@ interface ExtraNotesProps {
     setData: (newNotes: Array<Note>) => void;
 }
 
+// eslint-disable-next-line
 export default function ExtraNotes({data, setData}: ExtraNotesProps) {
     return <Card>
         <CardContent>

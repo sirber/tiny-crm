@@ -6,6 +6,7 @@ interface ExtraFollowUpsProps {
     setData: (newNotes: Array<FollowUp>) => void;
 }
 
+// eslint-disable-next-line
 export default function ExtraFollowUps({data, setData}: ExtraFollowUpsProps) {
     return <Card>
         <CardContent>
