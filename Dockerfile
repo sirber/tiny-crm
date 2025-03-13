@@ -15,5 +15,6 @@ COPY package*.json entrypoint.sh prisma/ ./
 RUN npm i --omit dev
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
+RUN chmod +x entrypoint.sh
 EXPOSE 3000
-CMD ["./entrypoint.sh"]
+CMD ["sh", "./entrypoint.sh"]
