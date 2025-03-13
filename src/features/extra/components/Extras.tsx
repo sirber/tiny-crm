@@ -9,16 +9,16 @@ export default function Extras({data, setData}: ExtrasState) {
     const {followups, links, notes} = data;
 
     const setFollowups = useCallback((newFollowups: Array<FollowUp>) => {
-        setData(prev => ({...prev, followups: newFollowups}));
-    }, [setData]);
+        setData({...data, followups: newFollowups});
+    }, [setData, data]);
 
     const setLinks = useCallback((newLinks: Array<Link>) => {
-        setData(prev => ({...prev, links: newLinks}));
-    }, [setData]);
+        setData({...data, links: newLinks});
+    }, [setData, data]);
 
     const setNotes = useCallback((newNotes: Array<Note>) => {
-        setData(prev => ({...prev, notes: newNotes}));
-    }, [setData]);
+        setData({...data, notes: newNotes});
+    }, [setData, data]);
 
     return (
         <Grid container spacing={1} direction="column">
