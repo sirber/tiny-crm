@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // custom config
+  output: "standalone",
 };
 
 export default nextConfig;
