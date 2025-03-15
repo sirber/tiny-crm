@@ -1,5 +1,6 @@
 services:
   app:
+    container_name: tiny-crm-dev-app
     image: node:22-alpine
     user: "1000:1000"
     restart: unless-stopped
@@ -17,6 +18,7 @@ services:
       - ./:/app
 
   db:
+    container_name: tiny-crm-dev-db
     image: postgres:17-alpine
     restart: unless-stopped
     environment:
