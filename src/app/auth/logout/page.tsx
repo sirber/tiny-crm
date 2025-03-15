@@ -1,15 +1,15 @@
 "use client";
 
-import {useEffect} from "react";
-import {useRouter} from "next/navigation";
-import {logoutUser} from "./actions";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { logoutUser } from "./actions";
 
 export default function LogoutPage() {
-    const router = useRouter();
+  const router = useRouter();
 
-    useEffect(() => {
-        logoutUser();
-    }, [router]);
+  useEffect(() => {
+    logoutUser();
+  }, [router]);
 
-    return <p>Logging out...</p>;
+  return <p>Logging out...</p>;
 }

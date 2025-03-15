@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint && tsc --noEmit",
-    "clean": "rm -fr ./.next",
+    "format": "npx prettier --write src",
     "migrate:dev": "npx prisma migrate dev",
     "migrate:prod": "npx prisma migrate deploy",
     "postinstall": "prisma generate"
