@@ -2,6 +2,7 @@ import { ExtraProps } from "@/features/extra";
 
 export default class CustomerDTO {
   constructor(
+    public userId: string = "",
     public name: string = "",
     public email: string = "",
     public phone: string = "",
@@ -14,6 +15,7 @@ export default class CustomerDTO {
 
   withUpdatedField(key: keyof CustomerDTO, value: string): CustomerDTO {
     return new CustomerDTO(
+      key === "userId" ? value : this.userId,
       key === "name" ? value : this.name,
       key === "email" ? value : this.email,
       key === "phone" ? value : this.phone,
@@ -22,6 +24,12 @@ export default class CustomerDTO {
   }
 
   withUpdatedExtras(extras: ExtraProps): CustomerDTO {
-    return new CustomerDTO(this.name, this.email, this.phone, extras);
+    return new CustomerDTO(
+      this.userId,
+      this.name,
+      this.email,
+      this.phone,
+      extras,
+    );
   }
 }

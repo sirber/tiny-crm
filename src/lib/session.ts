@@ -26,13 +26,13 @@ export async function createSession(sessionToken: string): Promise<void> {
   });
 }
 
-export async function getUser(): Promise<User | null> {
+export async function getUser(): Promise<User> {
   const payload = await getToken();
   if (!payload) {
-    return null;
+    throw new Error("No token found");
   }
 
-  return prisma.user.findFirst({
+  return prisma.user.findFirstOrThrow({
     where: {
       id: {
         equals: payload.id,

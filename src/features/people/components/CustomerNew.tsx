@@ -14,11 +14,14 @@ import { useRouter } from "next/navigation";
 import Extras from "@/features/extra/components/Extras";
 import CustomerDTO from "@/features/people/dto/CustomerDTO";
 import { ExtraProps } from "@/features/extra";
+import { NewCustomerProps } from "../interfaces/NewCustomerProps";
 
-export const CustomerNew = () => {
+export const CustomerNew = ({ userId }: NewCustomerProps) => {
   const router = useRouter();
 
-  const [customer, setCustomer] = useState<CustomerDTO>(new CustomerDTO());
+  const [customer, setCustomer] = useState<CustomerDTO>(
+    new CustomerDTO(userId),
+  );
 
   function handleCustomerChange(key: keyof CustomerDTO, value: string) {
     setCustomer((prev) => prev.withUpdatedField(key, value));
