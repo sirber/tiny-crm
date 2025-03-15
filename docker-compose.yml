@@ -2,11 +2,10 @@ services:
   app:
     container_name: tiny-crm-dev-app
     image: node:22-alpine
-    user: "1000:1000"
     restart: unless-stopped
     working_dir: /app
     command: >
-      sh -c "npm install && npm run dev"
+      sh -c "yarn install && yarn dev"
     depends_on:
       - db
     ports:
