@@ -1,7 +1,7 @@
 # Tiny CRM
 
 Small CRM for small business. This is a "learning project",
-made with NextJS. The database is in MySQL format.
+made with NextJS. The database is with Postgresql.
 
 ### Requirements
 
@@ -87,7 +87,5 @@ To run elsewhere, you can use the image directly and configure using environment
 ```
 NEXT_PUBLIC_REGISTER_ENABLED=true
 DATABASE_URL=postgresql://[user:pass]@[db-name]:5432/[schema]?connection_limit=10
+JWT_SECRET=[my secret]
 ```
-
-docker build --target migrate -t tiny-crm-migrate .
-docker build --target runner -t tiny-crm .
