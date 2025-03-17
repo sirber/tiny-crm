@@ -6,7 +6,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  TextField,
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
@@ -15,17 +14,22 @@ import Extras from "@/features/extra/components/Extras";
 import CustomerDTO from "@/features/people/dto/CustomerDTO";
 import { ExtraProps } from "@/features/extra";
 import { NewCustomerProps } from "../interfaces/NewCustomerProps";
+import { FormField } from "@/interfaces/FormField";
+import { FormComponent } from "@/components/FormComponent";
 
 export const CustomerNew = ({ userId }: NewCustomerProps) => {
   const router = useRouter();
 
   const [customer, setCustomer] = useState<CustomerDTO>(
-    new CustomerDTO(userId),
+    new CustomerDTO(userId)
   );
 
-  function handleCustomerChange(key: keyof CustomerDTO, value: string) {
-    setCustomer((prev) => prev.withUpdatedField(key, value));
-  }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCustomer((prev) =>
+      prev.withUpdatedField(name as keyof CustomerDTO, value)
+    );
+  };
 
   const handleExtrasChange = useCallback((updatedExtras: ExtraProps) => {
     setCustomer((prev) => prev.withUpdatedExtras(updatedExtras));
@@ -35,33 +39,37 @@ export const CustomerNew = ({ userId }: NewCustomerProps) => {
     router.push("/people/customer");
   }
 
+  const fields: FormField<CustomerDTO>[] = [
+    { name: "name", label: "Name", required: true },
+    {
+      name: "email",
+      label: "Email",
+      type: "email",
+      required: true,
+      pattern: "^[^@s]+@[^@s]+.[^@s]+$",
+    },
+    {
+      name: "phone",
+      label: "Phone",
+      type: "tel",
+      required: true,
+      pattern: "^\\+?[0-9]{7,15}$",
+    },
+  ];
+
   return (
     <Grid container spacing={1}>
       <Grid size={6}>
         <Card>
           <CardContent>
             <Typography variant="h6">Add Customer</Typography>
-            <TextField
-              fullWidth
-              label="Name"
-              margin="dense"
-              value={customer.name}
-              onChange={(e) => handleCustomerChange("name", e.target.value)}
-            />
-            <TextField
-              fullWidth
-              label="Email"
-              margin="dense"
-              value={customer.email}
-              onChange={(e) => handleCustomerChange("email", e.target.value)}
-            />
-            <TextField
-              fullWidth
-              label="Phone"
-              margin="dense"
-              value={customer.phone}
-              onChange={(e) => handleCustomerChange("phone", e.target.value)}
-            />
+            <form action={}>
+              <FormComponent
+                fields={fields}
+                values={customer}
+                handleChange={handleChange}
+              />
+            </form>
           </CardContent>
           <CardActions>
             <Button variant="contained" color="primary">
