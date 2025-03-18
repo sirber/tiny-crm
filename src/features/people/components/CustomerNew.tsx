@@ -60,26 +60,26 @@ export const CustomerNew = ({ userId }: NewCustomerProps) => {
   return (
     <Grid container spacing={1}>
       <Grid size={6}>
-        <Card>
-          <CardContent>
-            <Typography variant="h6">Add Customer</Typography>
-            <form action={}>
+        <form>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Add Customer</Typography>
               <FormComponent
                 fields={fields}
                 values={customer}
                 handleChange={handleChange}
               />
-            </form>
-          </CardContent>
-          <CardActions>
-            <Button variant="contained" color="primary" type="submit">
-              Add
-            </Button>
-            <Button variant="contained" color="secondary" onClick={cancel}>
-              Cancel
-            </Button>
-          </CardActions>
-        </Card>
+            </CardContent>
+            <CardActions>
+              <Button variant="contained" color="primary" type="submit">
+                Add
+              </Button>
+              <Button variant="contained" color="secondary" onClick={cancel}>
+                Cancel
+              </Button>
+            </CardActions>
+          </Card>
+        </form>
       </Grid>
 
       <Grid size={6}>
