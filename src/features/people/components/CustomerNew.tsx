@@ -12,12 +12,24 @@ import { useRouter } from "next/navigation";
 import { NewCustomerProps } from "../interfaces/NewCustomerProps";
 import { FormField } from "@/interfaces/FormField";
 import { FormComponent } from "@/components/FormComponent";
+import { useState } from "react";
+import { ExtraProps } from "@/features/extra";
+import Extras from "@/features/extra/components/Extras";
 
 export const CustomerNew = ({ userId }: NewCustomerProps) => {
   const router = useRouter();
+  const [extras, setExtras] = useState<ExtraProps>({
+    followups: [],
+    notes: [],
+    links: [],
+  });
 
   function cancel() {
     router.push("/people/customer");
+  }
+
+  function handleExtrasChange(newExtras: ExtraProps) {
+    setExtras(newExtras);
   }
 
   const fields: FormField[] = [
@@ -53,6 +65,11 @@ export const CustomerNew = ({ userId }: NewCustomerProps) => {
             name="userId"
             value={userId}
           />
+          <input
+            type="hidden"
+            name="extras"
+            value={JSON.stringify(extras)}
+          />
           <Card>
             <CardContent>
               <Typography variant="h6">Add Customer</Typography>
@@ -79,10 +96,10 @@ export const CustomerNew = ({ userId }: NewCustomerProps) => {
       </Grid>
 
       <Grid size={6}>
-        {/* <Extras
-          data={customer.extras}
+        <Extras
+          data={extras}
           setData={handleExtrasChange}
-        /> */}
+        />
       </Grid>
     </Grid>
   );
