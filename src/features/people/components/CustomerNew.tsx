@@ -72,7 +72,7 @@ export const CustomerNew = ({ userId }: NewCustomerProps) => {
             </form>
           </CardContent>
           <CardActions>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" type="submit">
               Add
             </Button>
             <Button variant="contained" color="secondary" onClick={cancel}>
