@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useRouter } from "next/navigation";
-import Extras from "@/features/extra/components/Extras";
 import { NewCustomerProps } from "../interfaces/NewCustomerProps";
 import { FormField } from "@/interfaces/FormField";
 import { FormComponent } from "@/components/FormComponent";
@@ -49,6 +48,11 @@ export const CustomerNew = ({ userId }: NewCustomerProps) => {
     >
       <Grid size={6}>
         <form>
+          <input
+            type="hidden"
+            name="userId"
+            value={userId}
+          />
           <Card>
             <CardContent>
               <Typography variant="h6">Add Customer</Typography>
@@ -75,10 +79,10 @@ export const CustomerNew = ({ userId }: NewCustomerProps) => {
       </Grid>
 
       <Grid size={6}>
-        <Extras
+        {/* <Extras
           data={customer.extras}
           setData={handleExtrasChange}
-        />
+        /> */}
       </Grid>
     </Grid>
   );
