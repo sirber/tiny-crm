@@ -1,5 +1,5 @@
 import { getUser } from "@/lib/session";
-import { CustomerList } from "@/features/people/components/CustomerList";
+import { CustomerList } from "@/features/people";
 import prisma from "@/lib/database";
 import { formatDate } from "@/lib/date";
 
