@@ -23,3 +23,8 @@ stop: ## Stop running server
 .PHONY: build
 build: ## Make a production docker image
 	@docker build --target runner -t tiny-crm .
+
+.PHONY: quality
+quality: ## Run quality checks
+	@docker compose exec app yarn format
+	@docker compose exec app yarn lint
