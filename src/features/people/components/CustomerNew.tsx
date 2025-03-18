@@ -18,6 +18,7 @@ import Extras from "@/features/extra/components/Extras";
 
 export const CustomerNew = ({ userId }: NewCustomerProps) => {
   const router = useRouter();
+
   const [extras, setExtras] = useState<ExtraProps>({
     followups: [],
     notes: [],
@@ -26,10 +27,6 @@ export const CustomerNew = ({ userId }: NewCustomerProps) => {
 
   function cancel() {
     router.push("/people/customer");
-  }
-
-  function handleExtrasChange(newExtras: ExtraProps) {
-    setExtras(newExtras);
   }
 
   const fields: FormField[] = [
@@ -98,7 +95,7 @@ export const CustomerNew = ({ userId }: NewCustomerProps) => {
       <Grid size={6}>
         <Extras
           data={extras}
-          setData={handleExtrasChange}
+          setData={setExtras}
         />
       </Grid>
     </Grid>
