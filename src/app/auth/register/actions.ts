@@ -6,7 +6,7 @@ import { register } from "@/features/auth/actions/register";
 
 export async function registerUser(
   state: string | null,
-  formData: FormData
+  formData: FormData,
 ): Promise<string> {
   const name = formData.get("name")?.toString();
   const email = formData.get("email")?.toString();
@@ -22,15 +22,21 @@ export async function registerUser(
 
   // Validation
   if (!name) {
-    throw new Response("Name is required.", { status: 400 });
+    throw new Response("Name is required.", {
+      status: 400,
+    });
   }
 
   if (!email) {
-    throw new Response("Email is required.", { status: 400 });
+    throw new Response("Email is required.", {
+      status: 400,
+    });
   }
 
   if (!password || !confirmPassword) {
-    throw new Response("Password is required.", { status: 400 });
+    throw new Response("Password is required.", {
+      status: 400,
+    });
   }
 
   if (password != confirmPassword) {

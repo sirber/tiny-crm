@@ -5,13 +5,15 @@ import { loginAction } from "@/features/auth/actions/login";
 
 export async function loginUser(
   state: string | null,
-  formData: FormData
+  formData: FormData,
 ): Promise<string> {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
 
   if (!email || !password) {
-    throw new Response("Email and password are required.", { status: 400 });
+    throw new Response("Email and password are required.", {
+      status: 400,
+    });
   }
 
   const error = await loginAction(email, password);

@@ -14,7 +14,7 @@ if (!JWT_SECRET) {
 
 export async function loginAction(
   email: string,
-  password: string
+  password: string,
 ): Promise<string | void> {
   const user = await prisma.user.findFirst({
     where: {
@@ -36,7 +36,9 @@ export async function loginAction(
   // Generate JWT token using jose
   const secret = new TextEncoder().encode(JWT_SECRET);
   const sessionToken = await new SignJWT(payload)
-    .setProtectedHeader({ alg: "HS256" })
+    .setProtectedHeader({
+      alg: "HS256",
+    })
     .setExpirationTime("7d")
     .sign(secret);
 

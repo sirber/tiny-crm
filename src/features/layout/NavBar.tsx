@@ -50,8 +50,16 @@ const menuData: MenuItemType[] = [
     icon: <PeopleIcon />,
     align: "left",
     submenu: [
-      { label: "Contact", link: "/people/contact", icon: <ContactsIcon /> },
-      { label: "Prospect", link: "/people/prospect", icon: <PersonAddIcon /> },
+      {
+        label: "Contact",
+        link: "/people/contact",
+        icon: <ContactsIcon />,
+      },
+      {
+        label: "Prospect",
+        link: "/people/prospect",
+        icon: <PersonAddIcon />,
+      },
       {
         label: "Customer",
         link: "/people/customer",
@@ -64,7 +72,11 @@ const menuData: MenuItemType[] = [
     icon: <StoreIcon />,
     align: "left",
     submenu: [
-      { label: "Product", link: "/product/inventory", icon: <InventoryIcon /> },
+      {
+        label: "Product",
+        link: "/product/inventory",
+        icon: <InventoryIcon />,
+      },
       {
         label: "Transactions",
         link: "/product/transaction",
@@ -77,7 +89,11 @@ const menuData: MenuItemType[] = [
     icon: <AccountCircleIcon />,
     align: "right",
     submenu: [
-      { label: "My profile", link: "/profile", icon: <AccountCircleIcon /> },
+      {
+        label: "My profile",
+        link: "/profile",
+        icon: <AccountCircleIcon />,
+      },
       {
         label: "Administration",
         link: "/admin",
@@ -139,7 +155,10 @@ const NavBar = ({ hasSession }: NavBarInterface) => {
               <MenuIcon />
             </IconButton>
           )}
-          <Link key="home" href="/">
+          <Link
+            key="home"
+            href="/"
+          >
             <Image
               src={Logo}
               alt="Logo"
@@ -153,8 +172,16 @@ const NavBar = ({ hasSession }: NavBarInterface) => {
             />
           </Link>
 
-          <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
-            <List sx={{ width: 250 }}>
+          <Drawer
+            anchor="left"
+            open={drawerOpen}
+            onClose={toggleDrawer(false)}
+          >
+            <List
+              sx={{
+                width: 250,
+              }}
+            >
               {menuData.map((menu) => (
                 <div key={menu.label}>
                   {menu.submenu ? (
@@ -173,7 +200,9 @@ const NavBar = ({ hasSession }: NavBarInterface) => {
                           <ListItem
                             component="a"
                             onClick={toggleDrawer(false)}
-                            sx={{ pl: 4 }}
+                            sx={{
+                              pl: 4,
+                            }}
                           >
                             <ListItemIcon>{subItem.icon}</ListItemIcon>
                             <ListItemText primary={subItem.label} />
@@ -188,7 +217,10 @@ const NavBar = ({ hasSession }: NavBarInterface) => {
                       passHref
                       legacyBehavior
                     >
-                      <ListItem component="a" onClick={toggleDrawer(false)}>
+                      <ListItem
+                        component="a"
+                        onClick={toggleDrawer(false)}
+                      >
                         <ListItemIcon>{menu.icon}</ListItemIcon>
                         <ListItemText primary={menu.label} />
                       </ListItem>
@@ -202,7 +234,12 @@ const NavBar = ({ hasSession }: NavBarInterface) => {
           {!isMobile && (
             <>
               {/* Left-aligned menu items */}
-              <Box sx={{ display: "flex", flexGrow: 1 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexGrow: 1,
+                }}
+              >
                 {leftMenuItems.map((menu) => (
                   <div key={menu.label}>
                     {menu.submenu ? (
@@ -258,7 +295,11 @@ const NavBar = ({ hasSession }: NavBarInterface) => {
               </Box>
 
               {/* Right-aligned menu items */}
-              <Box sx={{ display: "flex" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                }}
+              >
                 {rightMenuItems.map((menu) => (
                   <div key={menu.label}>
                     {menu.submenu ? (

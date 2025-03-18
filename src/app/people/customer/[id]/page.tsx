@@ -4,7 +4,9 @@ import { CustomerEdit, CustomerNew } from "@/features/people";
 import { getUser } from "@/lib/session";
 
 interface PageParams {
-  params: Promise<{ id: string }>;
+  params: Promise<{
+    id: string;
+  }>;
 }
 
 export default async function CustomerPage({ params }: PageParams) {

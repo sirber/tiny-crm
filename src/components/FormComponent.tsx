@@ -1,31 +1,31 @@
 import { FormField } from "@/interfaces/FormField";
 import { TextField } from "@mui/material";
 
-interface FormProps<T> {
-  fields: FormField<T>[];
-  values: T;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+interface FormProps {
+  fields: FormField[];
+  values?: Record<string, unknown>;
 }
 
-export const FormComponent = <T,>({
-  fields,
-  values,
-  handleChange,
-}: FormProps<T>) => {
+export const FormComponent = ({ fields, values }: FormProps) => {
   return (
     <>
       {fields.map((field) => (
         <TextField
-          key={String(field.name)}
+          key={field.name}
           fullWidth
           label={field.label}
           margin="dense"
           type={field.type || "text"}
-          name={String(field.name)}
-          value={values[field.name]}
-          onChange={handleChange}
+          name={field.name}
+          value={values?.[field.name] || ""}
           required={field.required}
-          inputProps={field.pattern ? { pattern: field.pattern } : {}}
+          inputProps={
+            field.pattern
+              ? {
+                  pattern: field.pattern,
+                }
+              : {}
+          }
         />
       ))}
     </>

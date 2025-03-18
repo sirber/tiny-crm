@@ -1,5 +1,5 @@
-export interface FormField<T> {
-  name: keyof T;
+export interface FormField {
+  name: string;
   label: string;
   type?: string;
   required?: boolean;

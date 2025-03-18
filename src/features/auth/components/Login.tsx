@@ -30,13 +30,29 @@ export default function Login() {
       alignItems="center"
       minHeight="100vh"
     >
-      <Card sx={{ maxWidth: 400, width: "100%", padding: 3, boxShadow: 3 }}>
+      <Card
+        sx={{
+          maxWidth: 400,
+          width: "100%",
+          padding: 3,
+          boxShadow: 3,
+        }}
+      >
         <CardContent>
-          <Typography variant="h5" component="div" align="center" gutterBottom>
+          <Typography
+            variant="h5"
+            component="div"
+            align="center"
+            gutterBottom
+          >
             TinyCRM - Login
           </Typography>
           <form action={action}>
-            <Box display="flex" flexDirection="column" gap={2}>
+            <Box
+              display="flex"
+              flexDirection="column"
+              gap={2}
+            >
               <TextField
                 id="email"
                 name="email"

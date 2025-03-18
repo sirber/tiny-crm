@@ -6,7 +6,7 @@ import { hash } from "@/lib/password";
 export async function register(
   name: string,
   email: string,
-  password: string
+  password: string,
 ): Promise<string | void> {
   const hashedPassword = await hash(password);
 
