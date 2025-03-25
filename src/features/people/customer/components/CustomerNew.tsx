@@ -32,6 +32,8 @@ export const CustomerNew = ({ userId }: NewCustomerProps) => {
 
   const fields: FormField[] = getCustomerFields();
 
+  // TODO: form action
+
   return (
     <Grid
       container
@@ -51,7 +53,7 @@ export const CustomerNew = ({ userId }: NewCustomerProps) => {
           />
           <Card>
             <CardContent>
-              <Typography variant="h6">Add Customer</Typography>
+              <Typography variant="h6">New Customer</Typography>
               <FormComponent fields={fields} />
             </CardContent>
             <CardActions>
@@ -60,7 +62,7 @@ export const CustomerNew = ({ userId }: NewCustomerProps) => {
                 color="primary"
                 type="submit"
               >
-                Add
+                Save
               </Button>
               <Button
                 variant="contained"
