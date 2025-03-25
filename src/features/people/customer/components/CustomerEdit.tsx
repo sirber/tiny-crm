@@ -1,12 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { EditCustomerProps } from "../interfaces/EditCustomerProps";
 import { useState } from "react";
 import { ExtraProps } from "@/features/extra";
 import { FormField } from "@/interfaces/FormField";
 import { getCustomerFields } from "../helpers/fields";
 import { FormComponent } from "@/components/FormComponent";
+import type { Customer } from "@prisma/client";
 import Extras from "@/features/extra/components/Extras";
 import {
   Card,
@@ -17,7 +17,11 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
-export const CustomerEdit = ({ userId, customer }: EditCustomerProps) => {
+export interface EditCustomerProps {
+  customer: Customer;
+}
+
+export const CustomerEdit = ({ customer }: EditCustomerProps) => {
   const router = useRouter();
 
   const [extras, setExtras] = useState<ExtraProps>({
@@ -44,7 +48,12 @@ export const CustomerEdit = ({ userId, customer }: EditCustomerProps) => {
           <input
             type="hidden"
             name="userId"
-            value={userId}
+            value={customer.userId}
+          />
+          <input
+            type="hidden"
+            name="id"
+            value={customer.id}
           />
           <input
             type="hidden"

@@ -12,27 +12,27 @@ interface PageParams {
 
 export default async function CustomerPage({ params }: PageParams) {
   const { id } = await params;
-  const user = await getUser();
 
   if (id === "new") {
-    return <CustomerNew userId={user.id} />;
+    return <CustomerNew />;
   }
 
   if (!isUUID(id)) {
     return notFound();
   }
 
-  const customer = await prisma.customer.findFirstOrThrow({
-    where: {
-      id: id,
-      userId: user.id,
-    },
-  });
+  try {
+    const user = await getUser();
+    const customer = await prisma.customer.findFirstOrThrow({
+      where: {
+        id: id,
+        userId: user.id,
+      },
+    });
 
-  return (
-    <CustomerEdit
-      userId={user.id}
-      customer={customer}
-    />
-  );
+    return <CustomerEdit customer={customer} />;
+  } catch (error) {
+    console.error(error);
+    return notFound();
+  }
 }

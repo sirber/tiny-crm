@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useRouter } from "next/navigation";
-import { NewCustomerProps } from "../interfaces/NewCustomerProps";
 import { FormField } from "@/interfaces/FormField";
 import { FormComponent } from "@/components/FormComponent";
 import { useState } from "react";
@@ -17,7 +16,7 @@ import { ExtraProps } from "@/features/extra";
 import Extras from "@/features/extra/components/Extras";
 import { getCustomerFields } from "../helpers/fields";
 
-export const CustomerNew = ({ userId }: NewCustomerProps) => {
+export const CustomerNew = () => {
   const router = useRouter();
 
   const [extras, setExtras] = useState<ExtraProps>({
@@ -41,11 +40,6 @@ export const CustomerNew = ({ userId }: NewCustomerProps) => {
     >
       <Grid size={6}>
         <form>
-          <input
-            type="hidden"
-            name="userId"
-            value={userId}
-          />
           <input
             type="hidden"
             name="extras"
