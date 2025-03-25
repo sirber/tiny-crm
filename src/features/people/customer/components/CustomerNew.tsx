@@ -15,6 +15,7 @@ import { FormComponent } from "@/components/FormComponent";
 import { useState } from "react";
 import { ExtraProps } from "@/features/extra";
 import Extras from "@/features/extra/components/Extras";
+import { getCustomerFields } from "../helpers/fields";
 
 export const CustomerNew = ({ userId }: NewCustomerProps) => {
   const router = useRouter();
@@ -29,26 +30,7 @@ export const CustomerNew = ({ userId }: NewCustomerProps) => {
     router.push("/people/customer");
   }
 
-  const fields: FormField[] = [
-    {
-      name: "name",
-      label: "Name",
-      required: true,
-    },
-    {
-      name: "email",
-      label: "Email",
-      type: "email",
-      required: true,
-    },
-    {
-      name: "phone",
-      label: "Phone",
-      type: "tel",
-      required: true,
-      pattern: "^\\+?[0-9]{7,15}$",
-    },
-  ];
+  const fields: FormField[] = getCustomerFields();
 
   return (
     <Grid
