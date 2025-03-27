@@ -11,9 +11,7 @@ export async function loginUser(
   const password = formData.get("password")?.toString();
 
   if (!email || !password) {
-    throw new Response("Email and password are required.", {
-      status: 400,
-    });
+    return "Email and password are required";
   }
 
   const error = await loginAction(email, password);

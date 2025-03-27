@@ -11,13 +11,15 @@ import Grid from "@mui/material/Grid2";
 import { useRouter } from "next/navigation";
 import { FormField } from "@/interfaces/FormField";
 import { FormComponent } from "@/components/FormComponent";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { ExtraProps } from "@/features/extra";
 import Extras from "@/features/extra/components/Extras";
 import { getCustomerFields } from "../helpers/fields";
+import { newCustomer } from "@/app/people/customer/[id]/actions";
 
 export const CustomerNew = () => {
   const router = useRouter();
+  const [state, action] = useActionState(newCustomer, null);
 
   const [extras, setExtras] = useState<ExtraProps>({
     followups: [],
@@ -31,15 +33,13 @@ export const CustomerNew = () => {
 
   const fields: FormField[] = getCustomerFields();
 
-  // TODO: form action
-
   return (
     <Grid
       container
       spacing={1}
     >
       <Grid size={6}>
-        <form>
+        <form action={action}>
           <input
             type="hidden"
             name="extras"
@@ -49,6 +49,7 @@ export const CustomerNew = () => {
             <CardContent>
               <Typography variant="h6">New Customer</Typography>
               <FormComponent fields={fields} />
+              {state}
             </CardContent>
             <CardActions>
               <Button
