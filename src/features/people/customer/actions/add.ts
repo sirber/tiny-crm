@@ -7,7 +7,7 @@ export async function addCustomerAction(
   email: string,
   phone: string,
 ): Promise<Customer> {
-  const customer: Prisma.CustomerCreateInput = {
+  const customerData: Prisma.CustomerCreateInput = {
     name: name,
     email: email,
     phone: phone,
@@ -19,7 +19,12 @@ export async function addCustomerAction(
     },
   };
 
-  return prisma.customer.create({
-    data: customer,
-  });
+  try {
+    return await prisma.customer.create({
+      data: customerData,
+    });
+  } catch (error) {
+    console.error("Error creating customer:", error);
+    throw new Error("Could not create customer");
+  }
 }
