@@ -3,12 +3,11 @@ import { TextField } from "@mui/material";
 
 interface FormProps {
   fields: FormField[];
-  values?: Record<string, unknown>;
 }
 
-export const FormComponent = ({ fields, values }: FormProps) => {
+export const FormComponent = ({ fields }: FormProps) => {
   return (
-    <>
+    <form action="/your-server-action" method="POST">
       {fields.map((field) => (
         <TextField
           key={field.name}
@@ -17,17 +16,18 @@ export const FormComponent = ({ fields, values }: FormProps) => {
           margin="dense"
           type={field.type || "text"}
           name={field.name}
-          value={values?.[field.name] || ""}
           required={field.required}
+          defaultValue={field.value || ""}
           inputProps={
             field.pattern
               ? {
-                  pattern: field.pattern,
-                }
+                pattern: field.pattern,
+              }
               : {}
           }
         />
       ))}
-    </>
+      <button type="submit">Submit</button>
+    </form>
   );
 };
