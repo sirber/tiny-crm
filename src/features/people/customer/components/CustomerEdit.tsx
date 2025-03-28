@@ -71,7 +71,7 @@ export const CustomerEdit = ({ customer }: EditCustomerProps) => {
                 color="primary"
                 type="submit"
               >
-                Add
+                Save
               </Button>
               <Button
                 variant="contained"

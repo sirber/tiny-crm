@@ -28,6 +28,7 @@ export async function newCustomer(
     return "phone is required";
   }
 
+  let id;
   try {
     const customer: Customer = await addCustomerAction(
       user.id,
@@ -36,11 +37,13 @@ export async function newCustomer(
       phone,
     );
 
-    redirect("/customer/" + customer.id);
+    id = customer.id;
   } catch (error: unknown) {
-    console.error(error);
+    console.log(error);
     return "could not add a new customer";
   }
+
+  redirect("/people/customer/" + id);
 }
 
 export async function editCustomer(
@@ -70,6 +73,7 @@ export async function editCustomer(
     return "Phone is required";
   }
 
+  let id;
   try {
     const customer: Customer = await editCustomerAction(
       customerId,
@@ -79,9 +83,11 @@ export async function editCustomer(
       phone,
     );
 
-    redirect("/customer/" + customer.id);
+    id = customer.id;
   } catch (error: unknown) {
-    console.error("Error editing customer:", error);
+    console.log("Error editing customer:", error);
     return "Could not edit the customer";
   }
+
+  redirect("/people/customer/" + id);
 }

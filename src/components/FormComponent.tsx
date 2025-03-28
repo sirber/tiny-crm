@@ -7,7 +7,7 @@ interface FormProps {
 
 export const FormComponent = ({ fields }: FormProps) => {
   return (
-    <form action="/your-server-action" method="POST">
+    <>
       {fields.map((field) => (
         <TextField
           key={field.name}
@@ -21,13 +21,12 @@ export const FormComponent = ({ fields }: FormProps) => {
           inputProps={
             field.pattern
               ? {
-                pattern: field.pattern,
-              }
+                  pattern: field.pattern,
+                }
               : {}
           }
         />
       ))}
-      <button type="submit">Submit</button>
-    </form>
+    </>
   );
 };
