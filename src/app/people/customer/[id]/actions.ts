@@ -3,10 +3,10 @@
 import { addCustomerAction } from "@/features/people/customer/actions/add";
 import { editCustomerAction } from "@/features/people/customer/actions/edit";
 import { getUser } from "@/lib/session";
-import { Customer } from "@prisma/client";
+import { type Customer } from "@prisma/client";
 import { redirect } from "next/navigation";
 
-export async function newCustomer(
+export async function addCustomer(
   state: string | null,
   formData: FormData,
 ): Promise<string> {

@@ -15,11 +15,11 @@ import { useActionState, useState } from "react";
 import { ExtraProps } from "@/features/extra";
 import Extras from "@/features/extra/components/Extras";
 import { getCustomerFields } from "../helpers/fields";
-import { newCustomer } from "@/app/people/customer/[id]/actions";
+import { addCustomer } from "@/app/people/customer/[id]/actions";
 
-export const CustomerNew = () => {
+export const CustomerAdd = () => {
   const router = useRouter();
-  const [state, action] = useActionState(newCustomer, null);
+  const [state, action] = useActionState(addCustomer, null);
 
   const [extras, setExtras] = useState<ExtraProps>({
     followups: [],

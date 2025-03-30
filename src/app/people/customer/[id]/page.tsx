@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { validate as isUUID } from "uuid";
-import { CustomerEdit, CustomerNew } from "@/features/people";
+import { CustomerEdit, CustomerAdd } from "@/features/people";
 import { getUser } from "@/lib/session";
 import prisma from "@/lib/database";
 
@@ -14,7 +14,7 @@ export default async function CustomerPage({ params }: PageParams) {
   const { id } = await params;
 
   if (id === "new") {
-    return <CustomerNew />;
+    return <CustomerAdd />;
   }
 
   if (!isUUID(id)) {
