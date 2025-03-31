@@ -52,7 +52,7 @@ export async function editCustomer(
 ): Promise<string> {
   const user = await getUser();
 
-  const customerId = formData.get("customerId")?.toString();
+  const customerId = formData.get("id")?.toString();
   const name = formData.get("name")?.toString();
   const email = formData.get("email")?.toString();
   const phone = formData.get("phone")?.toString();

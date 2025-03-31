@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { ExtraProps } from "@/features/extra";
 import { FormField } from "@/interfaces/FormField";
 import { getCustomerFields } from "../helpers/fields";
@@ -16,6 +16,7 @@ import {
   Button,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import { editCustomer } from "@/app/people/customer/[id]/actions";
 
 export interface EditCustomerProps {
   customer: Customer;
@@ -23,6 +24,7 @@ export interface EditCustomerProps {
 
 export const CustomerEdit = ({ customer }: EditCustomerProps) => {
   const router = useRouter();
+  const [state, action] = useActionState(editCustomer, null);
 
   const [extras, setExtras] = useState<ExtraProps>({
     followups: [],
@@ -36,20 +38,13 @@ export const CustomerEdit = ({ customer }: EditCustomerProps) => {
 
   const fields: FormField[] = getCustomerFields(customer);
 
-  // TODO: form action
-
   return (
     <Grid
       container
       spacing={1}
     >
       <Grid size={6}>
-        <form>
-          <input
-            type="hidden"
-            name="userId"
-            value={customer.userId}
-          />
+        <form action={action}>
           <input
             type="hidden"
             name="id"
@@ -64,6 +59,7 @@ export const CustomerEdit = ({ customer }: EditCustomerProps) => {
             <CardContent>
               <Typography variant="h6">Edit Customer</Typography>
               <FormComponent fields={fields} />
+              {state}
             </CardContent>
             <CardActions>
               <Button
