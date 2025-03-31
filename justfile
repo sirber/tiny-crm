@@ -7,7 +7,7 @@ help:
 
 [group('dev')]
 dev: stop
-    yarn install
+    npm install
     docker compose up -d
     docker compose exec app npm run migrate:dev
     echo Open http://localhost:3000
