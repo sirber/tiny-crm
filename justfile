@@ -26,5 +26,5 @@ build:
 
 [group('quality')]
 quality:
-    @docker compose exec app yarn format
-    @docker compose exec app yarn lint
+    @docker compose exec app npm run format
+    @docker compose exec app npm run lint
