@@ -15,7 +15,7 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import { editCustomer } from "@/app/people/customer/[id]/actions";
 
 export interface EditCustomerProps {
