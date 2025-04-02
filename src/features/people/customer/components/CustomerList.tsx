@@ -5,10 +5,26 @@ import { GridColDef, GridRowParams, GridValidRowModel } from "@mui/x-data-grid";
 import { useRouter } from "next/navigation";
 
 const columns: GridColDef[] = [
-  { field: "name", headerName: "Name", width: 200 },
-  { field: "email", headerName: "Email", width: 300 },
-  { field: "createdAt", headerName: "Created At", width: 150 },
-  { field: "updatedAt", headerName: "Updated At", width: 150 },
+  {
+    field: "name",
+    headerName: "Name",
+    width: 200,
+  },
+  {
+    field: "email",
+    headerName: "Email",
+    width: 300,
+  },
+  {
+    field: "createdAt",
+    headerName: "Created At",
+    width: 150,
+  },
+  {
+    field: "updatedAt",
+    headerName: "Updated At",
+    width: 150,
+  },
 ];
 
 export const CustomerList = ({ rows }: { rows: GridValidRowModel[] }) => {

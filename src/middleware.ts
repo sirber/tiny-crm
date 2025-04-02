@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { validateToken } from "@/lib/session"; // ✅ Edge-compatible JWT verification
+import { validateToken } from "@/lib/session";
 
 export async function middleware(req: NextRequest) {
   const isValid = await validateToken();

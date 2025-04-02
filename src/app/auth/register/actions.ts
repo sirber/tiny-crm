@@ -1,13 +1,10 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
 import { redirect } from "next/navigation";
-import { hash } from "@/lib/password";
 import { isRegisterEnabled } from "@/config";
+import { register } from "@/features/auth/actions/register";
 
-const prisma = new PrismaClient();
-
-export async function register(
+export async function registerUser(
   state: string | null,
   formData: FormData,
 ): Promise<string> {
@@ -25,15 +22,21 @@ export async function register(
 
   // Validation
   if (!name) {
-    throw new Response("Name is required.", { status: 400 });
+    throw new Response("Name is required.", {
+      status: 400,
+    });
   }
 
   if (!email) {
-    throw new Response("Email is required.", { status: 400 });
+    throw new Response("Email is required.", {
+      status: 400,
+    });
   }
 
   if (!password || !confirmPassword) {
-    throw new Response("Password is required.", { status: 400 });
+    throw new Response("Password is required.", {
+      status: 400,
+    });
   }
 
   if (password != confirmPassword) {
@@ -43,18 +46,9 @@ export async function register(
   }
 
   // Create new user
-  const hashedPassword = await hash(password);
-
-  try {
-    await prisma.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-      },
-    });
-  } catch {
-    return "could not create user";
+  const error = await register(name, email, password);
+  if (error) {
+    return error;
   }
 
   redirect("/");

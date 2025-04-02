@@ -27,13 +27,22 @@ export default function List({
 }: ListProps) {
   return (
     <>
-      <Grid2 container alignItems="center">
+      <Grid2
+        container
+        alignItems="center"
+      >
         <Grid2 size={6}>
-          <Typography variant="h4" component="h1">
+          <Typography
+            variant="h4"
+            component="h1"
+          >
             {title}
           </Typography>
         </Grid2>
-        <Grid2 size={6} textAlign="right">
+        <Grid2
+          size={6}
+          textAlign="right"
+        >
           <ButtonGroup variant="contained">
             <Button onClick={onAddClick}>Add</Button>
             <Button onClick={onRefreshClick}>Refresh</Button>
@@ -41,7 +50,12 @@ export default function List({
         </Grid2>
       </Grid2>
 
-      <Box sx={{ minHeight: 400, width: "100%" }}>
+      <Box
+        sx={{
+          minHeight: 400,
+          width: "100%",
+        }}
+      >
         <DataGrid
           rows={rows}
           columns={columns}
@@ -57,7 +71,10 @@ export default function List({
           }}
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
+              paginationModel: {
+                page: 0,
+                pageSize: 10,
+              },
             },
           }}
           pageSizeOptions={[10, 20, 50, 100]}

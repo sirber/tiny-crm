@@ -1,10 +1,10 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { clearToken } from "@/lib/session";
+import { logoutAction } from "@/features/auth/actions/logout";
 
 export async function logoutUser() {
-  await clearToken();
+  await logoutAction();
 
   redirect("/");
 }
