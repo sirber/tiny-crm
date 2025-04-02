@@ -6,9 +6,9 @@ help:
     just --list
 
 [group('dev')]
-dev: stop
+dev: 
     npm install
-    docker compose up -d
+    docker compose up -d --wait
     docker compose exec app npm run migrate:dev
     echo Open http://localhost:3000
 
