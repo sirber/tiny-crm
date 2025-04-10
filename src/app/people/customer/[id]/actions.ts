@@ -3,7 +3,7 @@
 import { addCustomerAction } from "@/features/people/customer/actions/add";
 import { editCustomerAction } from "@/features/people/customer/actions/edit";
 import { getUser } from "@/lib/session";
-import { type Customer } from "@prisma/client";
+import { type Customer } from "@/lib/database";
 import { redirect } from "next/navigation";
 
 export async function addCustomer(

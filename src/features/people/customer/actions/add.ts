@@ -1,5 +1,4 @@
-import { Customer, Prisma } from "@prisma/client";
-import prisma from "@/lib/database";
+import { Customer, Prisma, prisma } from "@/lib/database";
 
 export async function addCustomerAction(
   userId: string,

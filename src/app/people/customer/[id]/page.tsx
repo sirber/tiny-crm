@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { validate as isUUID } from "uuid";
 import { CustomerEdit, CustomerAdd } from "@/features/people";
 import { getUser } from "@/lib/session";
-import prisma from "@/lib/database";
+import { prisma } from "@/lib/database";
 
 interface PageParams {
   params: Promise<{

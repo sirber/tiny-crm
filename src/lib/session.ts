@@ -1,8 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import prisma from "./database";
-import { User } from "@prisma/client";
+import { prisma, User } from "./database";
 import { jwtVerify } from "jose";
 
 const JWT_SECRET = process.env.JWT_SECRET;

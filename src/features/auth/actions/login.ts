@@ -2,10 +2,9 @@
 
 import { verify } from "@/lib/password";
 import { createSession, TokenInterface } from "@/lib/session";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/database";
 import { JWTPayload, SignJWT } from "jose";
 
-const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET;
 
 if (!JWT_SECRET) {

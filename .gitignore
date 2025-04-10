@@ -5,6 +5,7 @@ core
 
 # database
 prisma/**/*.db*
+prisma/client
 
 # dependencies
 /node_modules

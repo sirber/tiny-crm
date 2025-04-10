@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "@/lib/database";
+import { prisma } from "@/lib/database";
 import { hash } from "@/lib/password";
 
 export async function register(
