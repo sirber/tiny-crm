@@ -1,7 +1,7 @@
 import ExtraFollowUps from "@/features/extra/components/ExtraFollowUps";
 import ExtraLinks from "@/features/extra/components/ExtraLnks";
 import ExtraNotes from "@/features/extra/components/ExtraNotes";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import { useCallback } from "react";
 import { ExtrasState, FollowUp, Link, Note } from "@/features/extra";
 

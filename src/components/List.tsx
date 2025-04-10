@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, ButtonGroup, Grid2, Typography } from "@mui/material";
+import { Box, Button, ButtonGroup, Grid, Typography } from "@mui/material";
 import {
   DataGrid,
   GridColDef,
@@ -27,19 +27,19 @@ export default function List({
 }: ListProps) {
   return (
     <>
-      <Grid2
+      <Grid
         container
         alignItems="center"
       >
-        <Grid2 size={6}>
+        <Grid size={6}>
           <Typography
             variant="h4"
             component="h1"
           >
             {title}
           </Typography>
-        </Grid2>
-        <Grid2
+        </Grid>
+        <Grid
           size={6}
           textAlign="right"
         >
@@ -47,8 +47,8 @@ export default function List({
             <Button onClick={onAddClick}>Add</Button>
             <Button onClick={onRefreshClick}>Refresh</Button>
           </ButtonGroup>
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
 
       <Box
         sx={{

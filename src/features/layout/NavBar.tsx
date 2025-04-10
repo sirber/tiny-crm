@@ -74,12 +74,12 @@ const menuData: MenuItemType[] = [
     submenu: [
       {
         label: "Product",
-        link: "/product/inventory",
+        link: "/store/product",
         icon: <InventoryIcon />,
       },
       {
-        label: "Transactions",
-        link: "/product/transaction",
+        label: "Transaction",
+        link: "/store/transaction",
         icon: <ReceiptIcon />,
       },
     ],
@@ -91,7 +91,7 @@ const menuData: MenuItemType[] = [
     submenu: [
       {
         label: "My profile",
-        link: "/profile",
+        link: "/admin/profile",
         icon: <AccountCircleIcon />,
       },
       {
