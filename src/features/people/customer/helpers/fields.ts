@@ -1,5 +1,5 @@
 import { FormField } from "@/interfaces/FormField";
-import { Customer } from "@prisma/client";
+import { type Customer } from "@/lib/database";
 
 export function getCustomerFields(customer?: Customer): FormField[] {
   return [

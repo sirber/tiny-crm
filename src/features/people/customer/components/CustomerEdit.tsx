@@ -6,7 +6,7 @@ import { ExtraProps } from "@/features/extra";
 import { FormField } from "@/interfaces/FormField";
 import { getCustomerFields } from "../helpers/fields";
 import { FormComponent } from "@/components/FormComponent";
-import type { Customer } from "@prisma/client";
+import type { Customer } from "@/lib/database";
 import Extras from "@/features/extra/components/Extras";
 import {
   Card,
