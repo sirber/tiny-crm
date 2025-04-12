@@ -40,6 +40,12 @@ export async function getUser(): Promise<User> {
   });
 }
 
+export async function getRole(): Promise<string> {
+  const user = await getUser();
+
+  return user.role;
+}
+
 export async function getToken(): Promise<TokenInterface | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;

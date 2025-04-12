@@ -17,11 +17,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const hasSession = await validateToken();
-  if (hasSession) {
-    const user = await getUser();
-    if (!user) {
-      throw new Error("token is valid but user is not found");
-    }
+  const user = hasSession ? await getUser() : null;
+
+  if (hasSession && !user) {
+    throw new Error("token is valid but user is not found");
   }
 
   return (
@@ -29,7 +28,10 @@ export default async function RootLayout({
       <body>
         <AppRouterCacheProvider>
           <Theme>
-            <NavBar hasSession={hasSession} />
+            <NavBar
+              hasSession={hasSession}
+              userRole={user?.role || "user"}
+            />
             <main>{children}</main>
           </Theme>
         </AppRouterCacheProvider>

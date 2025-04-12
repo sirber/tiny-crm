@@ -35,10 +35,12 @@ import Logo from "@/assets/people.png";
 interface MenuItemType {
   label: string;
   link?: string;
+  role?: string;
   icon: React.ReactNode;
   submenu?: {
     label: string;
     link: string;
+    role?: string;
     icon: React.ReactNode;
   }[];
   align?: "left" | "right";
@@ -97,6 +99,7 @@ const menuData: MenuItemType[] = [
       {
         label: "Administration",
         link: "/admin",
+        role: "admin",
         icon: <AdminPanelSettingsIcon />,
       },
     ],
@@ -111,9 +114,10 @@ const menuData: MenuItemType[] = [
 
 interface NavBarInterface {
   hasSession: boolean;
+  userRole: string;
 }
 
-const NavBar = ({ hasSession }: NavBarInterface) => {
+const NavBar = ({ hasSession, userRole }: NavBarInterface) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -134,9 +138,13 @@ const NavBar = ({ hasSession }: NavBarInterface) => {
     setDrawerOpen(open);
   };
 
-  // Separate menu items by alignment
-  const leftMenuItems = menuData.filter((item) => item.align !== "right");
-  const rightMenuItems = menuData.filter((item) => item.align === "right");
+  // Filter items by role: items with no role property are always shown.
+  const leftMenuItems = menuData.filter(
+    (item) => item.align !== "right" && (!item.role || userRole === item.role),
+  );
+  const rightMenuItems = menuData.filter(
+    (item) => item.align === "right" && (!item.role || userRole === item.role),
+  );
 
   if (!hasSession) {
     return null;
@@ -172,74 +180,74 @@ const NavBar = ({ hasSession }: NavBarInterface) => {
             />
           </Link>
 
+          {/* Drawer for mobile view */}
           <Drawer
             anchor="left"
             open={drawerOpen}
             onClose={toggleDrawer(false)}
           >
-            <List
-              sx={{
-                width: 250,
-              }}
-            >
-              {menuData.map((menu) => (
-                <div key={menu.label}>
-                  {menu.submenu ? (
-                    <>
-                      <ListItem>
-                        <ListItemIcon>{menu.icon}</ListItemIcon>
-                        <ListItemText primary={menu.label} />
-                      </ListItem>
-                      {menu.submenu.map((subItem) => (
-                        <Link
-                          key={subItem.label}
-                          href={subItem.link}
-                          passHref
-                          legacyBehavior
-                        >
-                          <ListItem
-                            component="a"
-                            onClick={toggleDrawer(false)}
-                            sx={{
-                              pl: 4,
-                            }}
-                          >
-                            <ListItemIcon>{subItem.icon}</ListItemIcon>
-                            <ListItemText primary={subItem.label} />
-                          </ListItem>
-                        </Link>
-                      ))}
-                    </>
-                  ) : (
-                    <Link
-                      key={menu.label}
-                      href={menu.link!}
-                      passHref
-                      legacyBehavior
-                    >
-                      <ListItem
-                        component="a"
-                        onClick={toggleDrawer(false)}
+            <List sx={{ width: 250 }}>
+              {menuData.map((menu) => {
+                // Check the main menu item's role
+                if (menu.role && menu.role !== userRole) return null;
+
+                return (
+                  <div key={menu.label}>
+                    {menu.submenu ? (
+                      <>
+                        <ListItem>
+                          <ListItemIcon>{menu.icon}</ListItemIcon>
+                          <ListItemText primary={menu.label} />
+                        </ListItem>
+                        {menu.submenu
+                          .filter(
+                            (subItem) =>
+                              !subItem.role || subItem.role === userRole,
+                          )
+                          .map((subItem) => (
+                            <Link
+                              key={subItem.label}
+                              href={subItem.link}
+                              passHref
+                              legacyBehavior
+                            >
+                              <ListItem
+                                component="a"
+                                onClick={toggleDrawer(false)}
+                                sx={{ pl: 4 }}
+                              >
+                                <ListItemIcon>{subItem.icon}</ListItemIcon>
+                                <ListItemText primary={subItem.label} />
+                              </ListItem>
+                            </Link>
+                          ))}
+                      </>
+                    ) : (
+                      <Link
+                        key={menu.label}
+                        href={menu.link!}
+                        passHref
+                        legacyBehavior
                       >
-                        <ListItemIcon>{menu.icon}</ListItemIcon>
-                        <ListItemText primary={menu.label} />
-                      </ListItem>
-                    </Link>
-                  )}
-                </div>
-              ))}
+                        <ListItem
+                          component="a"
+                          onClick={toggleDrawer(false)}
+                        >
+                          <ListItemIcon>{menu.icon}</ListItemIcon>
+                          <ListItemText primary={menu.label} />
+                        </ListItem>
+                      </Link>
+                    )}
+                  </div>
+                );
+              })}
             </List>
           </Drawer>
 
           {!isMobile && (
             <>
               {/* Left-aligned menu items */}
-              <Box
-                sx={{
-                  display: "flex",
-                  flexGrow: 1,
-                }}
-              >
+              <Box sx={{ display: "flex", flexGrow: 1 }}>
                 {leftMenuItems.map((menu) => (
                   <div key={menu.label}>
                     {menu.submenu ? (
@@ -261,23 +269,28 @@ const NavBar = ({ hasSession }: NavBarInterface) => {
                           }
                           onClose={handleMenuClose}
                         >
-                          {menu.submenu.map((subItem) => (
-                            <MenuItem
-                              key={subItem.label}
-                              onClick={handleMenuClose}
-                            >
-                              <ListItemIcon>{subItem.icon}</ListItemIcon>
-                              <Link
-                                href={subItem.link}
-                                style={{
-                                  textDecoration: "none",
-                                  color: "inherit",
-                                }}
+                          {menu.submenu
+                            ?.filter(
+                              (subItem) =>
+                                !subItem.role || subItem.role === userRole,
+                            )
+                            .map((subItem) => (
+                              <MenuItem
+                                key={subItem.label}
+                                onClick={handleMenuClose}
                               >
-                                {subItem.label}
-                              </Link>
-                            </MenuItem>
-                          ))}
+                                <ListItemIcon>{subItem.icon}</ListItemIcon>
+                                <Link
+                                  href={subItem.link}
+                                  style={{
+                                    textDecoration: "none",
+                                    color: "inherit",
+                                  }}
+                                >
+                                  {subItem.label}
+                                </Link>
+                              </MenuItem>
+                            ))}
                         </Menu>
                       </>
                     ) : (
@@ -295,11 +308,7 @@ const NavBar = ({ hasSession }: NavBarInterface) => {
               </Box>
 
               {/* Right-aligned menu items */}
-              <Box
-                sx={{
-                  display: "flex",
-                }}
-              >
+              <Box sx={{ display: "flex" }}>
                 {rightMenuItems.map((menu) => (
                   <div key={menu.label}>
                     {menu.submenu ? (
@@ -321,23 +330,28 @@ const NavBar = ({ hasSession }: NavBarInterface) => {
                           }
                           onClose={handleMenuClose}
                         >
-                          {menu.submenu.map((subItem) => (
-                            <MenuItem
-                              key={subItem.label}
-                              onClick={handleMenuClose}
-                            >
-                              <ListItemIcon>{subItem.icon}</ListItemIcon>
-                              <Link
-                                href={subItem.link}
-                                style={{
-                                  textDecoration: "none",
-                                  color: "inherit",
-                                }}
+                          {menu.submenu
+                            ?.filter(
+                              (subItem) =>
+                                !subItem.role || subItem.role === userRole,
+                            )
+                            .map((subItem) => (
+                              <MenuItem
+                                key={subItem.label}
+                                onClick={handleMenuClose}
                               >
-                                {subItem.label}
-                              </Link>
-                            </MenuItem>
-                          ))}
+                                <ListItemIcon>{subItem.icon}</ListItemIcon>
+                                <Link
+                                  href={subItem.link}
+                                  style={{
+                                    textDecoration: "none",
+                                    color: "inherit",
+                                  }}
+                                >
+                                  {subItem.label}
+                                </Link>
+                              </MenuItem>
+                            ))}
                         </Menu>
                       </>
                     ) : (
