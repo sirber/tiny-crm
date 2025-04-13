@@ -41,9 +41,13 @@ export async function getUser(): Promise<User> {
 }
 
 export async function getRole(): Promise<string> {
-  const user = await getUser();
+  const payload = await getToken();
 
-  return user.role;
+  if (!payload) {
+    throw new Error("No token found");
+  }
+
+  return payload.role;
 }
 
 export async function getToken(): Promise<TokenInterface | null> {

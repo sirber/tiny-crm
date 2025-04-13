@@ -93,7 +93,7 @@ const menuData: MenuItemType[] = [
     submenu: [
       {
         label: "My profile",
-        link: "/admin/profile",
+        link: "/profile",
         icon: <AccountCircleIcon />,
       },
       {

@@ -23,7 +23,7 @@ export default async function AdminUserPage() {
           flexDirection: "column",
         }}
       >
-        <Typography variant="h6">Dashboard</Typography>
+        <Typography variant="h6">Users</Typography>
         {/* Add main content here */}
       </Paper>
     </Box>
