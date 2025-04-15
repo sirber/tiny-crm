@@ -1,10 +1,12 @@
+name: tiny-crm
+
 services:
   app:
     container_name: tiny-crm-dev-app
-    image: node:22-alpine
-    restart: unless-stopped
+    image: node:22-slim
+    restart: no
     working_dir: /app
-    command: yarn dev
+    command: npm run dev
     depends_on:
       - db
     ports:
@@ -14,12 +16,11 @@ services:
       - NODE_ENV=development
     volumes:
       - ./:/app
-      - next:/app/.next
 
   db:
     container_name: tiny-crm-dev-db
     image: postgres:17-alpine
-    restart: unless-stopped
+    restart: no
     environment:
     - POSTGRES_PASSWORD=crm
     ports:
@@ -29,4 +30,3 @@ services:
 
 volumes:
   db_data:
-  next: 
