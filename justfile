@@ -8,6 +8,7 @@ help:
 [group('dev')]
 dev: 
     @npm install
+    @docker compose build
     @docker compose up -d --wait
     @docker compose exec app npm run migrate:dev
     @echo Open http://localhost:3000

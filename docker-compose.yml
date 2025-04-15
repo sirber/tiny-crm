@@ -3,10 +3,10 @@ name: tiny-crm
 services:
   app:
     container_name: tiny-crm-dev-app
-    image: node:22-slim
+    build:
+      context: .
+      dockerfile: resources/docker/Dockerfile.dev
     restart: no
-    working_dir: /app
-    command: npm run dev
     depends_on:
       - db
     ports:
