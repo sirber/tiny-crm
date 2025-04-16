@@ -15,7 +15,7 @@ services:
       - DATABASE_URL=postgresql://postgres:crm@db:5432/tiny-crm?connection_limit=10
       - NODE_ENV=development
     volumes:
-      - ./:/app
+      - ./:/app:z
 
   db:
     container_name: tiny-crm-dev-db
