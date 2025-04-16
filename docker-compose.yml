@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: resources/docker/Dockerfile.dev
-    restart: no
+    restart: on-failure:5
     depends_on:
       - db
     ports:
@@ -20,7 +20,7 @@ services:
   db:
     container_name: tiny-crm-dev-db
     image: postgres:17-alpine
-    restart: no
+    restart: on-failure:5
     environment:
     - POSTGRES_PASSWORD=crm
     ports:
