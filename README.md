@@ -5,7 +5,7 @@ made with NextJS. The database is in MySQL format.
 
 ### Requirements
 
-- Docker
+- Docker or Podman, with compose
 
 ### Stack
 

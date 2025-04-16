@@ -2,17 +2,14 @@
 # based on https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 
 FROM node:22-slim AS base
-
-FROM base AS deps
-RUN apk add --no-cache libc6-compat
-WORKDIR /app
-COPY package*.json prisma/ ./
-RUN npm install
+RUN apt-get update && \
+    apt-get install -y openssl && \
+    rm -rf /var/lib/apt/lists/*
 
 FROM base AS builder
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN npm install
 RUN npx prisma generate
 RUN npm run build
 
