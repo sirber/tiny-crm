@@ -13,12 +13,6 @@ enum UserRole {
   admin
 }
 
-enum CustomerType {
-  contact
-  prospect
-  customer
-}
-
 model User {
   id        String     @id @default(uuid()) @db.Uuid
   email     String     @unique
@@ -30,6 +24,32 @@ model User {
   deletedAt DateTime?
   products  Product[]
   customers Customer[]
+  contacts  Contact[]
+  prospects Prospect[]
+}
+
+model Contact {
+  id        String       @id @default(uuid()) @db.Uuid
+  userId    String       @db.Uuid
+  User      User         @relation(fields: [userId], references: [id])
+  name      String
+  email     String       @unique
+  phone     String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @default(now()) @updatedAt
+  deletedAt DateTime?
+}
+
+model Prospect {
+  id        String       @id @default(uuid()) @db.Uuid
+  userId    String       @db.Uuid
+  User      User         @relation(fields: [userId], references: [id])
+  name      String
+  email     String       @unique
+  phone     String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @default(now()) @updatedAt
+  deletedAt DateTime?
 }
 
 model Customer {
@@ -39,7 +59,6 @@ model Customer {
   name      String
   email     String       @unique
   phone     String
-  type      CustomerType
   createdAt DateTime     @default(now())
   updatedAt DateTime     @default(now()) @updatedAt
   deletedAt DateTime?
