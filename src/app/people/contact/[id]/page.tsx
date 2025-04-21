@@ -35,4 +35,4 @@ export default async function ContactPage({ params }: PageParams) {
     console.error(error);
     return notFound();
   }
-} 
+}

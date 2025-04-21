@@ -89,4 +89,4 @@ export const ContactEdit = ({ contact }: EditContactProps) => {
       </Grid>
     </Grid>
   );
-}; 
+};

@@ -1,10 +1,13 @@
-import mongoose from 'mongoose';
-import { initModels } from './models';
+import mongoose from "mongoose";
+import { initModels } from "./models";
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/tiny-crm';
+const MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/tiny-crm";
 
 if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env');
+  throw new Error(
+    "Please define the MONGODB_URI environment variable inside .env",
+  );
 }
 
 interface MongooseCache {

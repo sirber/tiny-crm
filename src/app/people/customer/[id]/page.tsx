@@ -36,7 +36,9 @@ export default async function CustomerPage({ params }: PageParams) {
       return notFound();
     }
 
-    return <CustomerEdit customer={{ ...customer, id: customer._id.toString() }} />;
+    return (
+      <CustomerEdit customer={{ ...customer, id: customer._id.toString() }} />
+    );
   } catch (error) {
     console.error(error);
     return notFound();

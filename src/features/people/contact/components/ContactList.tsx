@@ -57,4 +57,4 @@ export const ContactList = ({ rows }: { rows: GridValidRowModel[] }) => {
       onRowClick={onRowClick}
     ></List>
   );
-}; 
+};

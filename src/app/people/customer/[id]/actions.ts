@@ -29,12 +29,7 @@ export async function addCustomer(
 
   let id;
   try {
-    const customer = await addCustomerAction(
-      user.id,
-      name,
-      email,
-      phone,
-    );
+    const customer = await addCustomerAction(user.id, name, email, phone);
 
     id = customer._id.toString();
   } catch (error: unknown) {

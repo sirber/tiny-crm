@@ -22,7 +22,7 @@ export async function editCustomerAction(
         email,
         phone,
       },
-      { new: true }
+      { new: true },
     );
 
     if (!customer) {

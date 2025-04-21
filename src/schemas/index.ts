@@ -1,11 +1,16 @@
-import { UserRole, IUser, IUserDocument, userSchema } from './User';
-import { PeopleType, IPeople, IPeopleDocument, IBill, IBillProduct, peopleSchema, billSchema } from './People';
-import { IProduct, IProductDocument, productSchema } from './Product';
+import { UserRole, IUser, IUserDocument, userSchema } from "./User";
+import {
+  PeopleType,
+  IPeople,
+  IPeopleDocument,
+  IBill,
+  IBillProduct,
+  peopleSchema,
+  billSchema,
+} from "./People";
+import { IProduct, IProductDocument, productSchema } from "./Product";
 
-export {
-  UserRole,
-  PeopleType
-};
+export { UserRole, PeopleType };
 
 export type {
   IUser,
@@ -15,12 +20,7 @@ export type {
   IBill,
   IBillProduct,
   IProduct,
-  IProductDocument
+  IProductDocument,
 };
 
-export {
-  userSchema,
-  peopleSchema,
-  billSchema,
-  productSchema
-}; 
+export { userSchema, peopleSchema, billSchema, productSchema };

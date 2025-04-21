@@ -1,9 +1,9 @@
-import mongoose, { Document, Types } from 'mongoose';
+import mongoose, { Document, Types } from "mongoose";
 
 export enum PeopleType {
-  contact = 'contact',
-  prospect = 'prospect',
-  customer = 'customer'
+  contact = "contact",
+  prospect = "prospect",
+  customer = "customer",
 }
 
 export interface IBillProduct {
@@ -36,88 +36,96 @@ export interface IPeople {
 
 export interface IPeopleDocument extends IPeople, Document {}
 
-export const billSchema = new mongoose.Schema({
-  taxes1: {
-    type: Number,
-    required: true
-  },
-  taxes2: {
-    type: Number,
-    required: true
-  },
-  total: {
-    type: Number,
-    required: true
-  },
-  products: [{
-    productId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product',
-      required: true
-    },
-    price: {
+export const billSchema = new mongoose.Schema(
+  {
+    taxes1: {
       type: Number,
-      required: true
+      required: true,
     },
-    quantity: {
+    taxes2: {
       type: Number,
-      required: true
-    }
-  }],
-  createdAt: {
-    type: Date,
-    default: Date.now
+      required: true,
+    },
+    total: {
+      type: Number,
+      required: true,
+    },
+    products: [
+      {
+        productId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        price: {
+          type: Number,
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now,
+    },
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now
+  {
+    timestamps: true,
   },
-  deletedAt: {
-    type: Date,
-    default: null
-  }
-}, {
-  timestamps: true
-});
+);
 
-export const peopleSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+export const peopleSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      enum: Object.values(PeopleType),
+      required: true,
+      default: PeopleType.contact,
+    },
+    bills: [billSchema],
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now,
+    },
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
   },
-  name: {
-    type: String,
-    required: true
+  {
+    timestamps: true,
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  phone: {
-    type: String,
-    required: true
-  },
-  type: {
-    type: String,
-    enum: Object.values(PeopleType),
-    required: true,
-    default: PeopleType.contact
-  },
-  bills: [billSchema],
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
-  },
-  deletedAt: {
-    type: Date,
-    default: null
-  }
-}, {
-  timestamps: true
-}); 
+);

@@ -24,4 +24,4 @@ export function getContactFields(contact?: any): FormField[] {
       value: contact?.phone || "",
     },
   ];
-} 
+}

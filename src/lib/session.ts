@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { IUserDocument } from "@/schemas/User";
 import { jwtVerify } from "jose";
 import { getUserModel } from "./models";
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
