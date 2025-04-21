@@ -10,8 +10,6 @@ dev: stop
     @npm install
     @docker compose build
     @docker compose up -d
-    @sleep 10
-    @docker compose exec app npm run migrate:dev
     @echo Open http://localhost:3000
 
 # Stop the development server

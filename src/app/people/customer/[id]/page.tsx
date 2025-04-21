@@ -2,7 +2,8 @@ import { notFound } from "next/navigation";
 import { validate as isUUID } from "uuid";
 import { CustomerEdit, CustomerAdd } from "@/features/people";
 import { getUser } from "@/lib/session";
-import { prisma } from "@/lib/database";
+import { People, PeopleType } from "@/schemas";
+import connectDB from "@/lib/database";
 
 interface PageParams {
   params: Promise<{
@@ -23,14 +24,19 @@ export default async function CustomerPage({ params }: PageParams) {
 
   try {
     const user = await getUser();
-    const customer = await prisma.customer.findFirstOrThrow({
-      where: {
-        id: id,
-        userId: user.id,
-      },
-    });
+    await connectDB();
 
-    return <CustomerEdit customer={customer} />;
+    const customer = await People.findOne({
+      _id: id,
+      userId: user.id,
+      type: PeopleType.customer,
+    }).lean();
+
+    if (!customer) {
+      return notFound();
+    }
+
+    return <CustomerEdit customer={{ ...customer, id: customer._id.toString() }} />;
   } catch (error) {
     console.error(error);
     return notFound();

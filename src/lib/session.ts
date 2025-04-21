@@ -1,8 +1,10 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { prisma, User } from "./database";
+import { IUserDocument } from "@/schemas/User";
 import { jwtVerify } from "jose";
+import { getUserModel } from "./models";
+import mongoose from 'mongoose';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -25,19 +27,23 @@ export async function createSession(sessionToken: string): Promise<void> {
   });
 }
 
-export async function getUser(): Promise<User> {
+export async function getUser(): Promise<IUserDocument> {
   const payload = await getToken();
   if (!payload) {
     throw new Error("No token found");
   }
 
-  return prisma.user.findFirstOrThrow({
-    where: {
-      id: {
-        equals: payload.id,
-      },
-    },
+  const User = await getUserModel();
+  const user = await User.findOne({
+    _id: new mongoose.Types.ObjectId(payload.id),
+    deletedAt: null,
   });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return user;
 }
 
 export async function getRole(): Promise<string> {

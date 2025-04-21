@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/database";
+import { getUserModel } from "@/lib/models";
 import { hash } from "@/lib/password";
 
 export async function register(
@@ -9,14 +9,13 @@ export async function register(
   password: string,
 ): Promise<string | void> {
   const hashedPassword = await hash(password);
+  const User = await getUserModel();
 
   try {
-    await prisma.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-      },
+    await User.create({
+      name,
+      email,
+      password: hashedPassword,
     });
   } catch {
     return "could not create user";

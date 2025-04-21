@@ -8,25 +8,27 @@ services:
       dockerfile: resources/docker/Dockerfile.dev
     restart: on-failure:5
     depends_on:
-      - db
+      - mongodb
     ports:
       - '3000:3000'
     environment:
-      - DATABASE_URL=postgresql://postgres:crm@db:5432/tiny-crm?connection_limit=10
+      - MONGODB_URI=mongodb://mongodb:27017/tiny-crm
       - NODE_ENV=development
     volumes:
       - ./:/app:z
 
-  db:
-    container_name: tiny-crm-dev-db
-    image: postgres:17-alpine
+  mongodb:
+    container_name: tiny-crm-dev-mongodb
+    image: mongo:8.0-noble
     restart: on-failure:5
     environment:
-    - POSTGRES_PASSWORD=crm
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=crm
     ports:
-    - '5432:5432'
+      - '27017:27017'
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - mongodb_data:/data/db
+    command: ["--auth"]
 
 volumes:
-  db_data:
+  mongodb_data:

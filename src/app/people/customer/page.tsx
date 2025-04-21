@@ -1,7 +1,8 @@
 import { getUser } from "@/lib/session";
 import { CustomerList } from "@/features/people";
-import { prisma } from "@/lib/database";
+import { People, PeopleType } from "@/schemas";
 import { formatDate } from "@/lib/date";
+import connectDB from "@/lib/database";
 
 export default async function Customer() {
   const user = await getUser();
@@ -9,16 +10,17 @@ export default async function Customer() {
     return null;
   }
 
-  const rows = await prisma.customer.findMany({
-    where: {
-      userId: user.id,
-      type: "customer",
-      deletedAt: null,
-    },
-  });
+  await connectDB();
+
+  const rows = await People.find({
+    userId: user.id,
+    type: PeopleType.customer,
+    deletedAt: null,
+  }).lean();
 
   const displayRows = rows.map((row) => ({
     ...row,
+    id: row._id.toString(),
     createdAt: formatDate(new Date(row.createdAt)),
     updatedAt: formatDate(new Date(row.updatedAt)),
   }));

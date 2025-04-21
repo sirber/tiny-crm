@@ -7,10 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint && tsc --noEmit",
-    "format": "npx prettier --write src",
-    "migrate:dev": "npx prisma migrate dev",
-    "migrate:prod": "npx prisma migrate deploy",
-    "postinstall": "prisma generate"
+    "format": "npx prettier --write src"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
@@ -23,8 +20,10 @@
     "@mui/x-data-grid": "^7.24.0",
     "@prisma/adapter-pg": "^6.2.1",
     "@prisma/client": "^6.1.0",
+    "@types/mongoose": "^5.11.96",
     "argon2": "^0.41.1",
     "jose": "^6.0.8",
+    "mongoose": "^8.13.2",
     "next": "^15.3.0",
     "pg": "^8.13.1",
     "prisma": "^6.1.0",

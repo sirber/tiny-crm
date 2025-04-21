@@ -1,4 +1,5 @@
-import { Customer, Prisma, prisma } from "@/lib/database";
+import { People, PeopleType } from "@/schemas";
+import connectDB from "@/lib/database";
 
 export async function editCustomerAction(
   customerId: string,
@@ -6,21 +7,29 @@ export async function editCustomerAction(
   name: string,
   email: string,
   phone: string,
-): Promise<Customer> {
-  const customerData: Prisma.CustomerUpdateInput = {
-    name,
-    email,
-    phone,
-  };
+) {
+  await connectDB();
 
   try {
-    return await prisma.customer.update({
-      where: {
-        id: customerId,
+    const customer = await People.findOneAndUpdate(
+      {
+        _id: customerId,
         userId: userId,
+        type: PeopleType.customer,
       },
-      data: customerData,
-    });
+      {
+        name,
+        email,
+        phone,
+      },
+      { new: true }
+    );
+
+    if (!customer) {
+      throw new Error("Customer not found");
+    }
+
+    return customer;
   } catch (error) {
     console.error("Error updating customer:", error);
     throw new Error("Could not update customer");

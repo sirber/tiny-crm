@@ -3,7 +3,6 @@
 import { addCustomerAction } from "@/features/people/customer/actions/add";
 import { editCustomerAction } from "@/features/people/customer/actions/edit";
 import { getUser } from "@/lib/session";
-import { type Customer } from "@/lib/database";
 import { redirect } from "next/navigation";
 
 export async function addCustomer(
@@ -30,14 +29,14 @@ export async function addCustomer(
 
   let id;
   try {
-    const customer: Customer = await addCustomerAction(
+    const customer = await addCustomerAction(
       user.id,
       name,
       email,
       phone,
     );
 
-    id = customer.id;
+    id = customer._id.toString();
   } catch (error: unknown) {
     console.log(error);
     return "could not add a new customer";
@@ -75,7 +74,7 @@ export async function editCustomer(
 
   let id;
   try {
-    const customer: Customer = await editCustomerAction(
+    const customer = await editCustomerAction(
       customerId,
       user.id,
       name,
@@ -83,7 +82,7 @@ export async function editCustomer(
       phone,
     );
 
-    id = customer.id;
+    id = customer._id.toString();
   } catch (error: unknown) {
     console.log("Error editing customer:", error);
     return "Could not edit the customer";
