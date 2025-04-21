@@ -7,7 +7,7 @@ import { ExtraProps } from "@/features/extra";
 import { getPeopleModel } from "@/lib/models";
 import mongoose from "mongoose";
 
-export async function addContact(formData: FormData): Promise<string | void> {
+export async function addContact(state: string, formData: FormData) {
   const user = await getUser();
   if (!user) {
     return redirect("/auth/login");

@@ -1,5 +1,5 @@
-import { People, PeopleType } from "@/schemas";
-import connectDB from "@/lib/database";
+import { PeopleType } from "@/schemas";
+import { getPeopleModel } from "@/lib/models";
 
 export async function addCustomerAction(
   userId: string,
@@ -7,9 +7,9 @@ export async function addCustomerAction(
   email: string,
   phone: string,
 ) {
-  await connectDB();
-
   try {
+    const People = await getPeopleModel();
+
     const customer = new People({
       userId,
       name,

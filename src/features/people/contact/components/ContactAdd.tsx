@@ -19,7 +19,7 @@ import { addContact } from "@/app/people/contact/[id]/actions";
 
 export const ContactAdd = () => {
   const router = useRouter();
-  const [state, action] = useActionState(addContact, null);
+  const [state, action] = useActionState(addContact, "");
 
   const [extras, setExtras] = useState<ExtraProps>({
     followups: [],

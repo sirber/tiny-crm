@@ -34,7 +34,9 @@ export interface IPeople {
   deletedAt: Date | null;
 }
 
-export interface IPeopleDocument extends IPeople, Document {}
+export interface IPeopleDocument extends IPeople, Document<Types.ObjectId> {
+  _id: Types.ObjectId;
+}
 
 export const billSchema = new mongoose.Schema(
   {

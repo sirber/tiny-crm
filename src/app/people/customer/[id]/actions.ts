@@ -77,6 +77,10 @@ export async function editCustomer(
       phone,
     );
 
+    if (!customer) {
+      throw new Error("Customer not found");
+    }
+
     id = customer._id.toString();
   } catch (error: unknown) {
     console.log("Error editing customer:", error);

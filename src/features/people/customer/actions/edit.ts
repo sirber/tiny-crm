@@ -1,5 +1,5 @@
-import { People, PeopleType } from "@/schemas";
-import connectDB from "@/lib/database";
+import { IPeopleDocument, PeopleType } from "@/schemas";
+import { getPeopleModel } from "@/lib/models";
 
 export async function editCustomerAction(
   customerId: string,
@@ -7,10 +7,9 @@ export async function editCustomerAction(
   name: string,
   email: string,
   phone: string,
-) {
-  await connectDB();
-
+): Promise<IPeopleDocument | null> {
   try {
+    const People = await getPeopleModel();
     const customer = await People.findOneAndUpdate(
       {
         _id: customerId,
