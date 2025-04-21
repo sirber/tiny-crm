@@ -10,7 +10,6 @@ export async function addCustomerAction(
     name: name,
     email: email,
     phone: phone,
-    type: "customer",
     User: {
       connect: {
         id: userId,

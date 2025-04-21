@@ -12,7 +12,6 @@ export default async function Customer() {
   const rows = await prisma.customer.findMany({
     where: {
       userId: user.id,
-      type: "customer",
       deletedAt: null,
     },
   });
