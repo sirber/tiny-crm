@@ -1,92 +1,49 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useActionState, useState } from "react";
-import { ExtraProps } from "@/features/extra";
-import { FormField } from "@/interfaces/FormField";
+import { Card, CardContent, CardHeader } from "@mui/material";
 import { getContactFields } from "../helpers/fields";
 import { FormComponent } from "@/components/FormComponent";
-import type { Contact } from "@/lib/database";
-import Extras from "@/features/extra/components/Extras";
-import {
-  Card,
-  CardContent,
-  Typography,
-  CardActions,
-  Button,
-} from "@mui/material";
-import Grid from "@mui/material/Grid";
 import { editContact } from "@/app/people/contact/[id]/actions";
+import { useActionState } from "react";
+import { IPeopleDocument, PeopleType } from "@/schemas/People";
+import { Types } from "mongoose";
+import { ExtraProps } from "@/features/extra";
 
-export interface EditContactProps {
-  contact: Contact;
-}
+type Contact = IPeopleDocument & {
+  type: PeopleType.contact;
+  extras?: ExtraProps;
+  _id: Types.ObjectId;
+};
 
-export const ContactEdit = ({ contact }: EditContactProps) => {
-  const router = useRouter();
-  const [state, action] = useActionState(editContact, null);
-
-  const [extras, setExtras] = useState<ExtraProps>({
-    followups: [],
-    notes: [],
-    links: [],
-  });
-
-  function cancel() {
-    router.push("/people/contact");
-  }
-
-  const fields: FormField[] = getContactFields(contact);
+export function ContactEdit({ contact }: { contact: Contact }) {
+  const [state, action] = useActionState<string | null, FormData>(
+    async (_, formData) => {
+      const result = await editContact(formData);
+      return result || null;
+    },
+    null,
+  );
+  const fields = getContactFields(contact);
 
   return (
-    <Grid
-      container
-      spacing={1}
-    >
-      <Grid size={6}>
+    <Card>
+      <CardHeader title="Edit Contact" />
+      <CardContent>
         <form action={action}>
           <input
             type="hidden"
             name="id"
-            value={contact.id}
+            value={contact._id.toString()}
           />
           <input
             type="hidden"
             name="extras"
-            value={JSON.stringify(extras)}
+            value={JSON.stringify(contact.extras || {})}
           />
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Edit Contact</Typography>
-              <FormComponent fields={fields} />
-              {state}
-            </CardContent>
-            <CardActions>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-              >
-                Save
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={cancel}
-              >
-                Cancel
-              </Button>
-            </CardActions>
-          </Card>
+          <FormComponent fields={fields} />
+          {state && <div>{state}</div>}
         </form>
-      </Grid>
-
-      <Grid size={6}>
-        <Extras
-          data={extras}
-          setData={setExtras}
-        />
-      </Grid>
-    </Grid>
+      </CardContent>
+    </Card>
   );
-};
+}

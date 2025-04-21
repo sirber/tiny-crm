@@ -1,6 +1,9 @@
 import { FormField } from "@/interfaces/FormField";
+import { IPeopleDocument, PeopleType } from "@/schemas/People";
 
-export function getContactFields(contact?: any): FormField[] {
+type Contact = IPeopleDocument & { type: PeopleType.contact };
+
+export function getContactFields(contact?: Contact): FormField[] {
   return [
     {
       name: "name",

@@ -1,9 +1,8 @@
 import { notFound } from "next/navigation";
-import { validate as isUUID } from "uuid";
 import { CustomerEdit, CustomerAdd } from "@/features/people";
 import { getUser } from "@/lib/session";
-import { People, PeopleType } from "@/schemas";
-import connectDB from "@/lib/database";
+import { getPeopleModel } from "@/lib/models";
+import { PeopleType } from "@/schemas";
 
 interface PageParams {
   params: Promise<{
@@ -18,13 +17,9 @@ export default async function CustomerPage({ params }: PageParams) {
     return <CustomerAdd />;
   }
 
-  if (!isUUID(id)) {
-    return notFound();
-  }
-
   try {
     const user = await getUser();
-    await connectDB();
+    const People = await getPeopleModel();
 
     const customer = await People.findOne({
       _id: id,

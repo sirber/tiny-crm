@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { initModels } from "./models";
 
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/tiny-crm";
@@ -16,6 +15,7 @@ interface MongooseCache {
 }
 
 declare global {
+  // eslint-disable-next-line no-var
   var mongoose: MongooseCache;
 }
 

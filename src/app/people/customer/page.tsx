@@ -1,8 +1,8 @@
 import { getUser } from "@/lib/session";
 import { CustomerList } from "@/features/people";
-import { People, PeopleType } from "@/schemas";
+import { PeopleType } from "@/schemas";
 import { formatDate } from "@/lib/date";
-import connectDB from "@/lib/database";
+import { getPeopleModel } from "@/lib/models";
 
 export default async function Customer() {
   const user = await getUser();
@@ -10,7 +10,7 @@ export default async function Customer() {
     return null;
   }
 
-  await connectDB();
+  const People = await getPeopleModel();
 
   const rows = await People.find({
     userId: user.id,

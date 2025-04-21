@@ -1,5 +1,7 @@
 import { FormField } from "@/interfaces/FormField";
-import { type Customer } from "@/lib/database";
+import { IPeopleDocument, PeopleType } from "@/schemas/People";
+
+type Customer = IPeopleDocument & { type: PeopleType.customer };
 
 export function getCustomerFields(customer?: Customer): FormField[] {
   return [

@@ -2,38 +2,38 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { prisma } from "@/lib/database";
 import { getUser } from "@/lib/session";
 import { ExtraProps } from "@/features/extra";
+import { getPeopleModel } from "@/lib/models";
+import mongoose from "mongoose";
 
-export async function addContact(formData: FormData) {
+export async function addContact(formData: FormData): Promise<string | void> {
   const user = await getUser();
   if (!user) {
     return redirect("/auth/login");
   }
 
   const extras = JSON.parse(formData.get("extras") as string) as ExtraProps;
+  const People = await getPeopleModel();
 
   try {
-    await prisma.contact.create({
-      data: {
-        name: formData.get("name") as string,
-        email: formData.get("email") as string,
-        phone: formData.get("phone") as string,
-        userId: user.id,
-        extras: extras,
-      },
+    await People.create({
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string,
+      userId: new mongoose.Types.ObjectId(user._id.toString()),
+      extras: extras,
     });
 
     revalidatePath("/people/contact");
     redirect("/people/contact");
   } catch (error) {
     console.error(error);
-    return <div>Error creating contact</div>;
+    return "Error creating contact";
   }
 }
 
-export async function editContact(formData: FormData) {
+export async function editContact(formData: FormData): Promise<string | void> {
   const user = await getUser();
   if (!user) {
     return redirect("/auth/login");
@@ -41,25 +41,26 @@ export async function editContact(formData: FormData) {
 
   const id = formData.get("id") as string;
   const extras = JSON.parse(formData.get("extras") as string) as ExtraProps;
+  const People = await getPeopleModel();
 
   try {
-    await prisma.contact.update({
-      where: {
-        id: id,
-        userId: user.id,
+    await People.updateOne(
+      {
+        _id: new mongoose.Types.ObjectId(id),
+        userId: new mongoose.Types.ObjectId(user._id.toString()),
       },
-      data: {
+      {
         name: formData.get("name") as string,
         email: formData.get("email") as string,
         phone: formData.get("phone") as string,
         extras: extras,
       },
-    });
+    );
 
     revalidatePath("/people/contact");
     redirect("/people/contact");
   } catch (error) {
     console.error(error);
-    return <div>Error updating contact</div>;
+    return "Error updating contact";
   }
-} 
+}
