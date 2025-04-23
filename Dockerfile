@@ -4,18 +4,28 @@
 FROM node:22-slim AS base
 RUN apt-get update && \
     apt-get install -y openssl && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* 
 
-FROM base AS builder
+FROM base AS deps
+WORKDIR /app
+COPY package*.json ./
+COPY prisma/ ./prisma/
+RUN npm install
+
+FROM base AS dev
+WORKDIR /app
+CMD ["npm", "run", "dev"]   
+
+FROM deps AS builder
 WORKDIR /app
 COPY . .
-RUN npm install
-RUN npx prisma generate
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/prisma ./prisma
 RUN npm run build
 
 FROM base AS migrate
 WORKDIR /app
-COPY prisma/ ./
+COPY --from=deps prisma/ ./
 RUN npm install prisma pg
 
 FROM base AS runner

@@ -5,7 +5,7 @@ services:
     container_name: tiny-crm-dev-app
     build:
       context: .
-      dockerfile: resources/docker/Dockerfile.dev
+      target: dev
     restart: on-failure:5
     depends_on:
       - db
