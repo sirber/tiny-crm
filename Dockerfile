@@ -25,7 +25,7 @@ RUN npm run build
 
 FROM base AS migrate
 WORKDIR /app
-COPY --from=deps prisma/ ./
+COPY --from=deps /app/prisma/ ./
 RUN npm install prisma pg
 
 FROM base AS runner
