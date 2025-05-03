@@ -6,21 +6,21 @@ help:
 
 # Start de development server
 [group('dev')]
-dev:
-    @docker compose up --build -d
+up:
+    @docker compose up --build -d --wait
     @npm install
     @docker compose exec app npm run migrate:dev
     @echo Open http://localhost:3000
 
-# Stop the development server
-[group('dev')]
-stop:
-    @docker compose down
-
-# Migrate the database, for development
+# Runs the migations
 [group('dev')]
 migrate:
     @docker compose exec app npm run migrate:dev
+
+# Stop the development server
+[group('dev')]
+down:
+    @docker compose down
 
 # Build a production image
 [group('production')]
