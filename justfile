@@ -6,28 +6,26 @@ help:
 
 # Start de development server
 [group('dev')]
-dev: stop
+up:
+    @docker compose up --build -d --wait
     @npm install
-    @docker compose build
-    @docker compose up -d
-    @sleep 10
     @docker compose exec app npm run migrate:dev
     @echo Open http://localhost:3000
 
-# Stop the development server
-[group('dev')]
-stop:
-    @docker compose down
-
-# Migrate the database, for development
+# Runs the migations
 [group('dev')]
 migrate:
     @docker compose exec app npm run migrate:dev
 
-# Build a production image
+# Stop the development server
 [group('dev')]
+down:
+    @docker compose down
+
+# Build a production image
+[group('production')]
 build:
-    @docker build --target runner -t tiny-crm .
+    @docker build --target runner -t tiny-crm:latest .
 
 # Run various quality checks
 [group('quality')]
