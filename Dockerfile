@@ -26,7 +26,7 @@ RUN npm run build
 FROM base AS migrate
 WORKDIR /app
 COPY --from=deps /app/prisma/ ./
-RUN npm install prisma pg
+RUN npm install prisma pg mysql2
 
 FROM base AS runner
 WORKDIR /app
