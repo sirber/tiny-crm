@@ -26,6 +26,8 @@ model User {
   customers Customer[]
   contacts  Contact[]
   prospects Prospect[]
+
+  @@index([email])
 }
 
 model Contact {
@@ -99,4 +101,13 @@ model BillProduct {
   Product   Product @relation(fields: [productId], references: [id])
   price     Float
   quantity  Int
+}
+
+model Extra {
+  route     String   @id
+  notes     Json
+  followups Json
+  links     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
