@@ -1,42 +1,56 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+import useSWR from "swr";
 import ExtraFollowUps from "@/features/extra/components/ExtraFollowUps";
 import ExtraLinks from "@/features/extra/components/ExtraLnks";
 import ExtraNotes from "@/features/extra/components/ExtraNotes";
 import Grid from "@mui/material/Grid";
 import { useCallback } from "react";
-import { ExtrasState, FollowUp, Link, Note } from "@/features/extra";
+import { FollowUp, Link, Note } from "@/features/extra";
 
-export default function Extras({ data, setData }: ExtrasState) {
-  const { followups, links, notes } = data;
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-  const setFollowups = useCallback(
-    (newFollowups: Array<FollowUp>) => {
-      setData({
-        ...data,
-        followups: newFollowups,
+export default function Extras() {
+  const pathname = usePathname();
+  const routeParam = pathname.startsWith("/") ? pathname.slice(1) : pathname;
+  const shouldFetch = !routeParam.endsWith("/new");
+  const apiUrl = shouldFetch
+    ? `/api/extra?route=${encodeURIComponent(routeParam)}`
+    : null;
+
+  const { data, mutate, isLoading, error } = useSWR(apiUrl, fetcher);
+
+  const updateData = useCallback(
+    async (
+      updated: Partial<{ followups: FollowUp[]; notes: Note[]; links: Link[] }>,
+    ) => {
+      if (!data || !shouldFetch) return;
+      const newData = { ...data, ...updated };
+
+      // Optimistic update
+      mutate(newData, false);
+
+      await fetch(apiUrl!, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newData),
       });
+
+      mutate();
     },
-    [setData, data],
+    [data, mutate, apiUrl, shouldFetch],
   );
 
-  const setLinks = useCallback(
-    (newLinks: Array<Link>) => {
-      setData({
-        ...data,
-        links: newLinks,
-      });
-    },
-    [setData, data],
-  );
+  if (!shouldFetch) return null;
 
-  const setNotes = useCallback(
-    (newNotes: Array<Note>) => {
-      setData({
-        ...data,
-        notes: newNotes,
-      });
-    },
-    [setData, data],
-  );
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading extras.</div>;
+
+  const setFollowups = (newFollowups: FollowUp[]) =>
+    updateData({ followups: newFollowups });
+  const setNotes = (newNotes: Note[]) => updateData({ notes: newNotes });
+  const setLinks = (newLinks: Link[]) => updateData({ links: newLinks });
 
   return (
     <Grid
@@ -45,15 +59,15 @@ export default function Extras({ data, setData }: ExtrasState) {
       direction="column"
     >
       <ExtraFollowUps
-        data={followups}
+        data={data.followups}
         setData={setFollowups}
       />
       <ExtraNotes
-        data={notes}
+        data={data.notes}
         setData={setNotes}
       />
       <ExtraLinks
-        data={links}
+        data={data.links}
         setData={setLinks}
       />
     </Grid>
