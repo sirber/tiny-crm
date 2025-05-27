@@ -76,7 +76,7 @@ export async function editCustomer(
   let id;
   try {
     const customer: Customer = await editCustomerAction(
-      customerId,
+      parseInt(customerId),
       user.id,
       name,
       email,

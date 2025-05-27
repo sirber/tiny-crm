@@ -33,9 +33,7 @@ export async function getUser(): Promise<User> {
 
   return prisma.user.findFirstOrThrow({
     where: {
-      id: {
-        equals: payload.id,
-      },
+      id: parseInt(payload.id),
     },
   });
 }

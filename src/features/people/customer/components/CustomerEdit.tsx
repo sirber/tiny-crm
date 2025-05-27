@@ -1,8 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useActionState, useState } from "react";
-import { ExtraProps } from "@/features/extra";
+import { useActionState } from "react";
 import { FormField } from "@/interfaces/FormField";
 import { getCustomerFields } from "../helpers/fields";
 import { FormComponent } from "@/components/FormComponent";
@@ -26,12 +25,6 @@ export const CustomerEdit = ({ customer }: EditCustomerProps) => {
   const router = useRouter();
   const [state, action] = useActionState(editCustomer, null);
 
-  const [extras, setExtras] = useState<ExtraProps>({
-    followups: [],
-    notes: [],
-    links: [],
-  });
-
   function cancel() {
     router.push("/people/customer");
   }
@@ -49,11 +42,6 @@ export const CustomerEdit = ({ customer }: EditCustomerProps) => {
             type="hidden"
             name="id"
             value={customer.id}
-          />
-          <input
-            type="hidden"
-            name="extras"
-            value={JSON.stringify(extras)}
           />
           <Card>
             <CardContent>
@@ -82,10 +70,7 @@ export const CustomerEdit = ({ customer }: EditCustomerProps) => {
       </Grid>
 
       <Grid size={6}>
-        <Extras
-          data={extras}
-          setData={setExtras}
-        />
+        <Extras />
       </Grid>
     </Grid>
   );

@@ -27,7 +27,7 @@ export async function loginAction(
   }
 
   const payload: TokenInterface & JWTPayload = {
-    id: user.id,
+    id: user.id.toString(),
     email: user.email,
     role: user.role,
   };
