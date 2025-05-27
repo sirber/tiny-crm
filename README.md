@@ -10,7 +10,7 @@ made with NextJS. The database is with Postgresql.
 ### Stack
 
 - NextJS 15
-- PostgreSQL 17
+- MySQL 8.4
 - Prisma
 
 ## Development
@@ -56,36 +56,36 @@ You can use this sample `docker-compose.yml`
 ```yaml
 services:
   app:
-    restart: unless-stopped
+    restart: always
     image: ghcr.io/sirber/tiny-crm:latest
     depends_on:
       - db
     ports:
       - "3000:3000"
     environment:
-      - DATABASE_URL=postgresql://postgres:crm@db:5432/tiny-crm?connection_limit=10
+      - DATABASE_URL=mysql://root:crm@db:3306/tiny-crm
       - NODE_ENV=production
       - JWT_SECRET=[my secret]
       - NEXT_PUBLIC_REGISTER_ENABLED=false
 
   db:
-    image: postgres:17-alpine
-    restart: unless-stopped
-    command: -c 'max_connections=1000'
+    image: mysql:8.4
+    restart: always
     environment:
-      - POSTGRES_PASSWORD=crm
+      - MYSQL_ROOT_PASSWORD=crm
+      - MYSQL_DATABASE=tiny-crm
     ports:
-      - "5432:5432"
+      - "3306:3306"
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - db_data:/var/lib/mysql
 ```
 
 ### Via a Docker host
 
 To run elsewhere, you can use the image directly and configure using environment variables:
 
-```
-NEXT_PUBLIC_REGISTER_ENABLED=true
-DATABASE_URL=postgresql://[user:pass]@[db-name]:5432/[schema]?connection_limit=10
+```env
+NEXT_PUBLIC_REGISTER_ENABLED=false
+DATABASE_URL=mysql://[user:pass]@[db-name]:3306/[schema]
 JWT_SECRET=[my secret]
 ```
