@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { validate as isUUID } from "uuid";
 import { CustomerEdit, CustomerAdd } from "@/features/people";
 import { getUser } from "@/lib/session";
 import { prisma } from "@/lib/database";
@@ -17,15 +16,11 @@ export default async function CustomerPage({ params }: PageParams) {
     return <CustomerAdd />;
   }
 
-  if (!isUUID(id)) {
-    return notFound();
-  }
-
   try {
     const user = await getUser();
     const customer = await prisma.customer.findFirstOrThrow({
       where: {
-        id: id,
+        id: parseInt(id),
         userId: user.id,
       },
     });

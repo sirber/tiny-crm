@@ -1,8 +1,8 @@
 import { Customer, Prisma, prisma } from "@/lib/database";
 
 export async function editCustomerAction(
-  customerId: string,
-  userId: string,
+  customerId: number,
+  userId: number,
   name: string,
   email: string,
   phone: string,
