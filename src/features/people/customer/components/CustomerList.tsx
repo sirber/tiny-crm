@@ -30,10 +30,6 @@ const columns: GridColDef[] = [
 export const CustomerList = ({ rows }: { rows: GridValidRowModel[] }) => {
   const router = useRouter();
 
-  function onRefreshClick() {
-    router.refresh();
-  }
-
   function onAddClick() {
     router.push("/people/customer/new");
   }
@@ -47,7 +43,6 @@ export const CustomerList = ({ rows }: { rows: GridValidRowModel[] }) => {
       title="Customers"
       columns={columns}
       rows={rows}
-      onRefreshClick={onRefreshClick}
       onAddClick={onAddClick}
       onRowClick={onRowClick}
     ></List>
