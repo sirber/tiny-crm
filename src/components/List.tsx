@@ -30,12 +30,7 @@ export default function List({
         alignItems="center"
       >
         <Grid size={6}>
-          <Typography
-            variant="h4"
-            component="h4"
-          >
-            {title}
-          </Typography>
+          <Typography variant="h5">{title}</Typography>
         </Grid>
         <Grid
           size={6}

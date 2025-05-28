@@ -35,7 +35,7 @@ export const CustomerAdd = () => {
         <form action={action}>
           <Card>
             <CardContent>
-              <Typography variant="h6">New Customer</Typography>
+              <Typography variant="h5">New Customer</Typography>
               <FormComponent fields={fields} />
               {state}
             </CardContent>
