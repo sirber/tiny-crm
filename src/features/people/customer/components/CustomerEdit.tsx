@@ -45,7 +45,7 @@ export const CustomerEdit = ({ customer }: EditCustomerProps) => {
           />
           <Card>
             <CardContent>
-              <Typography variant="h6">Edit Customer</Typography>
+              <Typography variant="h5">Edit Customer</Typography>
               <FormComponent fields={fields} />
               {state}
             </CardContent>

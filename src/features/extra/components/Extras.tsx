@@ -16,10 +16,16 @@ export default function Extras() {
   const routeParam = pathname.startsWith("/") ? pathname.slice(1) : pathname;
   const shouldFetch = !routeParam.endsWith("/new");
   const apiUrl = shouldFetch
-    ? `/api/extra?route=${encodeURIComponent(routeParam)}`
+    ? `/extra?route=${encodeURIComponent(routeParam)}`
     : null;
 
-  const { data, mutate, isLoading, error } = useSWR(apiUrl, fetcher);
+  const { data, mutate, error } = useSWR(apiUrl, fetcher, {
+    fallbackData: {
+      followups: [],
+      notes: [],
+      links: [],
+    },
+  });
 
   const updateData = useCallback(
     async (
@@ -43,8 +49,6 @@ export default function Extras() {
   );
 
   if (!shouldFetch) return null;
-
-  if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading extras.</div>;
 
   const setFollowups = (newFollowups: FollowUp[]) =>

@@ -5,11 +5,9 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const route = searchParams.get("route") || null;
 
-  const regex = /^\w+\/\d+$/;
-
-  if (null === route || !regex.test(route)) {
+  if (null === route) {
     return NextResponse.json(
-      { error: 'Missing or invalid "route" query parameter' },
+      { error: 'Missing "route" query parameter' },
       { status: 400 },
     );
   }
@@ -19,10 +17,11 @@ export async function GET(request: NextRequest) {
   });
 
   if (!extras) {
-    return NextResponse.json(
-      { error: "No extras found for the given route" },
-      { status: 404 },
-    );
+    return NextResponse.json({
+      links: [],
+      notes: [],
+      followups: [],
+    });
   }
 
   return NextResponse.json({

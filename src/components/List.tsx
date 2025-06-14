@@ -14,7 +14,6 @@ interface ListProps {
   rows: GridValidRowModel[];
   onRowClick: (params: GridRowParams) => void;
   onAddClick: () => void;
-  onRefreshClick: () => void;
 }
 
 export default function List({
@@ -23,7 +22,6 @@ export default function List({
   rows,
   onAddClick,
   onRowClick,
-  onRefreshClick,
 }: ListProps) {
   return (
     <>
@@ -32,12 +30,7 @@ export default function List({
         alignItems="center"
       >
         <Grid size={6}>
-          <Typography
-            variant="h4"
-            component="h1"
-          >
-            {title}
-          </Typography>
+          <Typography variant="h5">{title}</Typography>
         </Grid>
         <Grid
           size={6}
@@ -45,14 +38,12 @@ export default function List({
         >
           <ButtonGroup variant="contained">
             <Button onClick={onAddClick}>Add</Button>
-            <Button onClick={onRefreshClick}>Refresh</Button>
           </ButtonGroup>
         </Grid>
       </Grid>
 
       <Box
         sx={{
-          minHeight: 400,
           width: "100%",
         }}
       >
