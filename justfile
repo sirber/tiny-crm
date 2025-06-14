@@ -4,7 +4,7 @@
 help:
     @just --list
 
-# Start de development server
+# Build and Start de development server
 [group('dev')]
 up:
     @docker compose up --build -d --wait
@@ -16,6 +16,16 @@ up:
 [group('dev')]
 migrate:
     @docker compose exec app npm run migrate:dev
+
+# Start the development server
+[group('dev')]
+start:
+    @docker compose start
+
+# Pause the development server
+[group('dev')]
+stop:
+    @docker compose stop
 
 # Stop the development server
 [group('dev')]
