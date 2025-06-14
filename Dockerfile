@@ -1,10 +1,10 @@
 # Tiny-CRM Docker File
 # based on https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 
-FROM node:22-slim AS base
+FROM node:24.2-slim AS base
 RUN apt-get update && \
     apt-get install -y openssl && \
-    rm -rf /var/lib/apt/lists/* 
+    rm -rf /var/lib/apt/lists/*
 
 FROM base AS deps
 WORKDIR /app
@@ -14,7 +14,7 @@ RUN npm install
 
 FROM base AS dev
 WORKDIR /app
-CMD ["npm", "run", "dev"]   
+CMD ["npm", "run", "dev"]
 
 FROM deps AS builder
 WORKDIR /app
