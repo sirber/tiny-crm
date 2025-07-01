@@ -20,7 +20,7 @@
     "@mui/material": "^7.1.2",
     "@mui/material-nextjs": "^7.1.0",
     "@mui/system": "^7.1.0",
-    "@mui/x-data-grid": "^8.5.3",
+    "@mui/x-data-grid": "^8.6.0",
     "@prisma/adapter-pg": "^6.10.1",
     "@prisma/client": "^6.8.2",
     "argon2": "^0.43.0",
