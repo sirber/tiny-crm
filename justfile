@@ -12,6 +12,11 @@ up:
     @docker compose exec app npm run migrate:dev
     @echo Open http://localhost:3000
 
+# Show docker logs
+[group('dev')]
+logs:
+    @docker compose logs -f
+    
 # Runs the migations
 [group('dev')]
 migrate:
