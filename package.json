@@ -7,10 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint && tsc --noEmit",
-    "format": "npx prettier --write src",
-    "migrate:dev": "npx prisma migrate dev",
-    "migrate:prod": "npx prisma migrate deploy",
-    "postinstall": "prisma generate"
+    "format": "prettier --write src",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:prod": "prisma migrate deploy",
+    "postinstall": "prisma generate",
+    "user:create": "tsx ./src/scripts/user-create.ts"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",

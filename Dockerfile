@@ -1,7 +1,7 @@
 # Tiny-CRM Docker File
 # based on https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 
-FROM node:24.2-slim AS base
+FROM node:24.5-slim AS base
 RUN apt-get update && \
     apt-get install -y openssl && \
     rm -rf /var/lib/apt/lists/*

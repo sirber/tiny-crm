@@ -47,3 +47,8 @@ build:
 quality:
     @docker compose exec app npm run format
     @docker compose exec app npm run lint
+
+# Create a user
+[group('admin')]
+user-create:
+    @docker compose exec app npm run user:create
