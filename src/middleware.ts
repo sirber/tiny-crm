@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getRole, validateToken } from "@/lib/session";
+import { clearToken, getRole, validateToken } from "@/lib/session";
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const isValid = await validateToken();
 
   if (!isValid) {
+    await clearToken();
+    
     return NextResponse.redirect(new URL("/auth/login", req.url));
   }
 

@@ -9,7 +9,8 @@ services:
       target: dev
     restart: on-failure:5
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - '3000:3000'
     environment:
@@ -21,6 +22,11 @@ services:
   db:
     image: mysql:8.4
     restart: on-failure:5
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     environment:
       - MYSQL_ROOT_PASSWORD=crm
       - MYSQL_DATABASE=tiny-crm
