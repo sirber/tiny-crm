@@ -7,6 +7,7 @@ function ask(question: string): Promise<string> {
     input: process.stdin,
     output: process.stdout,
   });
+  
   return new Promise((resolve) =>
     rl.question(question, (answer) => {
       rl.close();
@@ -15,7 +16,7 @@ function ask(question: string): Promise<string> {
   );
 }
 
-async function createUser() { 
+async function createUser(): Promise<void> { 
     const name = await ask('Enter user name: ');
     const email = await ask('Enter user email: ');
     const password = await ask('Enter user password: ');    
@@ -23,7 +24,7 @@ async function createUser() {
 
     const hashedPassword = await hash(password);
 
-    const user = await prisma.user.create({
+    await prisma.user.create({
       data: {
         name,
         email,
